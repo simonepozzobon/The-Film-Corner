@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Builder;
 
 class ClipsController extends Controller
 {
@@ -38,36 +39,48 @@ class ClipsController extends Controller
         // $this->options = array_merge($this->options_single, $this->options_multiple);
 
         $this->options_single = ['format', 'period', 'age', 'genre'];
-        $this->options_multiple = ['directors', 'peoples', 'topics', 'captions'];
+        $this->options_multiple = ['directors', 'peoples', 'topics'];
+        $this->options_multiple_not_translated = ['captions'];
         $this->options_mixed = ['paratexts', 'libraries.exercise', 'libraries.medias.library_captions'];
-        $this->options = array_merge($this->options_single, $this->options_multiple, $this->options_mixed);
+        $this->options = array_merge($this->options_single, $this->options_multiple, $this->options_mixed, $this->options_multiple_not_translated);
     }
 
     public function test()
     {
-        // $request = new Request();
-        // $request->replace(
-        //     [
-        //         // 'title'=> 'fdjdjgldkf',
-        //         // 'video'=> 'no',
-        //         // 'period'=> "Second World War",
-        //         // 'year'=> '1900',
-        //         // 'format'=> "4/3",
-        //         // 'age'=> "14-18",
-        //         // 'genre'=> "tuo",
-        //         // 'nationality'=> 'ital',
-        //         // 'directors' => ["Gianni","Beppe","giovanni"],
-        //         'clip_id' => 20,
-        //         'abstract' => uniqid(),
-        //         'tech_info' => uniqid(),
-        //         'historical_context' => uniqid(),
-        //         'food' => uniqid(),
-        //     ]
-        // );
+        $request = new Request();
+        $request->replace(
+            [
+                // 'title'=> 'fdjdjgldkf',
+                // 'video'=> 'no',
+                // 'period'=> "Second World War",
+                // 'year'=> '1900',
+                // 'format'=> "4/3",
+                // 'age'=> "14-18",
+                // 'genre'=> "tuo",
+                // 'nationality'=> 'ital',
+                // 'directors' => ["Gianni","Beppe","giovanni"],
+                // 'clip_id' => 20,
+                // 'abstract' => uniqid(),
+                // 'tech_info' => uniqid(),
+                // 'historical_context' => uniqid(),
+                // 'food' => uniqid(),
+                'id' => 16,
+                'period' => 'asfdsaasfasfdsaf',
+                'directors' => json_encode(['Renny Arlin', 'gianni']),
+                'peoples' => json_encode(['Rupert Friend','Richard Coyle','Emanuelle Chriqui']),
+                'year' => 2011,
+                'format' => uniqid(),
+                'age' => '14 - 18',
+                'genre' => 'guerra',
+                'nationality' => 'USA',
+                'topics' => json_encode(['confini','conflitto','guerra','giornalista','Indipendenza']),
+            ]
+        );
 
         // $this->store_details($request);
 
-        $this->get_initials_edit(39);
+        // $this->get_initials_edit(39);
+        $this->store_informations($request);
     }
 
     public function upload_caption(Request $request)
@@ -635,27 +648,39 @@ class ClipsController extends Controller
     public function check_single_option($name, $request)
     {
         $model = ucwords('App\\Propaganda\\'.ucfirst($name));
+        $modelTranslation = ucwords('App\\Propaganda\\'.ucfirst($name).'Translation');
+        $translation = $modelTranslation::where('title', $request->{$name})->where('locale', 'it')->first();
 
-        $result = $model::where('title', '=', $request->{$name})->first();
+        if ($translation) {
+            $result = $model::find($translation->{$name.'_id'});
+        } else {
+            $result = false;
+        }
 
         if ($result) {
             // return 'il risultato esiste già';
             return $result->id;
         } else {
             $obj = \App::make($model);
-            $columns = $obj->getTableColumns();
+            $obj->save();
+            $t = $obj->translateOrNew('it');
+            $columns = $t->getTableColumns();
 
             foreach ($columns as $key => $column) {
-                if ($column != 'id' && $column != 'created_at' && $column != 'updated_at') {
+                if ($column != 'id' && $column != 'locale' && $column != $name.'_id') {
                     if ($request->input($column, false) == false) {
                         // va riempita con un random
-                        $obj->{$column} = $request->{$name};
+                        $t->{$column} = $request->{$name};
                     } else {
-                        $obj->{$column} = $request->{$name};
+                        $t->{$column} = $request->{$name};
                     }
+                } elseif ($column == 'locale') {
+                    $t->locale = 'it';
+                } elseif ($column == $name.'_id') {
+                    $t->{$name.'_id'} = $obj->id;
                 }
             }
-            $obj->save();
+            $t->save();
             return $obj->id;
         }
     }
@@ -666,14 +691,22 @@ class ClipsController extends Controller
         // return true;
 
         $singular = rtrim($name, 's');
-        $model = ucwords('App\\Propaganda\\'.$singular);
+        $model = ucwords('App\\Propaganda\\'.ucfirst($singular));
+        $modelTranslation = ucwords('App\\Propaganda\\'.ucfirst($singular).'Translation');
 
         $results = collect();
 
         if (isset($request->{$name})) {
             foreach (json_decode($request->{$name}) as $key => $value) {
                 $field = $name == 'directors' ? 'name' : 'title';
-                $result = $model::where($field, '=', $value)->first();
+                $translation = $modelTranslation::where($field, $request->{$name})->where('locale', 'it')->first();
+
+                if ($translation) {
+                    $result = $model::find($translation->{$name.'_id'});
+                } else {
+                    $result = false;
+                }
+
 
                 if (!$result || $result == null) {
                     $obj = \App::make($model);
@@ -682,7 +715,6 @@ class ClipsController extends Controller
 
                     $result = $obj;
                 }
-
                 $results->push($result);
 
                 $clip->{$name}()->attach($result);
