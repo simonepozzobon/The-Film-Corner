@@ -359,7 +359,6 @@ class ClipsController extends Controller
         }
 
         $clip = $clip->fresh($this->options);
-
         return response()->json(
             [
                 'clip' => $clip,
@@ -695,31 +694,43 @@ class ClipsController extends Controller
         $modelTranslation = ucwords('App\\Propaganda\\'.ucfirst($singular).'Translation');
 
         $results = collect();
-
         if (isset($request->{$name})) {
             foreach (json_decode($request->{$name}) as $key => $value) {
                 $field = $name == 'directors' ? 'name' : 'title';
-                $translation = $modelTranslation::where($field, $request->{$name})->where('locale', 'it')->first();
+                $translation = $modelTranslation::where($field, $value)->where('locale', 'it')->first();
 
                 if ($translation) {
-                    $result = $model::find($translation->{$name.'_id'});
+                    $result = $model::find($translation->{$singular.'_id'});
                 } else {
                     $result = false;
                 }
 
-
-                if (!$result || $result == null) {
+                if ($result) {
+                    $results->push($result);
+                } else {
                     $obj = \App::make($model);
-                    $obj->{$field} = $value;
                     $obj->save();
+                    $t = $obj->translateOrNew('it');
+                    $columns = $t->getTableColumns();
 
-                    $result = $obj;
+                    foreach ($columns as $key => $column) {
+                        if ($column == $singular.'_id') {
+                            $t->{$column} = $obj->id;
+                        } elseif ($column == 'locale') {
+                            $t->locale = 'it';
+                        } elseif ($column == $field) {
+                            $t->{$field} = $value;
+                        }
+                    }
+
+                    $t->save();
+                    $results->push($obj);
                 }
-                $results->push($result);
 
                 $clip->{$name}()->attach($result);
             }
         }
+
         return $results;
     }
 }
