@@ -36,6 +36,8 @@ use App\Propaganda\Period;
 use App\Propaganda\PeriodTranslation;
 use App\Propaganda\Topic;
 use App\Propaganda\TopicTranslation;
+use App\Propaganda\Age;
+use App\Propaganda\AgeTranslation;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -119,6 +121,10 @@ class TranslateController extends Controller
 
         case 'propaganda_topic':
             $items = Topic::all();
+            break;
+
+        case 'propaganda_age':
+            $items = Age::all();
             break;
         }
 

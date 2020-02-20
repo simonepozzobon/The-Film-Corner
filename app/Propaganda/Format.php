@@ -11,6 +11,7 @@ class Format extends Model
 
     protected $table = 'formats';
     public $translatedAttributes = ['title'];
+    // public $translationModel = 'App\Propaganda\FormatTranslation';
 
     public function clip()
     {
