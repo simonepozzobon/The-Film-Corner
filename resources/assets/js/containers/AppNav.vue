@@ -7,10 +7,10 @@
         <li class="app-nav__item nav-item">
             <a
                 href="#"
-                @click="goTo($event, 'apps-home')"
+                @click="$router.go(-1)"
                 class="nav-link app-nav__link"
             >
-                Close
+                {{ this.$root.getCmd('close') }}
             </a>
         </li>
         <li
@@ -22,7 +22,7 @@
                 @click.stop.prevent="approveAndShare"
                 class="nav-link app-nav__link"
             >
-                Approve and Share
+                {{ this.$root.getCmd('approve_and_share') }}
             </a>
         </li>
         <li
@@ -34,7 +34,7 @@
                 @click.stop.prevent="addTitle"
                 class="nav-link app-nav__link"
             >
-                Save Session
+                {{ this.$root.getCmd('save_session') }}
             </a>
         </li>
         <li class="app-nav__item nav-item">
@@ -43,7 +43,7 @@
                 @click.stop.prevent="openSession"
                 class="nav-link app-nav__link"
             >
-                Open Existing Session
+                {{ this.$root.getCmd('open_existing_session') }}
             </a>
         </li>
         <li class="app-nav__item nav-item">
@@ -52,7 +52,7 @@
                 @click.stop.prevent="resetSession"
                 class="nav-link app-nav__link"
             >
-                Reset Session
+                {{ this.$root.getCmd('reset_session') }}
             </a>
         </li>
         <li class="app-nav__item nav-item">
@@ -61,16 +61,16 @@
                 @click.stop.prevent="printPage"
                 class="nav-link app-nav__link"
             >
-                Print
+                {{ this.$root.getCmd('print') }}
             </a>
         </li>
     </ul>
     <b-modal
         ref="saveSession"
-        title="Save your session"
+        :title="$root.getCmd('save_your_session')"
     >
         <div class="form-group">
-            <label for="title">Title</label>
+            <label for="title">{{ this.$root.getCmd('title') }}</label>
             <input
                 type="text"
                 name="title"
@@ -81,13 +81,13 @@
         <template slot="modal-footer">
             <ui-button
                 color="secondary"
-                title="Cancel"
+                :title="$root.getCmd('cancel')"
                 :has-margin="false"
                 @click="undoTitle"
             />
             <ui-button
                 color="primary"
-                title="Save"
+                :title="$root.getCmd('save')"
                 :has-margin="false"
                 @click="saveSession"
             />
@@ -95,23 +95,23 @@
     </b-modal>
     <b-modal
         ref="reset"
-        title="Reset Session"
+        :title="$root.getCmd('reset_session')"
     >
         <div>
             <p class="text-center">
-                Are you sure?
+                {{ this.$root.getCmd('are_you_sure') }}
             </p>
         </div>
         <template slot="modal-footer">
             <ui-button
                 color="secondary"
-                title="Cancel"
+                :title="$root.getCmd('cancel')"
                 :has-margin="false"
                 @click="undoReset"
             />
             <ui-button
                 color="danger"
-                title="Reset"
+                :title="$root.getCmd('reset')"
                 :has-margin="false"
                 @click="doReset"
             />
@@ -119,23 +119,23 @@
     </b-modal>
     <b-modal
         ref="open"
-        title="Leave this session"
+        :title="$root.getCmd('leave_this_section')"
     >
         <div>
             <p class="text-center">
-                Are you sure?
+                {{ this.$root.getCmd('are_you_sure') }}
             </p>
         </div>
         <template slot="modal-footer">
             <ui-button
                 color="secondary"
-                title="Cancel"
+                :title="$root.getCmd('cancel')"
                 :has-margin="false"
                 @click="undoOpen"
             />
             <ui-button
                 color="danger"
-                title="Leave"
+                :title="$root.getCmd('leave')"
                 :has-margin="false"
                 @click="doOpen"
             />
@@ -149,6 +149,12 @@ import {
     UiButton
 }
 from '../ui'
+
+import {
+    gsap,
+    TweenMax
+}
+from 'gsap/all'
 
 export default {
     name: 'AppNav',
@@ -203,6 +209,9 @@ export default {
             this.$refs.saveSession.hide()
         },
         addTitle: function () {
+            if (this.title == null && this.$root.session.title != 'empty') {
+                this.title = this.$root.session.title
+            }
             this.$refs.saveSession.show()
         },
         saveSession: function () {
@@ -211,11 +220,11 @@ export default {
             if (this.title) {
                 session.title = this.title
             }
-            this.$root.fullMessage = 'Saved'
+            this.$root.fullMessage = this.$root.getCmd('saved')
 
             this.$http.post('/api/v2/session', session).then(response => {
                 if (response.data.success) {
-                    this.$root.fullMessage = 'Saved'
+                    this.$root.fullMessage = this.$root.getCmd('saved')
                     this.undoTitle()
                     this.$root.showMessage()
                 }
@@ -253,7 +262,7 @@ export default {
 
             session.notification_id = this.$root.notificationId
 
-            this.$root.fullMessage = 'Approved and shared'
+            this.$root.fullMessage = this.$root.getCmd('approved_and_shared')
 
             this.$http.post('/api/v2/session/share-to-network', session).then(response => {
                 this.$root.showMessage().then(() => {

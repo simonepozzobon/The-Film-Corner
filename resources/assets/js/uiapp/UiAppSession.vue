@@ -18,21 +18,21 @@
                 color="dark"
                 :has-container="false"
                 :has-margin="false"
-                title="Share"
+                :title="getCmd('share')"
                 @click="shareSession"
             />
             <ui-button
                 color="dark"
                 :has-container="false"
                 :has-margin="false"
-                title="Open"
+                :title="getCmd('open')"
                 @click="openSession"
             />
             <ui-button
                 color="dark"
                 :has-container="false"
                 :has-margin="false"
-                title="delete"
+                :title="getCmd('delete')"
                 @click="deleteSession"
             />
         </div>
@@ -50,9 +50,11 @@ import {
     TimelineMax,
 }
 from 'gsap/all'
+import TranslateCmd from '_js/TranslateCmd'
 
 export default {
     name: 'UiAppSession',
+    mixins: [TranslateCmd],
     components: {
         UiButton,
     },

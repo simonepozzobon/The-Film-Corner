@@ -5,7 +5,7 @@
     align="center"
 >
     <ui-button
-        title="Crop a frame"
+        :title="$root.getCmd('crop_a_frame')"
         color="white"
         :has-container="false"
         :has-margin="false"
@@ -13,7 +13,7 @@
     />
     <ui-button
         v-if="clearAll"
-        title="Delete All"
+        :title="$root.getCmd('delete_all')"
         color="white"
         :has-container="false"
         :has-margin="false"

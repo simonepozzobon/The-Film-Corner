@@ -44,15 +44,12 @@ import {
 }
 from '../../uiapp'
 import SizeUtility from '../../Sizes'
-import {
-    SharedData,
-    SharedMethods,
-    SharedWatch
-}
-from './Shared'
+
+import Shared from './Shared'
 
 export default {
     name: 'ActiveOffscreen',
+    mixins: [Shared],
     components: {
         AppTemplate,
         UiAppFolder,
@@ -63,15 +60,11 @@ export default {
     },
     data: function () {
         return {
-            ...SharedData,
             media: {
                 videoSrc: '/video/empty-session.mp4'
             },
             isLoading: false
         }
-    },
-    watch: {
-        ...SharedWatch,
     },
     methods: {
         ready: function () {
@@ -109,7 +102,7 @@ export default {
                 }
             }
 
-            if (!this.isLoading) {
+            if (this.isLoading == false) {
                 console.log('siamo qui');
                 let idx = Math.round(Math.random() * this.assets.library.length)
                 this.media = this.assets.library[idx]
@@ -143,25 +136,28 @@ export default {
             this.saveContent()
         },
         saveContent: _.debounce(function () {
-            let content = this.$root.session.content
+            if (this.media) {
+                let content = this.$root.session.content
+                console.log('media', this.media);
 
-            let newContent = {
-                main_video: this.media.videoSrc,
-                videos: [],
-                notes: this.notes
-            }
-
-            // console.log(newContent);
-
-            for (let key in content) {
-                if (content.hasOwnProperty(key) && newContent.hasOwnProperty(key)) {
-                    content[key] = newContent[key]
+                let newContent = {
+                    main_video: this.media.videoSrc,
+                    videos: [],
+                    notes: this.notes
                 }
-            }
 
-            this.$root.session = {
-                ...this.$root.session,
-                content: content
+                // console.log(newContent);
+
+                for (let key in content) {
+                    if (content.hasOwnProperty(key) && newContent.hasOwnProperty(key)) {
+                        content[key] = newContent[key]
+                    }
+                }
+
+                this.$root.session = {
+                    ...this.$root.session,
+                    content: content
+                }
             }
         }, 500),
         uploaded: function (asset) {
@@ -169,9 +165,9 @@ export default {
         },
     },
     created: function () {
-        this.uniqid = SharedMethods.uniqid.bind(this)
-        this.getData = SharedMethods.getData.bind(this)
-        this.deleteEmptySession = SharedMethods.deleteEmptySession.bind(this)
+        // this.uniqid = SharedMethods.uniqid.bind(this)
+        // this.getData = SharedMethods.getData.bind(this)
+        // this.deleteEmptySession = SharedMethods.deleteEmptySession.bind(this)
 
         this.$root.isApp = true
         this.getData()

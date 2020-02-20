@@ -1,7 +1,7 @@
 <template>
 <div class="ua-audio-preview">
     <ui-title
-        title="Preview"
+        :title="this.$root.getCmd('preview')"
         color="white"
         :has-padding="false"
         ref="title"
@@ -17,7 +17,7 @@
             role="status"
         >
             <span class="sr-only">
-                Loading...
+                {{ this.$root.getCmd('loading') }}...
             </span>
         </div>
     </div>
@@ -52,6 +52,8 @@ from 'vue-video-player'
 import SizeUtility from '../Sizes'
 import WaveSurfer from 'wavesurfer.js'
 import RegionsPlugin from 'wavesurfer.js/src/plugin/regions.js'
+import TranslateCmd from '_js/TranslateCmd'
+
 export default {
     name: 'UiAppAudioPreview',
     components: {
@@ -147,7 +149,12 @@ export default {
             this.player.skipForward(5)
         },
     },
-    mounted: function () {}
+    mounted: function () {},
+    beforeDestroy: function () {
+        if (this.player) {
+            this.player.destroy()
+        }
+    },
 }
 </script>
 

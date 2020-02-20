@@ -15,7 +15,7 @@
             ref="library"
             :hasSubLibraries="assets.hasSubLibraries"
             :type="assets.type"
-            :items="assets.library"
+            :items="vrImages"
             @selected="selected"
         />
     </template>
@@ -54,14 +54,12 @@ import {
     UiButton
 }
 from '../../ui'
-import {
-    SharedData,
-    SharedMethods,
-    SharedWatch
-}
-from './Shared'
+
+import Shared from './Shared'
+
 export default {
     name: 'FrameCrop',
+    mixins: [Shared],
     components: {
         AppTemplate,
         UiAppBlock,
@@ -75,16 +73,15 @@ export default {
     },
     data: function () {
         return {
-            ...SharedData,
             viewer: null,
             renderer: null,
             frames: [],
+            currentSrc: '/img/test-app/360.jpg',
             clearAll: false,
             isLoading: false,
         }
     },
     watch: {
-        ...SharedWatch,
         'frames': function (frames) {
             if (frames.length > 0) {
                 this.clearAll = true
@@ -94,8 +91,45 @@ export default {
             }
         }
     },
+    computed: {
+        vrImages: function () {
+            if (this.assets && this.assets.library && this.assets.library.length > 0) {
+                return this.assets.library[0].medias
+            }
+
+            return []
+        }
+    },
     methods: {
-        selected: function () {},
+        selected: function (idx) {
+            let asset = this.assets.library[0].medias.find(asset => asset.id == idx)
+            this.currentSrc = '/storage/' + asset.src
+            // console.log(asset);
+
+            let preview = this.$refs.preview
+            if (preview && preview.hasOwnProperty('$refs')) {
+                this.viewer.destroy()
+                let el = this.$refs.preview.$refs.content
+
+                this.viewer = pannellum.viewer(el, {
+                        type: 'equirectangular',
+                        panorama: this.currentSrc,
+                        autoLoad: true,
+                        showFullscreenCtrl: false,
+                        hfov: 100,
+                        pitch: 0,
+                        yaw: 0,
+                        ignoreGPanoXMP: true,
+                    })
+                    .on('load', () => {
+                        this.renderer = this.viewer.getRenderer()
+                        let height = SizeUtility.get(this.$refs.preview.$el)
+                        this.$refs.library.setLibraryHeight(height.hClean)
+                        // this.$nextTick(this.cropFrame)
+                    })
+            }
+
+        },
         setNotes: function (notes) {
             this.notes = notes
         },
@@ -112,6 +146,9 @@ export default {
         },
         init: function () {
             // load app
+            // this.$refs.library.init()
+            // console.log(this.assets);
+
             if (this.$root.session && this.$root.session.app_id) {
                 if (this.$root.session.content.hasOwnProperty('frames')) {
                     let frames = JSON.parse(this.$root.session.content.frames)
@@ -126,6 +163,7 @@ export default {
                     }
                 }
             }
+
             let preview = this.$refs.preview
             if (preview && preview.hasOwnProperty('$refs')) {
                 let el = this.$refs.preview.$refs.content
@@ -186,13 +224,15 @@ export default {
             let content = this.$root.session.content
             let newContent = {
                 frames: JSON.stringify(this.frames),
-                src: '/img/test-app/360.jpg',
+                src: this.currentSrc,
             }
+
             for (let key in content) {
                 if (content.hasOwnProperty(key) && newContent.hasOwnProperty(key)) {
                     content[key] = newContent[key]
                 }
             }
+
             this.$root.session = {
                 ...this.$root.session,
                 content: content
@@ -200,8 +240,6 @@ export default {
         }, 500)
     },
     created: function () {
-        this.getData = SharedMethods.getData.bind(this)
-        this.uniqidSimple = SharedMethods.uniqidSimple.bind(this)
         this.$root.isApp = true
         this.getData()
     },

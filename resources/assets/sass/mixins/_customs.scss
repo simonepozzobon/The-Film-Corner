@@ -2,6 +2,10 @@
   box-shadow: $size ($size * 2) ($size * 6) 0 rgba($color, $opacity * 2), ($size * 2) ($size * 4) ($size * 12) 0 rgba($color, $opacity);
 }
 
+@mixin custom-box-shadow-single($color, $size: 4px, $opacity: .05) {
+  box-shadow: $size ($size * 1) ($size * 2) 0 rgba($color, $opacity * 2);
+}
+
 @mixin custom-text-shadow($color, $size: 2px, $opacity: .05) {
   text-shadow: $size ($size * 2) ($size * 4) rgba($color, $opacity * 2), ($size * 2) ($size * 4) ($size * 8) rgba($color, $opacity);
 }
@@ -17,6 +21,11 @@
   color: $title-darken;
   letter-spacing: $letterspacing;
   text-shadow: $size $size_1 $size_2 rgba($title-shadow, $opacity), (-$size) (-$size_1) ($size_2) rgba($title-shadow, $opacity), (0) ($size_1) ($size_2) rgba($title-shadow, $opacity), (0) (-$size_1) ($size_2) rgba($title-shadow, $opacity);
+}
+
+@mixin title-text-shadow-single($letterspacing: 12px, $size: 2px, $size_1: 4px, $size_2: 8px, $opacity: .9, $color: $title-shadow) {
+  letter-spacing: $letterspacing;
+  text-shadow: $size $size_1 $size_2 rgba($color, $opacity), (-$size) (-$size_1) ($size_2) rgba($color, $opacity), (0) ($size_1) ($size_2) rgba($color, $opacity), (0) (-$size_1) ($size_2) rgba($color, $opacity);
 }
 
 @mixin custom-inner-shadow($color, $size: 4px, $opacity: .33) {

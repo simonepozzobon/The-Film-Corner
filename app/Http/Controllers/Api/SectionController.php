@@ -44,7 +44,7 @@ class SectionController extends Controller
     public function get_studios()
     {
         $studios = AppSection::with('categories.apps')->orderBy('order')->get();
-        $studios = $studios->filter(function($studio, $key){
+        $studios = $studios->filter(function ($studio, $key) {
             return $studio->active == 1;
         });
 
@@ -119,12 +119,12 @@ class SectionController extends Controller
         $items = Network::orderBy('created_at', 'desc')->with('app', 'app.category', 'comments', 'likes')->get();
 
         // rimuove le sessioni delle app non più esistenti
-        $filtered = $items->filter(function($item, $key) {
+        $filtered = $items->filter(function ($item, $key) {
             return $item->app != null;
         });
 
         // formatta le sessioni
-        $sessions = $filtered->transform(function($item, $key) {
+        $sessions = $filtered->transform(function ($item, $key) {
             $item->content = $this->format_network_content($item);
             $item->views = Activity::where('description', '=', 'network_views')->forSubject($item)->count();
             return $item;
@@ -168,11 +168,11 @@ class SectionController extends Controller
     public function format_network_content($share)
     {
         $item = array();
+        $obj = $this->decode_obj($share->content);
 
         switch ($share->app_id) {
             // Film Specific - Framing - App 1 - Frame Composer
             case '1':
-                $obj = json_decode($share->content);
                 $item['media_type'] = 'image';
                 $item['featured_media'] = $obj->img;
                 $item['notes'] = $obj->notes;
@@ -180,7 +180,6 @@ class SectionController extends Controller
 
             // Film Specific - Framing - App 2 - Frame Crop
             case '2':
-                $obj = json_decode($share->content);
                 $item['media_type'] = 'image';
                 $item['featured_media'] = $obj->frames[0]->img;
                 $item['notes'] = $obj->frames[0]->description;
@@ -188,16 +187,14 @@ class SectionController extends Controller
 
             // Film Specific - Framing - App 3 - types-of-images
             case '3':
-                $obj = json_decode($share->content);
-
+                // dd(gettype($obj));
                 $item['media_type'] = 'image';
                 $item['featured_media'] = $obj->images[0];
                 $item['notes'] = $obj->notes;
+
                 break;
 
             case '4':
-                $obj = json_decode($share->content);
-
                 $item['media_type'] = 'video';
                 $item['featured_media'] = '/'.$obj->video;
                 $item['notes'] = $obj->notes;
@@ -205,8 +202,6 @@ class SectionController extends Controller
 
             // Film Specific - Editing - App 5 - Offscreen
             case '5':
-                $obj = json_decode($share->content);
-
                 $item['media_type'] = 'video';
                 $item['featured_media'] = $obj->video;
                 $item['notes'] = $obj->notes;
@@ -214,8 +209,6 @@ class SectionController extends Controller
 
             // Film Specific - Editing - App 6 - Attractions
             case '6':
-                $obj = json_decode($share->content);
-
                 $item['media_type'] = 'image';
                 $item['featured_media'] = $obj->videoL;
                 $item['notes'] = $obj->notes;
@@ -223,8 +216,6 @@ class SectionController extends Controller
 
             // Film Specific - Sound - App 7 - What's going on
             case '7':
-                $obj = json_decode($share->content);
-
                 $item['media_type'] = 'audio';
                 $item['featured_media'] = $obj->audio;
                 $item['notes'] = $obj->notes;
@@ -232,8 +223,6 @@ class SectionController extends Controller
 
             // Film Specific - Sound - App 8 - Sound Atmosphere
             case '8':
-                $obj = json_decode($share->content);
-
                 $item['media_type'] = 'video';
                 $item['featured_media'] = $obj->video;
                 $item['notes'] = $obj->notes;
@@ -241,8 +230,6 @@ class SectionController extends Controller
 
             // Film Specific - Sound - App 9 - Soundscapes
             case '9':
-                $obj = json_decode($share->content);
-
                 $item['media_type'] = 'video';
                 $item['featured_media'] = Storage::disk('local')->url($obj->exp);
                 $item['notes'] = $obj->notes;
@@ -250,8 +237,6 @@ class SectionController extends Controller
 
             // Creative Studio - Warm up - App 10 - Active Offscreen
             case '10':
-                $obj = json_decode($share->content);
-
                 $item['media_type'] = 'video';
                 $item['featured_media'] = Storage::disk('local')->url($obj->videos[0]->video);
                 $item['notes'] = '';
@@ -259,8 +244,6 @@ class SectionController extends Controller
 
             // Creative Studio - Warm up - App 11 - Active Parallel Action
             case '11':
-                $obj = json_decode($share->content);
-
                 $item['media_type'] = 'video';
                 $item['featured_media'] = '/'.$obj->video;
                 $item['notes'] = '';
@@ -268,8 +251,6 @@ class SectionController extends Controller
 
             // Creative Studio - Warm up - App 12 - Sound Studio
             case '12':
-                $obj = json_decode($share->content);
-
                 $item['media_type'] = 'video';
                 $item['featured_media'] = Storage::disk('local')->url($obj->videos[0]->video);
                 $item['notes'] = '';
@@ -277,7 +258,6 @@ class SectionController extends Controller
 
             // Creative Studio - Story Telling - App 13 - Character Builder
             case '13':
-                $obj = json_decode($share->content);
                 $item['media_type'] = 'image';
                 $item['featured_media'] = $obj->img;
                 $item['notes'] = $obj->notes;
@@ -285,8 +265,6 @@ class SectionController extends Controller
 
             // Creative Studio - Story Telling - App 14 - Storytelling
             case '14':
-                $obj = json_decode($share->content);
-
                 $item['media_type'] = 'text';
                 $item['featured_media'] = '';
                 $item['notes'] = $obj->notes;
@@ -294,7 +272,6 @@ class SectionController extends Controller
 
             // Creative Studio - Story Telling - App 15 - Storyboard
             case '15':
-                $obj = json_decode($share->content);
                 $item['media_type'] = 'image';
                 $item['featured_media'] = $obj[0]->img;
                 $item['notes'] = $obj[0]->description;
@@ -302,7 +279,6 @@ class SectionController extends Controller
 
             // Creative Studio - Contest - App 16 - Minuto Lumiere
             case '16':
-                $obj = json_decode($share->content);
                 $item['media_type'] = 'video';
                 $item['featured_media'] = Storage::disk('local')->url($obj->video->video);
                 $item['notes'] = '';
@@ -310,7 +286,6 @@ class SectionController extends Controller
 
             // Creative Studio - Contest - App 16 - Make Your Own film
             case '17':
-                $obj = json_decode($share->content);
                 $item['media_type'] = 'video';
                 $item['thumb'] = $obj->video->img;
                 $item['featured_media'] = Storage::disk('local')->url($obj->video->video);
@@ -319,5 +294,15 @@ class SectionController extends Controller
         }
 
         return $item;
+    }
+
+    public function decode_obj($content)
+    {
+        $obj = json_decode($content);
+        if (gettype($obj) == 'array') {
+            $obj = json_decode($obj[0]);
+        }
+
+        return $obj;
     }
 }

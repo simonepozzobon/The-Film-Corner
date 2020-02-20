@@ -12,7 +12,18 @@
                     <option value="apps">Apps</option>
                     <option value="app_categories">Percorso didattico</option>
                     <option value="app_sections">Studio</option>
+                    <option value="app_keywords">Glossario</option>
                     <option value="general_texts">Testi Generali</option>
+                    <option value="exercises">Propaganda App Esercizi</option>
+                    <option value="challenges">Propaganda App Challenges</option>
+                    <option value="propaganda_period">Propaganda App Informazioni - Periodo</option>
+                    <option value="propaganda_director">Propaganda App Informazioni - Registi</option>
+                    <option value="propaganda_people">Propaganda App Informazioni - Interpreti</option>
+                    <option value="propaganda_format">Propaganda App Informazioni - Formato</option>
+                    <option value="propaganda_genre">Propaganda App Informazioni - Genere</option>
+                    <option value="propaganda_topic">Propaganda App Informazioni - Argomenti</option>
+                    <option value="propaganda_age">Propaganda App Informazioni - Età</option>
+                    <!-- <option value="propaganda_country">Propaganda App Informazioni - Nazionalità</option> -->
                 </select>
             </div>
             <div class="admin-translate__per-page">
@@ -157,6 +168,7 @@ export default {
         },
         init: function () {
             this.translation = 'apps'
+            // this.translation = 'exercises'
         },
         getLanguages: function () {
             this.$http.get('/api/v2/admin/translate').then(response => {
@@ -167,14 +179,18 @@ export default {
         getTranslations: function (translation) {
             let data = new FormData()
             data.append('type', translation)
+
+
             this.$http.post('/api/v2/admin/translate/elements', data).then(response => {
                 let options = fields.find(field => field.value == translation)
+                // console.log('opzioni', options);
                 this.items = response.data
                 this.fields = options.fields
                 this.options = options.options
                 this.model = options.model
                 this.$refs.panel.hide()
 
+                // console.log('response', response.data);
                 // this.$nextTick(() => this.debug())
             })
         },

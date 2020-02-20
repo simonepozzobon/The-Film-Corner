@@ -54,15 +54,12 @@ import {
 }
 from '../../uiapp'
 import SizeUtility from '../../Sizes'
-import {
-    SharedData,
-    SharedMethods,
-    SharedWatch
-}
-from './Shared'
+
+import Shared from './Shared'
 
 export default {
     name: 'ActiveParallelAction',
+    mixins: [Shared],
     components: {
         AppTemplate,
         UiAppFolder,
@@ -73,7 +70,6 @@ export default {
     },
     data: function () {
         return {
-            ...SharedData,
             timelines: [],
             tick: 10,
             isFree: true,
@@ -89,7 +85,6 @@ export default {
         'timelines': function (timelines) {
             this.$nextTick(this.updateEditor)
         },
-        ...SharedWatch,
     },
     computed: {
         video: function () {
@@ -124,11 +119,14 @@ export default {
                     this.isLoading = true
                     this.$root.isOpen = true
                     this.$root.objectsToLoad = 1
-                    for (let i = 0; i < timelines.length; i++) {
-                        this.$nextTick(() => {
-                            this.timelines.push(timelines[i])
-                        })
-                    }
+                    // for (let i = 0; i < timelines.length; i++) {
+                    //     this.$nextTick(() => {
+                    //         this.timelines.push(timelines[i])
+                    //     })
+                    // }
+                    this.$nextTick(() => {
+                        this.timelines = timelines
+                    })
                 }
             }
 
@@ -174,33 +172,35 @@ export default {
                 this.timelines.push(obj)
             }
         },
-        onDrag: function (obj) {
+        onDrag: _.debounce(function (obj) {
             this.timelines[obj.idx]['start'] = obj.start
             this.timelines = this.timelines.slice()
-        },
-        onResize: function (obj) {
+        }, 150),
+        onResize: _.debounce(function (obj) {
             this.timelines[obj.idx]['start'] = obj.start
             this.timelines[obj.idx]['duration'] = obj.duration
             this.timelines[obj.idx]['cutStart'] = obj.cutStart
             this.timelines[obj.idx]['cutEnd'] = obj.cutEnd
             this.timelines = this.timelines.slice()
-        },
+        }, 150),
         onUpdatePlayer: function (time) {
+            // console.log(time);
             this.playheadPosition = Math.round((time * this.tick) + this.playheadStart)
         },
-        updateEditor: function () {
+        updateEditor: _.debounce(function () {
             if (this.isFree) {
                 this.isFree = false
                 if (this.$refs.preview) {
                     this.$refs.preview.showLoader()
                 }
-                console.log('updating');
+                // console.log('updating');
                 let data = new FormData()
                 data.append('token', this.session.token)
                 data.append('video', this.video)
                 data.append('timelines', JSON.stringify(this.timelines))
                 this.$http.post('/api/v2/render-audio', data).then(response => {
                     // se c'è qualcosa nella cache
+                    console.log(response.data);
                     this.isFree = true
                     if (this.cache) {
                         this.cache = null
@@ -214,7 +214,7 @@ export default {
                             this.currentExport = response.data.export
                             this.saveContent()
                         })
-                        console.log('complete');
+                        // console.log('complete');
                     }
                 })
             }
@@ -222,7 +222,7 @@ export default {
                 // console.log('cache');
                 this.cache = this.timelines
             }
-        },
+        }, 150),
         setNotes: function (notes) {
             this.notes = notes
             this.saveContent()
@@ -250,10 +250,6 @@ export default {
         }, 500)
     },
     created: function () {
-        this.uniqid = SharedMethods.uniqid.bind(this)
-        this.getData = SharedMethods.getData.bind(this)
-        this.deleteEmptySession = SharedMethods.deleteEmptySession.bind(this)
-
         this.$root.isApp = true
         this.getData()
     },

@@ -28,8 +28,8 @@ class SharedSession extends Notification
         $formatted = $session;
         $formatted->app = $session->app;
 
-        $this->session = $session;
-        $this->sender = $sender;
+        $this->session = $session->token;
+        $this->sender = $sender->id;
     }
 
     /**
@@ -54,7 +54,7 @@ class SharedSession extends Notification
         return [
             'sender' => $this->sender,
             'session' => $this->session,
-            'user' => $notifiable,
+            'user' => $notifiable->id,
             'sharedTime' => date('Y-m-d H:m:i')
         ];
     }

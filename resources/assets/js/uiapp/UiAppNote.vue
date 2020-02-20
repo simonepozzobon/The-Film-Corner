@@ -9,7 +9,7 @@
             :class="colorClass"
         >
             <ui-title
-                :title="title"
+                :title="this.$root.getCmd('notes')"
                 :has-padding="false"
             />
             <div class="ua-note__field">

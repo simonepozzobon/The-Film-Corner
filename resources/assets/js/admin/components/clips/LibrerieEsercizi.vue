@@ -12,7 +12,9 @@
             <block-content title="Contenuti">
                 <library-medias
                     :exercise="exercise"
-                    @destroy="destroyMedia"
+                    :initials="initials | filterInitials(exercise)"
+                    @deleted="deleted"
+                    @translate="translate"
                 />
             </block-content>
         </div>
@@ -21,58 +23,68 @@
             Questo esercizio non utilizza librerie
         </div>
         <div v-else-if="hasLibrary == true && libraryOptions">
-            <block-content title="Aggiungi un video">
-                <div class="title-section form-group row">
-                    <label
-                        for="title"
-                        class="col-md-2"
-                    >
-                        Titolo Media
-                    </label>
-                    <div class="col-md-10">
-                        <input
-                            type="text"
-                            name="title"
-                            class="form-control"
-                            v-model="title"
-                        />
-                    </div>
-                </div>
+            <block-content :title="uploadText">
+                <text-input
+                    label="Titolo"
+                    name="it_title"
+                    :initial="title"
+                    @update="updateTitle"
+                    v-if="libraryOptions.type != 'audio'"
+                />
+                <text-editor
+                    ref="description"
+                    label="Descrizione"
+                    :has-animation="true"
+                    min-height="100px"
+                    @update="updateDescription('it', arguments)"
+                    v-if="libraryOptions.type != 'audio'"
+                />
                 <div class="uploader">
-                    <file-preview
-                        :file="file"
-                        class="uploader__preview f-preview"
-                        @clear="clearFile"
-                    />
-
-                    <upload-zone
-                        ref="drop"
-                        class="uploader__drop"
-                        url="/api/v2/admin/clips/libraries/upload"
-                        :accept="libraryOptions.accept"
-                        :multiple="false"
-                        :auto-process-queue="false"
-                        :use-styles="false"
-                        @file-added="addFileToQueue"
-                        @success="addMediaToLibrary"
-                    />
-
-                    <transition name="upload-section-transition">
-                        <div
-                            class="uploader__btn"
-                            v-if="isReadyToUpload"
+                    <div class="title-section form-group row">
+                        <label
+                            for="title"
+                            class="col-md-2"
                         >
-                            <ui-button
-                                title="carica"
-                                color="dark"
-                                theme="outline"
-                                :has-container="false"
-                                :has-margin="false"
-                                align="center"
-                                @click="uploadFile"
+                            Upload file
+                        </label>
+                        <div class="col-md-10">
+                            <file-preview
+                                v-if="hasFile"
+                                :file="file"
+                                class="uploader__preview f-preview"
+                                @clear="clearFile"
                             />
+
+                            <upload-zone
+                                ref="drop"
+                                class="uploader__drop"
+                                url="/api/v2/admin/clips/libraries/upload"
+                                :accept="libraryOptions.accept"
+                                :multiple="false"
+                                :auto-process-queue="false"
+                                :use-styles="false"
+                                @file-added="addFileToQueue"
+                                @success="addMediaToLibrary"
+                            />
+
+                            <transition name="upload-section-transition">
+                                <div
+                                    class="uploader__btn"
+                                    v-if="isReadyToUpload"
+                                >
+                                    <ui-button
+                                        title="carica"
+                                        color="dark"
+                                        theme="outline"
+                                        :has-container="false"
+                                        :has-margin="false"
+                                        align="center"
+                                        @click="uploadFile"
+                                    />
+                                </div>
+                            </transition>
                         </div>
-                    </transition>
+                    </div>
                 </div>
             </block-content>
         </div>
@@ -86,6 +98,7 @@ import {
     BlockPanel,
     Container,
     TextEditor,
+    TextInput,
     UploadZone,
 }
 from '../../adminui'
@@ -110,18 +123,25 @@ import {
 from './mixins'
 
 export default {
-    name: 'LibrerieEsecizi',
+    name: 'LibrerieEsercizi',
     components: {
         BlockContent,
         BlockPanel,
         Container,
         TextEditor,
+        TextInput,
         UploadZone,
         UiButton,
         FilePreview,
         LibraryMedias,
     },
     props: {
+        initials: {
+            type: Object,
+            default: function () {
+                return {}
+            },
+        },
         exercise: {
             type: Object,
             default: function () {
@@ -138,17 +158,27 @@ export default {
     data: function () {
         return {
             title: null,
+            description: null,
             file: null,
             showPreview: false,
             isOpen: false,
             master: null,
             containerState: false,
+            dropAnim: null,
         }
     },
     watch: {
         file: function (file) {
             this.toggleAnim()
         },
+        clip: {
+            handler: function (clip) {
+                console.log('clup changed');
+            },
+        },
+        hasFile: function (value) {
+            this.toggleDrop()
+        }
     },
     computed: {
         hasLibrary: function () {
@@ -171,7 +201,7 @@ export default {
                 case 2:
                     opts = {
                         type: 'audio',
-                        accept: 'audio/mpeg,audio/mpeg3,audio/x-mpeg-3,video/mpeg,video/x-mpeg',
+                        accept: 'audio/mp3',
                     }
                     return opts
                 case 3:
@@ -187,17 +217,54 @@ export default {
             }
             return false
         },
-        isReadyToUpload: function () {
-            if (this.title && this.title.length > 0 && this.file != null) {
-                return true
+        uploadText: function () {
+            if (this.libraryOptions && this.libraryOptions.type != 'audio') {
+                return 'Aggiungi un video'
             }
-            return false
+            return 'Aggiungi un file audio'
+        },
+        isReadyToUpload: function () {
+            if (this.libraryOptions && this.libraryOptions.type != 'audio') {
+                if (this.title && this.title.length > 0 && this.file != null) {
+                    return true
+                }
+                return false
+            }
+            else {
+                if (this.file != null) {
+                    return true
+                }
+                return false
+            }
         },
         uuid: function () {
             return this.$util.uuid()
         },
+        hasFile: function () {
+            if (this.file) {
+                return true
+            }
+
+            return false
+        }
     },
     methods: {
+        toggleDrop: function () {
+            if (this.hasFile) {
+                gsap.to(this.$refs.drop.$el, .2, {
+                    height: 0,
+                    autoAlpha: 0,
+                    display: 'none'
+                })
+            }
+            else {
+                gsap.to(this.$refs.drop.$el, .2, {
+                    height: 'auto',
+                    autoAlpha: 1,
+                    display: 'block'
+                })
+            }
+        },
         initAnim: function () {
             if (this.$refs.drop) {
                 let container = this.$refs.drop.$el
@@ -217,6 +284,7 @@ export default {
                 this.master.progress(1).progress(0)
 
                 this.toggleAnim()
+                this.setInitials()
             }
         },
         addMediaToLibrary: function (response) {
@@ -250,6 +318,10 @@ export default {
                 this.file = null
                 if (titleReset == true) {
                     this.title = null
+                    this.description = null
+                    if (this.$refs.description) {
+                        this.$refs.description.editor.setContent(null)
+                    }
                 }
             }
         },
@@ -259,6 +331,7 @@ export default {
             data.append('exercise_id', this.exercise.id)
             data.append('media', this.file)
             data.append('title', this.title)
+            data.append('description', this.description)
             data.append('library_type_id', this.exercise.library_type_id)
 
             if (this.exercise.hasOwnProperty('isNew') && this.exercise.isNew == true) {
@@ -272,13 +345,39 @@ export default {
 
 
             this.$http.post('/api/v2/admin/clips/libraries/upload', data).then(response => {
+                // console.log(response);
                 this.$emit('update', response.data)
                 this.clearFile(true)
             })
         },
-        destroyMedia: function (item) {
-            this.$emit('destroy', item)
+        updateTitle: function (values = arguments) {
+            if (values) {
+                this.title = values
+            }
+            else {
+                this.title = null
+            }
         },
+        updateDescription: function (key, values = arguments) {
+            let value = values[1]
+            this.description = value
+        },
+        deleted: function (data) {
+            this.$emit('saved', data.clip)
+        },
+        setInitials: function () {
+
+        },
+        translate: function (item) {
+            this.$emit('translate', item)
+        }
+    },
+    filters: {
+        filterInitials: function (initials, exercise) {
+            // console.log('filters', initials, exercise);
+            let libraries = initials.libraries.filter(library => library.exercise_id == exercise.id)
+            return libraries
+        }
     },
     mounted: function () {
         this.initAnim()

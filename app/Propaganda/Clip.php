@@ -6,7 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Clip extends Model
 {
+    use \Dimsav\Translatable\Translatable;
+
     protected $connection = 'tfc_propaganda';
+
+    public $translatedAttributes = ['title'];
+
+    protected $fillable = ['video', 'year', 'nationality'];
 
     // One to many
     public function period()
@@ -52,7 +58,7 @@ class Clip extends Model
 
     public function paratexts()
     {
-        return $this->belongsToMany('App\Propaganda\Paratext', 'clip_paratext', 'clip_id', 'paratext_id');
+        return $this->belongsToMany('App\Propaganda\Paratext');
     }
 
     public function libraries()
@@ -63,5 +69,10 @@ class Clip extends Model
     public function details()
     {
         return $this->hasMany('App\Propaganda\Detail');
+    }
+
+    public function captions()
+    {
+        return $this->hasMany('App\Propaganda\Caption');
     }
 }

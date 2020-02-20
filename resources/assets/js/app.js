@@ -17,6 +17,7 @@ Vue.use(BootstrapVue)
 Vue.use(VueRouter)
 
 Vue.prototype.$cookie = Cookie
+// window.$translations = Vue.prototype.$translations = new Translations()
 
 axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest',
@@ -131,9 +132,11 @@ router.beforeEach((to, from, next) => {
 
 import MainTemplate from './containers/MainTemplate.vue'
 import SessionParams from './SessionParams'
+import TranslateCmd from './TranslateCmd'
 
 const home = new Vue({
     router,
+    mixins: [TranslateCmd],
     components: {
         MainTemplate,
     },
@@ -156,6 +159,7 @@ const home = new Vue({
             progress: 0,
             objectsToLoad: 0,
             objectsLoaded: 0,
+            loaderOpen: false,
             fullMessage: null,
             fullMessageMaster: null,
             notificationId: null,
@@ -163,6 +167,7 @@ const home = new Vue({
             translationsCache: [],
             translations: [],
             locale: 'it',
+            generalTexts: [],
         }
     },
     watch: {
@@ -170,7 +175,7 @@ const home = new Vue({
             this.checkSession(session.app_id)
         },
         objectsToLoad: function (value) {
-            // console.log('oggetti da caricare', value);
+            console.log('oggetti da caricare', value);
             this.objectsLoaded = 0
         },
         // locale: function (locale) {
@@ -295,7 +300,7 @@ const home = new Vue({
         },
         setLocale: function () {
             this.translations = this.translationsCache[this.locale]
-            // console.log(this.translations);
+            console.log(this.translations);
         },
         getTranslation: function () {
             // console.log('loading translations');
@@ -303,6 +308,7 @@ const home = new Vue({
                 if (response.data.success) {
                     this.translationsLoaded = true
                     this.translationsCache = response.data.translations
+                    this.generalTexts = response.data.general_texts
                     // this.translations = new Translations(response.data.translations)
                     // this.translations = this.translationsCache
                     // console.log(response.data);
@@ -322,4 +328,5 @@ const home = new Vue({
         })
     },
     // render: h => h(home)
+    // })
 }).$mount('#home')

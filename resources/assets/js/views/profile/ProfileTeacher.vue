@@ -8,7 +8,7 @@
             <ui-block-head
                 class="teacher-profile__activities"
                 :size="12"
-                title="Activities"
+                :title="$root.getCmd('activities')"
                 color="orange"
                 :radius="true"
             >
@@ -23,7 +23,7 @@
             <ui-block-head
                 class="teacher-profile__network"
                 :size="12"
-                title="Network"
+                :title="$root.getCmd('network')"
                 color="orange"
                 :radius="true"
             >
@@ -33,7 +33,7 @@
                     :counter="i"
                     :idx="network.id"
                     :title="network.title"
-                    :app="network.app.title"
+                    :app="network.app | translate('title', $root.locale)"
                     :name="network.user.name"
                     :surname="network.user.surname"
                     :comments="network.comments"
@@ -45,7 +45,7 @@
         </ui-block>
         <ui-block-head
             :size="4"
-            title="Students"
+            :title="$root.getCmd('students')"
             color="orange"
             :radius="true"
         >
@@ -90,7 +90,7 @@
                 <ui-button
                     v-if="panelType == 2 || panelType == 3"
                     class="teacher-profile__button"
-                    title="Cancel"
+                    :title="$root.getCmd('cancel')"
                     color="black"
                     align="center"
                     :has-container="false"
@@ -119,8 +119,12 @@ import {
     UiRow,
 }
 from '../../ui'
+
+import TranslationFilter from '_js/TranslationFilter'
+
 export default {
     name: 'ProfileTeacher',
+    mixins: [TranslationFilter],
     components: {
         ProActivity,
         ProSession,
@@ -138,7 +142,7 @@ export default {
             students: [],
             networks: [],
             activities: [],
-            button: 'Add Student',
+            button: null,
             panelType: 1,
             student: {
                 name: 'simone',
@@ -148,16 +152,36 @@ export default {
             },
         }
     },
+    watch: {
+        '$root.locale': function (locale) {
+            if (this.panelType == 1) {
+                this.button = this.$root.getCmd('add_student')
+            }
+            else if (this.panelType == 2) {
+                this.button = this.$root.getCmd('save_student')
+            }
+            else if (this.panelType == 3) {
+                this.button = this.$root.getCmd('update_student')
+            }
+            else {
+                this.button = this.$root.getCmd('add_student')
+            }
+        }
+    },
     methods: {
         getData: function () {
             // console.log(this.$root.user);
             this.$http.get('/api/v2/profile').then(response => {
                 // console.log(response.data.user.activities[0]);
-
+                // console.log(response.data);
                 if (response.data.success) {
+                    this.button = this.$root.getCmd('add_student')
+
                     this.activities = response.data.user.activities
                     this.students = response.data.user.students
                     this.networks = response.data.user.networks
+
+                    console.log('activities', this.activities);
                 }
 
                 // console.log(this.activities[0]);
@@ -175,13 +199,13 @@ export default {
         },
         cancelEditing: function () {
             this.panelType = 1
-            this.button = 'Add Student'
+            this.button = this.$root.getCmd('add_student')
         },
         addStudent: function () {
             switch (this.panelType) {
             case 1:
                 this.panelType = 2
-                this.button = 'Save Student'
+                this.button = this.$root.getCmd('save_student')
                 break;
             case 2:
                 this.saveStudent()
@@ -197,13 +221,15 @@ export default {
         editStudent: function (idx) {
             this.student = this.students.filter(student => student.id == idx)[0]
             this.$nextTick(() => {
-                this.button = 'Update Student'
+                this.button = this.$root.getCmd('update_student')
                 this.panelType = 3
             })
         },
         updateStudent: function () {
+            console.log(this.checkForm());
             if (this.checkForm()) {
                 this.$http.post('/api/v2/profile/student/edit', this.student).then(response => {
+                    console.log(response.data);
                     if (response.data.success) {
                         let newStudent = response.data.user
                         let idx = this.students.findIndex(student => student.id == newStudent.id)
@@ -212,6 +238,7 @@ export default {
                         }
                         this.$nextTick(() => {
                             this.panelType = 1
+                            this.button = this.$root.getCmd('add_student')
                         })
                     }
                 })
@@ -220,11 +247,12 @@ export default {
         saveStudent: function () {
             if (this.checkForm()) {
                 this.$http.post('/api/v2/profile/student/save', this.student).then(response => {
-                    // console.log(response.data);
+                    console.log(response.data);
                     if (response.data.success) {
                         this.students.push(response.data.user)
                         this.$nextTick(() => {
                             this.panelType = 1
+                            this.button = this.$root.getCmd('add_student')
                         })
                     }
                 })
@@ -232,7 +260,7 @@ export default {
         },
         checkForm: function () {
             for (let key in this.student) {
-                if (!this.student.hasOwnProperty(key) || !this.student[key]) {
+                if (!this.student.hasOwnProperty(key) || this.student[key] == null) {
                     return false
                 }
             }

@@ -27,72 +27,11 @@
                 />
             </ui-row>
             <ui-row justify="center">
-                <ui-block
+                <studio-block
                     v-for="studio in this.studios"
                     :key="studio.id"
-                    :size="4"
-                    :color="studio.color_class"
-                    :radius="true"
-                    :transparent="true"
-                    :full-height="true"
-                >
-                    <ui-title
-                        :title="studio | translate( 'name', $root.locale )"
-                        align="center"
-                        size="h4"
-                        color="white"
-                        :hoverable="true"
-                        :x-padding="true"
-                        @click.native="goToPavilion($event, studio.slug)"
-                    />
-
-                    <div v-if="studio.slug == 'cultural-approach'">
-                        <ul class="block-menu block-menu--var">
-                            <li
-                                class="block-menu__menu-head"
-                                @click="goToPropaganda(studio.slug)"
-                            >
-                                Propagand<b>app</b>
-                            </li>
-                            <li
-                                class="block-menu__menu-item"
-                                @click="goToPropaganda(studio.slug)"
-                            >
-                                Go to the challenges
-                            </li>
-                        </ul>
-                        <ul class="block-menu block-menu--var">
-                            <li class="block-menu__menu-head">
-                                Art<b>app</b>
-                            </li>
-                            <li class="block-menu__menu-item">
-                                Go to the challenges
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div v-else>
-                        <ul
-                            class="block-menu"
-                            v-for="cat in studio.categories"
-                        >
-                            <li
-                                class="block-menu__menu-head"
-                                @click="goToCat(cat.slug)"
-                            >
-                                {{cat | translate('name', $root.locale)}}
-                            </li>
-                            <li
-                                class="block-menu__menu-item"
-                                v-for="app in cat.apps"
-                                @click="goToApp(app.slug)"
-                            >
-                                {{ app | translate('title', $root.locale) }}
-                            </li>
-                        </ul>
-                    </div>
-
-                </ui-block>
+                    :studio="studio"
+                />
             </ui-row>
         </ui-container>
     </ui-hero-banner>
@@ -100,7 +39,7 @@
 </template>
 
 <script>
-import TranslationFilter from '../../TranslationFilter'
+import StudioBlock from '../../components/StudioBlock.vue'
 
 import {
     UiBlock,
@@ -118,6 +57,7 @@ from '../../ui'
 export default {
     name: 'AppsHome',
     components: {
+        StudioBlock,
         UiBlock,
         UiButton,
         UiContainer,
@@ -171,9 +111,6 @@ export default {
         goToPropaganda: function (slug) {
             this.$root.goTo('propaganda-intro')
         },
-    },
-    filters: {
-        ...TranslationFilter,
     },
     created: function () {
         this.$root.space = true

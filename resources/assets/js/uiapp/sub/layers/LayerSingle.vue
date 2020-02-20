@@ -17,7 +17,7 @@
             :has-margin="false"
             @click="selectLayer"
         >
-            Select
+            {{ this.$root.getCmd('select') }}
         </ui-button>
         <ui-button
             color="white"
@@ -26,7 +26,7 @@
             :has-margin="false"
             @click="deleteLayer"
         >
-            Delete
+            {{ this.$root.getCmd('delete') }}
         </ui-button>
     </div>
 </div>

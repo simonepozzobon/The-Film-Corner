@@ -2,7 +2,7 @@
 <app-template :app="app">
     <template>
         <ui-app-block
-            title="Submission"
+            :title="$root.getCmd('submission')"
             title-color="white"
             color="dark"
         >
@@ -28,7 +28,7 @@
                         class="custom-file-label"
                         for="inputGroupFile04"
                     >
-                        Choose file
+                        {{ this.$root.getCmd('select_file') }}
                     </label>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                 align="center"
                 @click="upload"
             >
-                Upload
+                {{ this.$root.getCmd('upload') }}
             </ui-button>
         </ui-app-block>
     </template>
@@ -55,18 +55,17 @@ import {
     UiAppNote
 }
 from '../../uiapp'
-import {
-    SharedData,
-    SharedMethods
-}
-from './Shared'
+
 import {
     UiButton
 }
 from '../../ui'
 
+import Shared from './Shared'
+
 export default {
     name: 'LumiereMinute',
+    mixins: [Shared],
     components: {
         AppTemplate,
         UiAppBlock,
@@ -77,7 +76,6 @@ export default {
     },
     data: function () {
         return {
-            ...SharedData,
             title: null,
             file: null,
             percent: 0,
@@ -141,7 +139,6 @@ export default {
         }, 500),
     },
     created: function () {
-        this.getData = SharedMethods.getData.bind(this)
         this.$root.isApp = true
         this.getData()
     },

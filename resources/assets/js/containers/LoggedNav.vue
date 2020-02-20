@@ -7,19 +7,19 @@
         <li class="logged-nav__item nav-item">
             <a
                 href="#"
-                @click.stop.prevent="goTo('apps-home')"
+                @click.stop.prevent="$root.goTo('apps-home')"
                 class="nav-link logged-nav__link"
             >
-                Studios
+                {{ this.$root.getCmd('studios') }}
             </a>
         </li>
         <li class="logged-nav__item nav-item">
             <a
                 href="#"
-                @click.stop.prevent="goTo('network-home')"
+                @click.stop.prevent="$root.goTo('network-home')"
                 class="nav-link logged-nav__link"
             >
-                Network
+                {{ this.$root.getCmd('network') }}
             </a>
         </li>
         <li
@@ -28,20 +28,20 @@
         >
             <a
                 href="#"
-                @click.stop.prevent="goTo('teacher-profile')"
+                @click.stop.prevent="$root.goTo('teacher-profile')"
                 class="nav-link logged-nav__link"
             >
-                Students
+                {{ this.$root.getCmd('students') }}
             </a>
         </li>
         <li class="logged-nav__item nav-item">
             <a
                 href="#"
-                @click.stop.prevent="goTo('apps-help')"
+                @click.stop.prevent="$root.goTo('apps-help')"
                 class="nav-link logged-nav__link disabled"
                 disabled
             >
-                Help
+                {{ this.$root.getCmd('help') }}
             </a>
         </li>
     </ul>
@@ -49,6 +49,11 @@
 </template>
 
 <script>
+import {
+    TweenMax
+}
+from 'gsap/all'
+
 export default {
     name: 'LoggedNav',
     data: function () {
@@ -63,11 +68,6 @@ export default {
         },
     },
     methods: {
-        goTo: function (name) {
-            this.$router.push({
-                name: name
-            })
-        },
         show: function () {
             let master = TweenMax.fromTo(this.$refs.menu, .5, {
                 y: -100,

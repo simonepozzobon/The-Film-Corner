@@ -4,9 +4,12 @@
     ref="container"
 >
     <ui-block :size="12">
-        <div class="ua-timeline">
+        <div
+            class="ua-timeline"
+            ref="timeline"
+        >
             <ui-title
-                :title="title"
+                :title="$root.getCmd(title)"
                 color="white"
                 :has-padding="false"
             />
@@ -40,16 +43,16 @@ import {
     UiRow
 }
 from '../ui'
+
 import {
+    gsap,
     TweenMax,
     TweenLite,
     ScrollToPlugin
 }
 from 'gsap/all'
 
-const plugins = [
-    ScrollToPlugin
-]
+gsap.registerPlugin(ScrollToPlugin);
 
 export default {
     name: 'UiAppTimeline',
@@ -63,7 +66,7 @@ export default {
     props: {
         title: {
             type: String,
-            default: 'Timeline',
+            default: 'timeline',
         },
         timelines: {
             type: Array,
@@ -117,12 +120,16 @@ export default {
     },
     mounted: function () {
         this.$nextTick(() => {
-            TweenLite.to(window, .2, {
-                scrollTo: {
-                    y: '.ua-timeline',
-                    offsetY: 200,
-                }
-            })
+            let timeline = this.$refs.timeline
+            if (timeline) {
+                TweenMax.to(window, {
+                    duration: .2,
+                    scrollTo: {
+                        y: timeline,
+                        offsetY: 200,
+                    }
+                })
+            }
         })
     },
 }

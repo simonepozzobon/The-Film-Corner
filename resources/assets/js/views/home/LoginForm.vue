@@ -11,7 +11,7 @@
         class="login-form__container"
     >
         <ui-title
-            title="Login"
+            :title="this.$root.getCmd('login')"
             color="white"
             :uppercase="false"
             align="center"
@@ -26,7 +26,7 @@
         />
 
         <ui-form-group
-            name="Password"
+            :name="this.$root.getCmd('password')"
             type="password"
             class="login-form__input"
             @changed="changed"
@@ -38,7 +38,7 @@
             class="login-form__submit"
             @click="attemptLogin"
         >
-            Login
+            {{ this.$root.getCmd('login') }}
         </ui-button>
 
         <ui-button
@@ -47,7 +47,7 @@
             class="login-form__submit"
             @click="goBack"
         >
-            Back
+            {{ this.$root.getCmd('back') }}
         </ui-button>
     </ui-block>
 </ui-row>
@@ -141,6 +141,7 @@ export default {
             data.append('password', this.obj.password)
 
             axios.post('/api/v2/login', data).then(response => {
+                console.log(response.data);
                 if (response.data.success) {
                     this.$root.user = response.data.user
                     this.$root.token = response.data.token

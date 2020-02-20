@@ -84,9 +84,9 @@ class LoadController extends Controller
                 $media_couples = MediaCouples::with('left', 'right')->get();
                 $media_couples = $media_couples->transform(
                     function ($item, $key) {
-                            $item->leftSrc = Storage::disk('local')->url($item->left->landscape);
-                            $item->rightSrc = Storage::disk('local')->url($item->right->landscape);
-                            return $item;
+                        $item->leftSrc = Storage::disk('local')->url($item->left->landscape);
+                        $item->rightSrc = Storage::disk('local')->url($item->right->landscape);
+                        return $item;
                     }
                 );
                 $random = $media_couples->random();
@@ -112,8 +112,8 @@ class LoadController extends Controller
                 $videos = $app->videos()->get();
                 $videos = $videos->transform(
                     function ($video, $key) {
-                            $video->videoSrc = Storage::disk('local')->url($video->src);
-                            return $video;
+                        $video->videoSrc = Storage::disk('local')->url($video->src);
+                        return $video;
                     }
                 );
                 $assets = [
@@ -127,8 +127,8 @@ class LoadController extends Controller
                 $audios = $app->audios()->get();
                 $audios = $audios->transform(
                     function ($audio, $key) {
-                            $audio->audioSrc = Storage::disk('local')->url($audio->src);
-                            return $audio;
+                        $audio->audioSrc = Storage::disk('local')->url($audio->src);
+                        return $audio;
                     }
                 );
                 $assets = [
@@ -169,8 +169,8 @@ class LoadController extends Controller
                 $videos = $app->videos()->get();
                 $videos = $videos->transform(
                     function ($video, $key) {
-                            $video->videoSrc = Storage::disk('local')->url($video->src);
-                            return $video;
+                        $video->videoSrc = Storage::disk('local')->url($video->src);
+                        return $video;
                     }
                 );
 
@@ -333,7 +333,6 @@ class LoadController extends Controller
 
     public function contest_upload(Request $request)
     {
-
         $utility = new Utility;
         $file = $request->file('media');
         $title = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
@@ -382,7 +381,7 @@ class LoadController extends Controller
                 'duration' => $video_store['duration'],
                 'src' => Storage::disk('local')->url($video_store['src']),
             ];
-        } else if ($format == 'audio') {
+        } elseif ($format == 'audio') {
             $audio_store = $utility->storeAudio($file, $filename, $ext, 'apps/'.$category_slug.'/'.$app_slug.'/'.$user->id.'/');
             return [
                 'success' => true,
@@ -401,7 +400,7 @@ class LoadController extends Controller
 
         if (in_array($ext, $video)) {
             return 'video';
-        } else if (in_array($ext, $audio)) {
+        } elseif (in_array($ext, $audio)) {
             return 'audio';
         } else {
             return false;
@@ -487,5 +486,4 @@ class LoadController extends Controller
             ];
         }
     }
-
 }

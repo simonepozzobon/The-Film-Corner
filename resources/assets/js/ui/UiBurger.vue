@@ -33,6 +33,7 @@ import {
 from 'gsap/all'
 
 const plugins = [
+    gsap,
     Sine,
     Power4,
     ExpoScaleEase
@@ -53,7 +54,7 @@ export default {
             duration: .6,
             scale: 2,
             status: null,
-            baseEase: Power4.easeInOut,
+            baseEase: 'power4.inOut',
             hovering: false,
             initialized: false,
             isMobile: true,
@@ -95,31 +96,31 @@ export default {
                 this.master.fromTo(line1, duration, {
                     y: 0,
                     rotation: '0',
-                    ease: ExpoScaleEase.config(invscale, 1, baseEase),
+                    ease: `expoScale(${invscale}, 1, ${baseEase}`,
                 }, {
                     y: yMid - 4,
                     rotation: '+=45',
-                    ease: ExpoScaleEase.config(invscale, 1, baseEase),
+                    ease: `expoScale(${invscale}, 1, ${baseEase}`,
                 }, 0)
 
                 this.master.fromTo(line2, duration, {
                     x: 0,
                     opacity: 1,
-                    ease: ExpoScaleEase.config(scale, 1, baseEase),
+                    ease: `expoScale(${invscale}, 1, ${baseEase}`,
                 }, {
                     x: width,
                     opacity: 0,
-                    ease: ExpoScaleEase.config(scale, 1, baseEase),
+                    ease: `expoScale(${invscale}, 1, ${baseEase}`,
                 }, 0)
 
                 this.master.fromTo(line3, duration, {
                     y: 0,
                     rotation: '0',
-                    ease: ExpoScaleEase.config(invscale, 1, baseEase),
+                    ease: `expoScale(${invscale}, 1, ${baseEase}`,
                 }, {
                     y: -yMid + 4,
                     rotation: '-=45',
-                    ease: ExpoScaleEase.config(invscale, 1, baseEase),
+                    ease: `expoScale(${invscale}, 1, ${baseEase}`,
                 }, 0)
 
                 this.master.progress(1).progress(0)

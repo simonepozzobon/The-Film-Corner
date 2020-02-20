@@ -11,25 +11,38 @@ use App\Propaganda\Detail;
 use App\Propaganda\Format;
 use App\Propaganda\People;
 use App\Propaganda\Period;
+use App\Propaganda\Caption;
 use App\Propaganda\Hashtag;
 use App\Propaganda\Director;
 use App\Propaganda\Paratext;
 use App\Propaganda\Exercise;
 use App\Propaganda\ParatextType;
+use App\Propaganda\ClipTranslation;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Builder;
 
 class ClipsController extends Controller
 {
     public function __construct()
     {
+        // set default locale per admin su italiano
+        \App::setLocale('it');
+
+        $this->locales = ['en', 'fr', 'it', 'sr', 'ka', 'sl'];
+        // $this->options_single = ['format', 'period', 'age', 'genre'];
+        // $this->options_multiple = ['directors', 'peoples', 'topics', 'captions'];
+        // $this->options = array_merge($this->options_single, $this->options_multiple);
+
         $this->options_single = ['format', 'period', 'age', 'genre'];
         $this->options_multiple = ['directors', 'peoples', 'topics'];
-        $this->options = array_merge($this->options_single, $this->options_multiple);
+        $this->options_multiple_not_translated = ['captions'];
+        $this->options_mixed = ['paratexts', 'libraries.exercise', 'libraries.medias.library_captions'];
+        $this->options = array_merge($this->options_single, $this->options_multiple, $this->options_mixed, $this->options_multiple_not_translated);
     }
 
     public function test()
@@ -46,26 +59,126 @@ class ClipsController extends Controller
                 // 'genre'=> "tuo",
                 // 'nationality'=> 'ital',
                 // 'directors' => ["Gianni","Beppe","giovanni"],
-                'clip_id' => 20,
-                'abstract' => uniqid(),
-                'tech_info' => uniqid(),
-                'historical_context' => uniqid(),
-                'food' => uniqid(),
+                // 'clip_id' => 20,
+                // 'abstract' => uniqid(),
+                // 'tech_info' => uniqid(),
+                // 'historical_context' => uniqid(),
+                // 'food' => uniqid(),
+                'id' => 16,
+                'period' => 'asfdsaasfasfdsaf',
+                'directors' => json_encode(['Renny Arlin', 'gianni']),
+                'peoples' => json_encode(['Rupert Friend','Richard Coyle','Emanuelle Chriqui']),
+                'year' => 2011,
+                'format' => uniqid(),
+                'age' => '14 - 18',
+                'genre' => 'guerra',
+                'nationality' => 'USA',
+                'topics' => json_encode(['confini','conflitto','guerra','giornalista','Indipendenza']),
             ]
         );
 
-        $this->store_details($request);
+        // $this->store_details($request);
 
-        // $this->store($request);
+        // $this->get_initials_edit(39);
+        $this->store_informations($request);
+    }
+
+    public function upload_caption(Request $request)
+    {
+        $clip = Clip::find($request->clip_id);
+        if ($clip) {
+            $caption = new Caption();
+            $caption->clip_id = $clip->id;
+            $caption->locale = $request->cap_locale;
+
+            $file = $request->file('cap_file');
+            $original_name = $file->getClientOriginalName();
+            $filename = uniqid() . '.srt';
+            $path = 'public/propaganda/clips/captions';
+            $src = $file->storeAs($path, $filename);
+            $src = Storage::disk('local')->url($src);
+
+            $caption->src = $src;
+            $caption->save();
+
+            $clip = $clip->fresh($this->options);
+            return [
+              'success' => true,
+              'clip' => $clip,
+              'caption' => $caption,
+              'message' => 'salvato',
+            ];
+        }
+
+        return [
+            'success' => false,
+            'message' => 'non trovato',
+        ];
+    }
+
+    public function destroy_caption(Request $request)
+    {
+        $caption = Caption::find($request->id);
+        $clip = $caption->clip;
+        $caption->delete();
+
+        $clip = $clip->fresh($this->options);
+
+        return [
+            'success' => true,
+            'id' => $request->id,
+            'clip' => $clip
+        ];
     }
 
     public function get_clips()
     {
         $clips = Clip::with('period')->get();
 
+
         return [
             'success' => true,
             'clips' => $clips
+        ];
+    }
+
+    public function add_exercise(Request $request)
+    {
+        $exercise_id = "exercise_$request->exercise_id";
+        $clip = Clip::find($request->clip_id);
+        if ($clip) {
+            $clip->{$exercise_id} = 1;
+            $clip->save();
+
+            return [
+                'success' => true,
+                'clip' => $clip,
+            ];
+        }
+
+        return [
+            'success' => false,
+            'message' => 'non trovato',
+        ];
+    }
+
+    public function remove_exercise(Request $request)
+    {
+        $exercise_id = "exercise_$request->exercise_id";
+        $clip = Clip::find($request->clip_id);
+        if ($clip) {
+            $clip->{$exercise_id} = 0;
+            $clip->save();
+
+            return [
+                'success' => true,
+                'clip' => $clip,
+            ];
+        }
+
+        return [
+            'success' => false,
+            'message' => 'non trovato',
         ];
     }
 
@@ -98,6 +211,34 @@ class ClipsController extends Controller
         ];
     }
 
+    public function get_initials_edit($id = null)
+    {
+        $response = $this->get_initials();
+
+        if ($id) {
+            $clip = Clip::where('id', $id)->first();
+            $clip = $clip->fresh($this->options);
+
+            if ($clip) {
+                $details = $clip->details()->first();
+                if ($details) {
+                    $details = $details->setDefaultLocale('it');
+                }
+                $clip->details = $details;
+
+                $response['success'] = true;
+                $response['initial'] = $clip;
+            } else {
+                $response['success'] = true;
+            }
+        } else {
+            $response['success'] = true;
+        }
+
+
+        return $response;
+    }
+
     public function upload_video($file)
     {
         $extension = $file->getClientOriginalExtension();
@@ -111,12 +252,206 @@ class ClipsController extends Controller
         return $src;
     }
 
+    public function store_clip(Request $request)
+    {
+        $is_new = false;
+
+        if (isset($request->id)) {
+            $clip = Clip::find($request->id);
+        } else {
+            $clip = new Clip();
+            $clip->year = 'no';
+            $clip->nationality = 'no';
+            $clip->period_id = 0;
+            $clip->genre_id = 0;
+            $clip->format_id = 0;
+            $clip->age_id = 0;
+            $is_new = true;
+
+            $t = new ClipTranslation();
+        }
+
+
+        // Upload Clip
+        $filename = uniqid() . '.mp4';
+        $path = 'public/propaganda/clips';
+        $file = $request->file('video');
+
+        if ($file) {
+            $src = $file->storeAs($path, $filename);
+            $src = Storage::disk('local')->url($src);
+        } else {
+            $src = 'no';
+        }
+
+        if ($is_new == false) {
+            if ($src != 'no') {
+                $clip->video = $src;
+            } else {
+                $clip->video = $clip->video;
+            }
+        } else {
+            $clip->video = $src;
+        }
+
+        $clip->save();
+
+
+        // Upload Titolo
+        $t = $clip->translateOrNew('it');
+        $t->clip_id = $clip->id;
+        $t->title = $request->title;
+        $t->locale = 'it';
+        $t->save();
+
+        $clip = $clip->fresh($this->options);
+
+        return [
+          'success' => true,
+          'clip' => $clip,
+          'translation' => $t,
+        ];
+    }
+
+    public function store_title_translation(Request $request)
+    {
+        $id = $request->id;
+        $translations = json_decode($request->translations);
+
+        $clip = Clip::find($id);
+
+        foreach ($translations as $key => $translation) {
+            $current = $clip->translateOrNew($translation->locale);
+            $current->clip_id = $clip->id;
+            $current->title = $translation->value;
+            $current->save();
+        }
+
+        $clip = $clip->fresh($this->options);
+
+        return response()->json(
+            [
+            'clip' => $clip,
+            'translations' => $translations
+            ]
+        );
+    }
+
+    public function store_informations(Request $request)
+    {
+        $id = $request->id;
+        $clip = Clip::find($id);
+
+        $clip->year = $request->year;
+        $clip->nationality = $request->nationality;
+
+        // $debug = collect();
+
+        foreach ($this->options_single as $key => $value) {
+            // $debug->push($this->check_single_option($value, $request));
+            $clip->{$value.'_id'} = $this->check_single_option($value, $request);
+        }
+
+        $clip->save();
+
+        foreach ($this->options_multiple as $key => $value) {
+            $saved = $this->check_multiple_option($value, $request, $clip);
+        }
+
+        $clip = $clip->fresh($this->options);
+        return response()->json(
+            [
+                'clip' => $clip,
+                // 'debug' => $debug,
+            ]
+        );
+    }
+
+    public function store_details_new(Request $request)
+    {
+        $clip = Clip::find($request->id);
+
+        if ($clip->details->count() > 0) {
+            $detail = $clip->details->first();
+        } else {
+            $detail = new Detail();
+            $detail->clip_id = $clip->id;
+            $detail->save();
+        }
+
+        $t = $detail->translateOrNew('it');
+        $t->detail_id = $detail->id;
+        $t->tech_info = $request->tech_info;
+        $t->abstract = $request->abstract;
+        $t->historical_context = $request->historical_context;
+        $t->foods = $request->foods;
+        $t->locale = 'it';
+
+        $t->save();
+
+        $clip = $clip->fresh($this->options);
+
+        return response()->json(
+            [
+            'clip' => $clip,
+            ]
+        );
+    }
+
+    public function store_details_translation(Request $request)
+    {
+        $id = $request->id;
+        $translations = json_decode($request->translations);
+        $clip = Clip::find($id);
+        $detail = $clip->details->first();
+
+        foreach ($translations as $key => $translation) {
+            $t = $translation->value;
+            $current = $detail->translateOrNew($translation->locale);
+            $current->detail_id = $detail->id;
+            $current->tech_info = $t->tech_info;
+            $current->abstract = $t->abstract;
+            $current->historical_context = $t->historical_context;
+            $current->foods = $t->foods;
+            $current->save();
+        }
+
+        $clip = $clip->fresh($this->options);
+
+        return response()->json(
+            [
+            'clip' => $clip,
+            ]
+        );
+    }
+
+    public function store_paratext_translation(Request $request)
+    {
+        $id = $request->id;
+        $translations = json_decode($request->translations);
+        $p = Paratext::find($id);
+
+        foreach ($translations as $key => $translation) {
+            $t = $translation->value;
+            $current = $p->translateOrNew($translation->locale);
+            $current->paratext_id = $p->id;
+            $current->content = $t ? $t : 'null';
+            $current->locale = $translation->locale;
+            $current->save();
+        }
+
+        $clip = Clip::where('id', $request->clip_id)->with('format', 'period', 'age', 'genre', 'directors', 'peoples', 'topics', 'paratexts', 'libraries.exercise')->first();
+
+        return response()->json(
+            [
+            'clip' => $clip,
+            'paratext' => $p,
+            ]
+        );
+    }
+
     public function store(Request $request)
     {
-        $options_single = ['format', 'period', 'age', 'genre'];
-        $options_multiple = ['directors', 'peoples', 'topics'];
-
-
         $clip = new Clip();
         $clip->video = $request->hasFile('video') ? $this->upload_video($request->file('video')) : 'no';
         $clip->year = $request->year;
@@ -143,38 +478,35 @@ class ClipsController extends Controller
     public function destroy_clip($id)
     {
         $clip = Clip::findOrFail($id);
-        $clip->peoples()->detach();
-        $clip->directors()->detach();
-        $clip->topics()->detach();
-        $clip->hashtags()->detach();
+
+        $relations = ['peoples', 'directors', 'topics', 'hashtags'];
+
+        foreach ($relations as $key => $relation) {
+            if ($clip->{$relation} && $clip->{$relation}->count() > 0) {
+                $clip->{$relation}->detach();
+            }
+        }
 
         // elimina i paratesti
-        $paratexts = $clip->paratexts;
+        $paratexts = $clip->paratexts()->get();
         foreach ($paratexts as $key => $paratext) {
-
             // elimina i media collegati ai paratesti
-            $medias = $paratext->medias;
+            $medias = $paratext->medias()->get();
             foreach ($medias as $key => $media) {
-                $paratext->detach($media);
                 $media->delete();
             }
-
-            $clip->detach($paratext);
             $paratext->delete();
         }
 
         // elimina le librerie
-        $libraries = $clip->libraries;
+        $libraries = $clip->libraries()->get();
         foreach ($libraries as $key => $library) {
 
             // elimina i media collegati
-            $medias = $library->medias;
+            $medias = $library->medias()->get();
             foreach ($medias as $key => $media) {
-                $library->detach($media);
                 $media->delete();
             }
-
-            $clip->detach($library);
             $library->delete();
         }
 
@@ -232,22 +564,34 @@ class ClipsController extends Controller
         $clip = Clip::find($request->clip_id);
         $paraType = ParatextType::find($request->paratext_type_id);
 
-        $file = $this->uploadFile($request->file('file'), $paraType->type);
+        if ($paraType->has_media == 1) {
+            $file = $this->uploadFile($request->file('file'), $paraType->type);
+        }
         // $file = Media::find(2);
 
 
         $p = new Paratext();
         $p->paratext_type_id = $paraType->id;
-        $p->content = $request->content ? $request->content : 'null';
+        // $p->content = $request->content ? $request->content : 'null';
         $p->media_type = $paraType->type;
-        $p->media = Storage::disk('local')->url($file->src);
+        $p->media = $paraType->has_media == 1 ? Storage::disk('local')->url($file->src) : 'no-file';
         $p->save();
 
-        $p->medias()->attach($file);
+        if ($paraType->has_media == 1) {
+            $p->medias()->attach($file);
+        }
         $p->clip()->attach($clip);
 
+        $t = $p->translateOrNew('it');
+        $t->paratext_id = $p->id;
+        $t->content = $request->content ? $request->content : 'null';
+        $t->locale = 'it';
+        $t->save();
+
+        $clip = $clip->fresh($this->options);
+
         return [
-          'clip' => $clip->fresh($this->options),
+          'clip' => $clip,
           'paratext' => $p,
         ];
     }
@@ -302,26 +646,40 @@ class ClipsController extends Controller
 
     public function check_single_option($name, $request)
     {
-        $model = ucwords('App\\Propaganda\\'.$name);
+        $model = ucwords('App\\Propaganda\\'.ucfirst($name));
+        $modelTranslation = ucwords('App\\Propaganda\\'.ucfirst($name).'Translation');
+        $translation = $modelTranslation::where('title', $request->{$name})->where('locale', 'it')->first();
 
-        $result = $model::where('title', '=', $request->{$name})->first();
+        if ($translation) {
+            $result = $model::find($translation->{$name.'_id'});
+        } else {
+            $result = false;
+        }
+
         if ($result) {
+            // return 'il risultato esiste già';
             return $result->id;
         } else {
             $obj = \App::make($model);
-            $columns = $obj->getTableColumns();
+            $obj->save();
+            $t = $obj->translateOrNew('it');
+            $columns = $t->getTableColumns();
 
             foreach ($columns as $key => $column) {
-                if ($column != 'id' && $column != 'created_at' && $column != 'updated_at') {
+                if ($column != 'id' && $column != 'locale' && $column != $name.'_id') {
                     if ($request->input($column, false) == false) {
                         // va riempita con un random
-                        $obj->{$column} = random_int(1, 100);
+                        $t->{$column} = $request->{$name};
                     } else {
-                        $obj->{$column} = $request->{$name};
+                        $t->{$column} = $request->{$name};
                     }
+                } elseif ($column == 'locale') {
+                    $t->locale = 'it';
+                } elseif ($column == $name.'_id') {
+                    $t->{$name.'_id'} = $obj->id;
                 }
             }
-            $obj->save();
+            $t->save();
             return $obj->id;
         }
     }
@@ -329,29 +687,50 @@ class ClipsController extends Controller
     public function check_multiple_option($name, $request, $clip)
     {
         $clip->{$name}()->detach();
+        // return true;
+
         $singular = rtrim($name, 's');
-        $model = ucwords('App\\Propaganda\\'.$singular);
+        $model = ucwords('App\\Propaganda\\'.ucfirst($singular));
+        $modelTranslation = ucwords('App\\Propaganda\\'.ucfirst($singular).'Translation');
 
         $results = collect();
-
         if (isset($request->{$name})) {
             foreach (json_decode($request->{$name}) as $key => $value) {
                 $field = $name == 'directors' ? 'name' : 'title';
-                $result = $model::where($field, '=', $value)->first();
+                $translation = $modelTranslation::where($field, $value)->where('locale', 'it')->first();
+
+                if ($translation) {
+                    $result = $model::find($translation->{$singular.'_id'});
+                } else {
+                    $result = false;
+                }
 
                 if ($result) {
                     $results->push($result);
                 } else {
                     $obj = \App::make($model);
-                    $obj->{$field} = $value;
-
                     $obj->save();
+                    $t = $obj->translateOrNew('it');
+                    $columns = $t->getTableColumns();
+
+                    foreach ($columns as $key => $column) {
+                        if ($column == $singular.'_id') {
+                            $t->{$column} = $obj->id;
+                        } elseif ($column == 'locale') {
+                            $t->locale = 'it';
+                        } elseif ($column == $field) {
+                            $t->{$field} = $value;
+                        }
+                    }
+
+                    $t->save();
                     $results->push($obj);
                 }
 
                 $clip->{$name}()->attach($result);
             }
         }
-        return true;
+
+        return $results;
     }
 }

@@ -1,41 +1,52 @@
 <template>
 <div class="ua-video-preview">
-    <ui-title
-        title="Preview"
-        color="white"
-        :has-padding="false"
-        ref="title"
-    />
-
-    <div
-        class="ua-video-preview__loader"
-        ref="loader"
-    >
-        <div
-            class="spinner-border"
-            :class="loaderColorClass"
-            role="status"
-        >
-            <span class="sr-only">Loading...</span>
-        </div>
+    <div class="ua-video-preview__title">
+        <ui-title
+            :title="$root.getCmd('preview')"
+            color="white"
+            :has-padding="false"
+            ref="title"
+        />
     </div>
 
-    <video-player
-        class="video-player-box ua-video-preview__player"
-        ref="player"
-        :options="playerOptions"
-        :playsinline="true"
-        @timeupdate="onPlayerTimeUpdate($event)"
-        @ready="ready"
-    />
+    <div class="ua-video-preview__container">
+        <div
+            class="ua-video-preview__loader"
+            ref="loader"
+        >
+            <div
+                class="spinner-border"
+                :class="loaderColorClass"
+                role="status"
+            >
+                <span class="sr-only">{{ this.$root.getCmd('loading') }}...</span>
+            </div>
+        </div>
 
-    <ui-app-video-controls
-        @play="play"
-        @pause="pause"
-        @stop="stop"
-        @backward="backward"
-        @forward="forward"
-    />
+        <div
+            class="ua-video-preview__player"
+            ref="playerContainer"
+        >
+            <video-player
+                class="video-player-box"
+                ref="player"
+                :options="playerOptions"
+                :playsinline="true"
+                @timeupdate="onPlayerTimeUpdate($event)"
+                @ready="ready"
+            />
+        </div>
+
+        <ui-app-video-controls
+            class="ua-video-preview__controls"
+            @play="play"
+            @pause="pause"
+            @stop="stop"
+            @backward="backward"
+            @forward="forward"
+            @update-size="setControlsHeight"
+        />
+    </div>
 </div>
 </template>
 
@@ -53,7 +64,9 @@ from 'vue-video-player'
 import SizeUtility from '../Sizes'
 
 import {
+    gsap,
     TimelineMax,
+    TweenMax,
 }
 from 'gsap/all'
 
@@ -87,6 +100,7 @@ export default {
                 poster: '/video/empty-session.png',
             },
             playerHeight: 0,
+            controlsHeight: 0,
         }
     },
     watch: {
@@ -119,7 +133,8 @@ export default {
             })
         },
         onPlayerTimeUpdate: function (player) {
-            let time = this.player.currentTime()
+            let time = player.currentTime()
+            console.log(time);
             this.$emit('on-update-player', time)
         },
         play: function () {
@@ -148,39 +163,41 @@ export default {
         },
         showLoader: function () {
             if (!this.loaderVisible) {
-                let el = this.$refs.player.$el
+                let el = this.$refs.playerContainer
                 let loader = this.$refs.loader
                 if (el && loader) {
                     this.loaderVisible = true
 
-                    let size = SizeUtility.get(el)
-                    this.playerHeight = Math.round(size.h)
 
-                    TweenMax.set([el, loader], {
+
+                    let master = gsap.timeline({
+                        paused: true,
+                        smoothChildTiming: true,
+                    })
+
+                    master.set([el, loader], {
                         clearProps: "all"
                     })
+                    master.addLabel('start', '+=0')
 
-                    let master = new TimelineMax({
-                        paused: true,
-                        autoRemoveChildren: true
-                    })
-                    master.fromTo(el, .6, {
-                        transformOrigin: '50% 100%',
-                        height: size.h,
-                        autoAlpha: 1,
-                    }, {
-                        transformOrigin: '50% 100%',
-                        height: 0,
-                        autoAlpha: 0,
-                    }, 0)
-                    master.fromTo(loader, .3, {
-                        height: 0,
+                    master.fromTo(loader, {
                         autoAlpha: 0,
                     }, {
-                        height: size.h,
+                        duration: .3,
                         autoAlpha: 1,
-                    }, 0)
-                    master.progress(1).progress(0)
+                        // immediateRender: false,
+                    }, 'start')
+
+                    master.fromTo(el, {
+                        autoAlpha: 1,
+                    }, {
+                        duration: .6,
+                        autoAlpha: 0,
+                        // immediateRender: false,
+                    }, 'start+=0.2')
+
+
+
                     master.eventCallback('onComplete', () => {
                         this.$nextTick(() => {
                             master.kill()
@@ -193,43 +210,40 @@ export default {
         hideLoader: function () {
             return new Promise(resolve => {
                 if (this.loaderVisible) {
-                    let el = this.$refs.player.$el
+                    let el = this.$refs.playerContainer
                     let loader = this.$refs.loader
                     if (el && loader) {
-                        let size = SizeUtility.get(loader)
-                        let originalHeight = this.playerHeight
-                        // console.log('player', size.h, this.playerHeight);
 
-                        let master = new TimelineMax({
-                            paused: true
+                        let master = gsap.timeline({
+                            paused: true,
+                            smoothChildTiming: true,
                         })
 
-                        master.fromTo(el, .3, {
-                            transformOrigin: '50% 0%',
-                            height: 0,
-                            autoAlpha: 0,
-                        }, {
-                            transformOrigin: '50% 0%',
-                            height: originalHeight,
-                            autoAlpha: 1,
-                        }, 0)
+                        master.addLabel('start', '+=0')
 
-                        master.fromTo(loader, .3, {
-                            height: originalHeight,
+                        master.fromTo(loader, {
                             autoAlpha: 1,
                         }, {
-                            height: 0,
+                            duration: .3,
                             autoAlpha: 0,
-                        }, 0)
+                            // immediateRender: false,
+                        }, 'start')
 
-                        master.progress(1).progress(0)
+                        master.fromTo(el, {
+                            autoAlpha: 0,
+                        }, {
+                            duration: .3,
+                            autoAlpha: 1,
+                            // immediateRender: false,
+                        }, 'start+=0.2')
+
+
                         master.eventCallback('onComplete', () => {
                             this.loaderVisible = false
-                            this.$nextTick(() => {
-                                master.kill()
-                                resolve()
-                            })
+                            master.kill()
+                            resolve()
                         })
+
                         master.play()
                     }
                 }
@@ -248,37 +262,83 @@ export default {
             else {
                 this.$emit('ready')
             }
-        }
+        },
+        setControlsHeight: function (height) {
+            // this.controlsHeight = height
+            // this.$refs.playerContainer.style.bottom = `${0}px`
+        },
     },
-    mounted: function () {}
+    mounted: function () {
+
+    }
 }
 </script>
+<style lang="scss">
+@import '~styles/shared';
+.ua-video-preview {
+    &__controls {
+        left: 0;
+        right: 0;
+    }
+}
+</style>
 
 <style lang="scss" scoped>
 @import '~styles/shared';
 
 .ua-video-preview {
     width: 100%;
-    height: 100%;
+    height: auto;
     background-color: $dark-gray;
     @include border-left-radius(24px);
-    padding: $app-padding-x $app-padding-x 0;
     overflow: hidden;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
+    // position: relative;
 
-    &__loader {
+    &__title {
+        padding: $app-padding-x $app-padding-x 0;
+    }
+
+    &__container {
         position: relative;
         display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 0;
+        flex-direction: column;
+        height: 100%;
         width: 100%;
-        visibility: hidden;
-        opacity: 0;
     }
 
     &__player {
-        position: relative;
+        padding: 0 $app-padding-x;
+        max-width: 100%;
     }
+
+    &__loader {
+        background-color: rgba($dark-gray, .9);
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+        width: 100%;
+        height: 100%;
+        visibility: hidden;
+        opacity: 0;
+        z-index: 2;
+
+        .spinner-border {
+            width: $spacer * 4;
+            height: $spacer * 4;
+            font-size: $font-size-base * 2;
+        }
+    }
+    //
+    // &__player {
+    //     position: absolute;
+    //     width: calc(100% - (#{$app-padding-x} * 2));
+    //     height: 100%;
+    //     top: 0;
+    // }
 }
 </style>
