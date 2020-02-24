@@ -13,13 +13,23 @@
         />
     </template>
     <div
-        v-if="modal.type == 'text'"
-        v-html="modal.description"
+        v-if="modal.type == 'text' && modal.hasOwnProperty('description')"
         class="ua-prop-modal__text"
     >
+        <modal-panel-text :content="modal" />
+
+    </div>
+    <div v-else-if="modal.type == 'text' && modal.hasOwnProperty('paratext')">
+        <ul>
+            <modal-panel-link
+                v-for="paratext in modal.paratext"
+                :key="paratext.id"
+                :content="paratext"
+            />
+        </ul>
     </div>
     <div
-        v-else-if="modal.type == 'gallery'"
+        v-else-if="modal.type == 'image'"
         class="ua-prop-modal__gallery"
     >
         <swiper
@@ -27,27 +37,11 @@
             ref="mySwiper"
         >
             <!-- slides -->
-            <swiper-slide
-                v-for="image in modal.medias"
-                :key="image.id"
-            >
-                <img
-                    :src="image.thumb"
-                    class="ua-prop-modal__image"
-                    :alt="image.title"
-                />
-                <ui-title
-                    class="ua-prop-modal__title"
-                    :title="image.title"
-                    :has-container="false"
-                    :has-padding="false"
-                    :has-margin="false"
-                />
-                <p
-                    v-html="image.description"
-                    class="ua-prop-modal__paragraph"
-                ></p>
-            </swiper-slide>
+            <modal-panel-image
+                v-for="paratext in modal.paratext"
+                :key="paratext.id"
+                :content="paratext"
+            />
             <!-- Optional controls -->
             <div
                 class="swiper-pagination"
@@ -65,7 +59,7 @@
     </div>
     <template slot="modal-footer">
         <ui-button
-            title="Close"
+            :title="$root.getCmd('close')"
             :has-container="false"
             :has-margin="false"
             :has-padding="false"
@@ -80,7 +74,6 @@
 import 'swiper/dist/css/swiper.css'
 import {
     swiper,
-    swiperSlide
 }
 from 'vue-awesome-swiper'
 
@@ -91,6 +84,10 @@ import {
 }
 from '../../../ui'
 
+import ModalPanelImage from './ModalPanelImage.vue'
+import ModalPanelLink from './ModalPanelLink.vue'
+import ModalPanelText from './ModalPanelText.vue'
+
 export default {
     name: 'ModalPanel',
     components: {
@@ -98,7 +95,9 @@ export default {
         UiParagraph,
         UiTitle,
         swiper,
-        swiperSlide,
+        ModalPanelImage,
+        ModalPanelLink,
+        ModalPanelText,
     },
     props: {
         modal: {
@@ -110,7 +109,9 @@ export default {
     },
     data: function () {
         return {
-            swiperOption: {}
+            swiperOption: {
+                autoHeight: true,
+            }
         }
     },
     methods: {
@@ -124,7 +125,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '~styles/shared';
 .ua-prop-modal {
     &__image {

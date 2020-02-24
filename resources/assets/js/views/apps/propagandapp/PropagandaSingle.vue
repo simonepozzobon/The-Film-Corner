@@ -24,7 +24,7 @@
                         :has-container="false"
                     >
                         <ui-app-depth-texts
-                            :subs="paratexts"
+                            :subs="subs"
                             @open-modal="openModal"
                         />
                     </ui-block>
@@ -138,19 +138,79 @@ export default {
             }
             return false
         },
+        detail: function () {
+            if (this.hasContent && this.content.details.length > 0) {
+                return this.content.details[0]
+            }
+            return null
+        },
+        details: function () {
+            let keys = ['tech_info', 'abstract', 'historical_context', 'foods']
+            let details = []
+
+            if (this.detail) {
+                for (let key in this.detail) {
+                    if (this.detail.hasOwnProperty(key) && keys.includes(key)) {
+                        let newObj = {
+                            key: key,
+                            clip_id: this.detail.clip_id,
+                            detail_id: this.detail.id,
+                            type: 'text',
+                            hasChildren: false,
+                            description: this.detail[key]
+                        }
+
+                        details.push(newObj)
+                    }
+                }
+
+                for (let i = 0; i < details.length; i++) {
+                    let detail = details[i]
+                    let translations = this.detail.translations.map(translation => {
+                        return {
+                            'locale': translation.locale,
+                            'content': translation[detail.key]
+                        }
+                    })
+
+                    details[i] = {
+                        idx: Utility.uuid(),
+                        ...details[i],
+                        translations: translations
+                    }
+                }
+            }
+
+            return details
+        },
         paratexts: function () {
             if (this.hasParatexts) {
                 return Object.assign([], this.content.paratexts_formatted)
                     .filter(el => el != null)
                     .map(item => {
                         return {
+                            idx: Utility.uuid(),
                             ...item,
                             paratext: Object.assign([], item.paratext).filter(el => el != null)
                         }
                     })
             }
             return []
-        }
+        },
+        subs: function () {
+            if (this.details.length > 0 && this.paratexts.length > 0) {
+                let subs = []
+                return subs.concat(this.details).concat(this.paratexts)
+            }
+            else if (this.details.length > 0) {
+                return this.details
+            }
+            else if (this.paratexts.length > 0) {
+                return this.paratexts
+            }
+
+            return []
+        },
     },
     methods: {
         getData: function () {
@@ -163,28 +223,37 @@ export default {
                     this.content = response.data.clip
                 }
                 // console.log(this.paratexts);
+
+                this.debug()
+
             })
             // this.content = movies.find(movie => movie.id == id)
-            // this.debug()
         },
         debug: function () {
             // this.selectChannel(this.channels[2])
-            this.openModal(5, 1)
+            // this.openModal(5, 1)
+            setTimeout(() => {
+                let idx = this.details[1].idx
+                console.log(this.details[1]);
+                this.openModal(idx, null)
+            }, 1500)
         },
         enter: function () {},
         leave: function () {},
         openModal: function (idx, subId = null) {
-            let content = this.content.subs.find(content => content.id == idx)
-            if (subId && content.hasChildren) {
-                let childrens = content.childrens
-                let sub = childrens.find(children => children.id == subId)
-                this.modal = Object.assign({}, sub)
-            }
-            else {
-                this.modal = Object.assign({}, content)
-            }
-
-
+            // let content = this.subs.find(content => content.id == idx)
+            let content = this.subs.find(content => content.idx == idx)
+            this.modal = Object.assign({}, content)
+            // if (subId && content.hasChildren) {
+            //     let childrens = content.childrens
+            //     let sub = childrens.find(children => children.id == subId)
+            //     this.modal = Object.assign({}, sub)
+            // }
+            // else {
+            //     this.modal = Object.assign({}, content)
+            // }
+            //
+            //
             this.$nextTick(() => {
                 this.$refs.modal.show()
             })

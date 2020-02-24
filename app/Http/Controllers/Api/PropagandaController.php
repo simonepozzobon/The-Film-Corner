@@ -28,7 +28,7 @@ class PropagandaController extends Controller
 
     public function get_clip_single($id)
     {
-        $clip = Clip::with('period', 'format', 'age', 'directors', 'peoples', 'topics', 'paratexts.type', 'paratexts.medias', 'libraries.exercise')->where('id', $id)->first();
+        $clip = Clip::with('period', 'format', 'age', 'directors', 'details', 'peoples', 'topics', 'paratexts.type', 'paratexts.medias', 'libraries.exercise')->where('id', $id)->first();
 
         $exercises = collect();
         foreach ($clip->libraries as $key => $library) {

@@ -9,8 +9,8 @@
     <div class="ua-depth__center">
         <sub-single
             v-for="sub in subs"
-            :key="sub.id"
-            :idx="sub.id"
+            :key="sub.idx"
+            :idx="sub.idx"
             :sub="sub"
             :has-children="sub.hasChildren"
             :childrens="sub.paratext"
@@ -18,7 +18,11 @@
         />
     </div>
     <div class="ua-depth__bottom">
-        <ui-button color="light-gray">
+        <ui-button
+            color="light-gray"
+            :disable="true"
+            class="d-none"
+        >
             Download all content
         </ui-button>
     </div>
@@ -58,7 +62,7 @@ export default {
         }
     },
     mounted: function () {
-        console.log(this.subs);
+        // console.log(this.subs);
     },
 }
 </script>
