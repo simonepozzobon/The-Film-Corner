@@ -47,6 +47,7 @@
                         :size="12"
                         :has-container="false"
                     >
+                        <div>Qhi</div>
                         <ui-button
                             v-for="exercise in content.exercises"
                             :key="exercise.id"
@@ -224,7 +225,7 @@ export default {
                 }
                 // console.log(this.paratexts);
 
-                this.debug()
+                // this.debug()
 
             })
             // this.content = movies.find(movie => movie.id == id)
@@ -241,19 +242,9 @@ export default {
         enter: function () {},
         leave: function () {},
         openModal: function (idx, subId = null) {
-            // let content = this.subs.find(content => content.id == idx)
             let content = this.subs.find(content => content.idx == idx)
             this.modal = Object.assign({}, content)
-            // if (subId && content.hasChildren) {
-            //     let childrens = content.childrens
-            //     let sub = childrens.find(children => children.id == subId)
-            //     this.modal = Object.assign({}, sub)
-            // }
-            // else {
-            //     this.modal = Object.assign({}, content)
-            // }
-            //
-            //
+
             this.$nextTick(() => {
                 this.$refs.modal.show()
             })
