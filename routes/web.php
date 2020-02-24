@@ -12,13 +12,13 @@ use App\Events\UserSignin;
 */
 
 // Route::get('/test', 'Api\LoadController@test');
-Route::get('/test', 'Api\Admin\ClipsController@test');
+// Route::get('/test', 'Api\Admin\ClipsController@test');
 // Route::get('/test', 'Api\TranslationController@get_translations');
 // Route::get('/test', 'Api\Admin\ClipsController@test');
-// Route::get('/test', 'Api\PropagandaController@test');
+Route::get('/test', 'Api\PropagandaController@test');
 // Route::get('/test', 'Api\SectionController@test');
 // Route::get('/test', 'Api\SectionController@get_network');
-Route::get('/fill-trans', 'Api\TestController@fill_empty_translations');
+// Route::get('/fill-trans', 'Api\TestController@fill_empty_translations');
 
 // Route::get('/convert-session-to-network', 'Api\TestController@convert_shared_sessions_to_networs');
 // Route::get('/convert-teachers', 'Api\TestController@convert_teacher_to_user');

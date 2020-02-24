@@ -17,7 +17,7 @@ import {
 }
 from 'gsap/all'
 export default {
-    name: 'AppsContainer',
+    name: 'PropagandaAppContainer',
     components: {
         // LoggedNav,
     },

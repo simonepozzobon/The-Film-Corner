@@ -10,9 +10,12 @@
                     <ui-block
                         :size="8"
                         :has-container="false"
+                        :v-if="false"
                     >
                         <ui-app-propaganda-player
                             :title="content.title"
+                            :translations="content.translations"
+                            :ages="content.age.translations"
                             :src="content.video"
                         />
                     </ui-block>
@@ -21,7 +24,7 @@
                         :has-container="false"
                     >
                         <ui-app-depth-texts
-                            :subs="content.subs"
+                            :subs="paratexts"
                             @open-modal="openModal"
                         />
                     </ui-block>
@@ -122,7 +125,33 @@ export default {
         }
     },
     watch: {},
-    computed: {},
+    computed: {
+        hasContent: function () {
+            if (this.content) {
+                return true
+            }
+            return false
+        },
+        hasParatexts: function () {
+            if (this.hasContent && this.content.paratexts_formatted) {
+                return true
+            }
+            return false
+        },
+        paratexts: function () {
+            if (this.hasParatexts) {
+                return Object.assign([], this.content.paratexts_formatted)
+                    .filter(el => el != null)
+                    .map(item => {
+                        return {
+                            ...item,
+                            paratext: Object.assign([], item.paratext).filter(el => el != null)
+                        }
+                    })
+            }
+            return []
+        }
+    },
     methods: {
         getData: function () {
             let id = this.$route.params.id
@@ -133,6 +162,7 @@ export default {
                 if (response.data.success) {
                     this.content = response.data.clip
                 }
+                // console.log(this.paratexts);
             })
             // this.content = movies.find(movie => movie.id == id)
             // this.debug()
