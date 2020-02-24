@@ -20,8 +20,8 @@
                             >
 
                                 <ui-app-propaganda-breadcrumbs
-                                    :app="content.title"
-                                    :clip-name="clip.title"
+                                    :app="content | translate('title', $root.locale)"
+                                    :clip-name="clip | translate('title', $root.locale)"
                                     :clip-id="clip.id"
                                 />
 
@@ -44,7 +44,7 @@
                                 <ui-title
                                     tag="h2"
                                     font-size="h2"
-                                    :title="content.title"
+                                    :title="content | translate('title', $root.locale)"
                                     class="pt-5"
                                     color="white"
                                 />
@@ -52,23 +52,21 @@
                                     color="white"
                                     class="pt-5 prop-ex-container__paragraph"
                                     align="justify"
-                                    v-html="description"
+                                    v-html="translatedDescription"
                                 />
                                 <div class="pb-4">
                                     <ui-button
                                         color="light"
                                         display="inline-block"
                                         @click="startApp"
-                                    >
-                                        Start a new session
-                                    </ui-button>
+                                        :title="this.$root.getCmd('start_new_session')"
+                                    />
                                     <ui-button
                                         color="light"
                                         display="inline-block"
                                         @click="togglePanel"
-                                    >
-                                        {{ buttonText }}
-                                    </ui-button>
+                                        :title="buttonText"
+                                    />
                                 </div>
                             </ui-block>
                         </ui-row>
@@ -94,6 +92,7 @@ import {
 from '../../../dummies/PropagandAppContent'
 
 import Utility from '../../../Utilities'
+import TranslationFilter from '../../../TranslationFilter'
 import {
     UiBlock,
     UiBreadcrumbs,
@@ -121,6 +120,7 @@ from '../../../uiapp'
 
 export default {
     name: 'PropagandaExercise',
+    mixins: [TranslationFilter],
     components: {
         UiAppPropagandaBreadcrumbs,
         UiAppSessionManager,
@@ -145,7 +145,7 @@ export default {
             content: null,
             open: false,
             description: null,
-            buttonText: 'Open existing session',
+            buttonText: null,
             sessions: []
         }
     },
@@ -153,9 +153,29 @@ export default {
         content: function (content) {
             this.description = content.description
         },
+        '$root.locale': function (locale) {
+            this.translateExercise()
+        }
     },
-    computed: {},
+    computed: {
+        translatedDescription: function () {
+            return this.$options.filters.translate(this.content, 'description', this.$root.locale)
+        }
+    },
     methods: {
+        translateExercise: function () {
+            this.description = this.translateContent('description')
+            this.title = this.translateContent('title')
+        },
+        translateContent: function (key) {
+            let item = this.content.translations.find(translation => translation.locale == this.$root.locale)
+
+            if (item) {
+                return item[key]
+            }
+
+            return this.content[key]
+        },
         getData: function () {
             let id = this.$route.params.id
             let exerciseId = this.$route.params.exerciseId
@@ -163,9 +183,12 @@ export default {
             // perform api call
             let url = '/api/v2/propaganda/clip/' + id + '/exercise/' + exerciseId
             this.$http.get(url).then(response => {
-                console.log(response);
+                // console.log(response);
                 this.clip = response.data.clip
                 this.content = response.data.exercise
+                this.buttonText = this.$root.getCmd('open_existing_session')
+
+                this.translateExercise()
             })
 
             // this.clip = movies.find(movie => movie.id == id)
@@ -187,14 +210,14 @@ export default {
             if (this.open) {
                 this.open = false
                 this.description = this.content.description
-                this.buttonText = 'Open existing session'
+                this.buttonText = this.$root.getCmd('open_existing_session')
             }
             else {
                 this.open = true
                 this.description = clipper(this.content.description, 150, {
                     html: true
                 })
-                this.buttonText = 'Close Panel'
+                this.buttonText = this.$root.getCmd('close_panel')
             }
         },
     },
