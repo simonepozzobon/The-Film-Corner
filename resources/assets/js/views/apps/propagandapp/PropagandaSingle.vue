@@ -47,7 +47,6 @@
                         :size="12"
                         :has-container="false"
                     >
-                        <div>Qhi</div>
                         <ui-button
                             v-for="exercise in content.exercises"
                             :key="exercise.id"
