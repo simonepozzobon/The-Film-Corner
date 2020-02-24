@@ -225,19 +225,19 @@ export default {
                 }
                 // console.log(this.paratexts);
 
-                // this.debug()
+                this.debug()
 
             })
             // this.content = movies.find(movie => movie.id == id)
         },
         debug: function () {
-            // this.selectChannel(this.channels[2])
-            // this.openModal(5, 1)
-            setTimeout(() => {
-                let idx = this.details[1].idx
-                console.log(this.details[1]);
-                this.openModal(idx, null)
-            }, 1500)
+            // Test dei modal per i paratesti
+            // setTimeout(() => {
+            //     let idx = this.details[1].idx
+            //     console.log(this.details[1]);
+            //     this.openModal(idx, null)
+            // }, 1500)
+            console.log(this.content);
         },
         enter: function () {},
         leave: function () {},
