@@ -31,10 +31,6 @@ export default {
             type: Number,
             default: 0,
         },
-        title: {
-            type: String,
-            default: 'titolo',
-        },
         hasChildren: {
             type: Boolean,
             default: false,
@@ -44,6 +40,24 @@ export default {
             default: function () {
                 return []
             },
+        },
+        sub: {
+            type: Object,
+            default: function () {
+                return {}
+            }
+        }
+    },
+    data: function () {
+        return {}
+    },
+    computed: {
+        title: function () {
+            if (this.sub && this.sub.type) {
+                return this.sub.title
+            }
+
+            return 'no-title'
         },
     },
     methods: {

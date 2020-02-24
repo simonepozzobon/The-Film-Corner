@@ -10,7 +10,7 @@
         <div class="ua-prop-player__top">
             <div class="ua-prop-player__title">
                 <ui-title
-                    :title="title"
+                    :title="lnTitle"
                     tag="h2"
                     font-size="h4"
                     :align="titleAlign"
@@ -24,7 +24,7 @@
                 v-if="hasAge"
             >
                 <ui-title
-                    title="14-18 anni"
+                    :title="age"
                     tag="h3"
                     font-size="h5"
                     :has-container="false"
@@ -99,6 +99,18 @@ export default {
             type: String,
             default: null,
         },
+        translations: {
+            type: Array,
+            default: function () {
+                return []
+            },
+        },
+        ages: {
+            type: Array,
+            default: function () {
+                return []
+            },
+        },
     },
     data: function () {
         return {
@@ -111,13 +123,19 @@ export default {
                     src: '/video/empty-session.mp4'
                 }],
                 poster: '/video/empty-session.png',
-            }
+            },
+            lnTitle: null,
+            age: null,
         }
     },
     watch: {
         src: function (src) {
             this.changeSrc()
         },
+        '$root.locale': function (locale) {
+            this.translateTitle(locale)
+            this.translateAge(locale)
+        }
     },
     computed: {
         player: function () {
@@ -135,6 +153,21 @@ export default {
         }
     },
     methods: {
+        translateTitle: function (locale = 'en') {
+            let translation = this.translations.find(translation => translation.locale == locale)
+            if (translation) {
+                this.lnTitle = translation.title
+            }
+            else {
+                this.lnTitle = this.title
+            }
+        },
+        translateAge: function (locale = 'en') {
+            let translation = this.ages.find(translation => translation.locale == locale)
+            if (translation) {
+                this.age = translation.title
+            }
+        },
         changeSrc: function () {
             if (this.src) {
                 delete this.playerOptions.poster
@@ -174,6 +207,10 @@ export default {
     },
     created: function () {
         this.changeSrc()
+    },
+    mounted: function () {
+        this.translateTitle(this.$root.locale)
+        this.translateAge(this.$root.locale)
     },
 }
 </script>

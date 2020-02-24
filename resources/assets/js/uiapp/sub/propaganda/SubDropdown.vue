@@ -47,15 +47,16 @@ import {
 from '../../../ui'
 
 import {
-    TweenMax,
-    TimelineMax,
-    Power4,
+    gsap
 }
-from 'gsap/all'
+from 'gsap'
 
-const plugins = [
-    Power4,
-]
+// import {
+//     ExpoScaleEase
+// }
+// from 'gsap/ExpoScaleEase'
+//
+// gsap.registerPlugin(ExpoScaleEase)
 
 export default {
     name: 'SubDropDown',
@@ -80,7 +81,7 @@ export default {
             master: null,
             duration: .6,
             scale: 2,
-            baseEase: Power4.easeInOut,
+            baseEase: 'power4.inOut',
             initialHeight: 0,
         }
     },
@@ -103,46 +104,48 @@ export default {
                 let inputDur = (duration / (inputs.length * 2))
                 // console.log(inputs);
 
-                TweenMax.set(list, {
+                gsap.set(list, {
                     height: 0,
                 })
 
-                TweenMax.set(inputs, {
+                gsap.set(inputs, {
                     autoAlpha: 0,
                 })
 
-                this.master = new TimelineMax({
+                this.master = gsap.timeline({
                     paused: true,
                     reversed: true
                 })
 
-                this.master.fromTo(el, duration, {
+                this.master.fromTo(el, {
                     rotation: 0,
                     transformOrigin: 'center center 0',
-                    ease: ExpoScaleEase.config(scale, 1, baseEase),
                 }, {
+                    duration: duration,
                     rotation: 90,
                     transformOrigin: 'center center 0',
-                    ease: ExpoScaleEase.config(scale, 1, baseEase),
+                    ease: `expoScale(${scale}, 1, ${baseEase})`,
                 }, 0)
 
-                this.master.fromTo(list, duration, {
+                this.master.fromTo(list, {
                     height: 0,
                     transformOrigin: 'top',
-                    ease: ExpoScaleEase.config(invscale, 1, baseEase),
                 }, {
+                    duration: duration,
                     height: height,
                     transformOrigin: 'top',
-                    ease: ExpoScaleEase.config(invscale, 1, baseEase),
+                    ease: `expoScale(${invscale}, 1, ${baseEase})`,
                 }, 0)
 
-                this.master.staggerFromTo(inputs, duration, {
+                this.master.fromTo(inputs, {
                     autoAlpha: 0,
-                    ease: ExpoScaleEase.config(invscale, 1, baseEase),
+                    ease: `expoScale(${invscale}, 1, ${baseEase})`,
                 }, {
+                    duration: duration,
                     autoAlpha: 1,
-                    ease: ExpoScaleEase.config(scale, 1, baseEase),
-                }, inputDur, 0)
+                    ease: `expoScale(${scale}, 1, ${baseEase})`,
+                    stagger: inputDur,
+                }, 0)
 
                 this.master.progress(1).progress(0)
 

@@ -11,9 +11,9 @@
             v-for="sub in subs"
             :key="sub.id"
             :idx="sub.id"
-            :title="sub.title"
+            :sub="sub"
             :has-children="sub.hasChildren"
-            :childrens="sub.childrens"
+            :childrens="sub.paratext"
             @open-modal="openModal"
         />
     </div>
@@ -56,6 +56,9 @@ export default {
         openModal: function (idx, subId = null) {
             this.$emit('open-modal', idx, subId)
         }
+    },
+    mounted: function () {
+        console.log(this.subs);
     },
 }
 </script>
