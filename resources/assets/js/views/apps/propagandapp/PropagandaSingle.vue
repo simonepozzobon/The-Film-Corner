@@ -47,16 +47,11 @@
                         :size="12"
                         :has-container="false"
                     >
-                        <ui-button
+                        <exercise-button
                             v-for="exercise in content.exercises"
                             :key="exercise.id"
-                            :title="exercise.title"
                             class="prop-single-exercise"
-                            display="inline-block"
-                            color="yellow"
-                            :has-container="false"
-                            :has-margin="false"
-                            @click="goToExercise(exercise.id)"
+                            :exercise="exercise"
                         />
                     </ui-block>
                 </ui-row>
@@ -78,6 +73,7 @@ from '../../../dummies/PropagandAppContent'
 
 import Utility from '../../../Utilities'
 import ModalPanel from '../../../uiapp/sub/propaganda/ModalPanel.vue'
+import ExerciseButton from '../../../uiapp/sub/propaganda/ExerciseButton.vue'
 import {
     UiBlock,
     UiButton,
@@ -116,6 +112,7 @@ export default {
         UiSpecialText,
         UiTitle,
         UiRow,
+        ExerciseButton,
     },
     data: function () {
         return {
@@ -249,10 +246,7 @@ export default {
             })
         },
         goToExercise: function (id) {
-            this.$root.goToWithParams('propaganda-exercise', {
-                id: this.$route.params.id,
-                exerciseId: id
-            })
+            console.log('deprecata');
         }
     },
     created: function () {

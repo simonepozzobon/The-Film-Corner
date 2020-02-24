@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Propaganda\Clip;
 use App\Propaganda\Period;
+use App\Propaganda\Exercise;
 use App\Propaganda\ParatextType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -29,11 +30,29 @@ class PropagandaController extends Controller
     public function get_clip_single($id)
     {
         $clip = Clip::with('period', 'format', 'age', 'directors', 'details', 'peoples', 'topics', 'paratexts.type', 'paratexts.medias', 'libraries.exercise')->where('id', $id)->first();
-
         $exercises = collect();
-        foreach ($clip->libraries as $key => $library) {
-            $exercises->push($library->exercise);
+
+        if ($clip->exercise_1 == 1) {
+            $exercise = Exercise::find(1);
+            $exercises->push($exercise);
         }
+
+        if ($clip->exercise_2 == 1) {
+            $exercise = Exercise::find(2);
+            $exercises->push($exercise);
+        }
+
+        if ($clip->exercise_3 == 1) {
+            $exercise = Exercise::find(3);
+            $exercises->push($exercise);
+        }
+
+        // foreach ($clip->libraries as $key => $library) {
+        //     $exercise = $library->exercise;
+        //     $exercises->push($library->exercise);
+        // }
+        //
+        // dd($exercisesLib);
         $clip->exercises = $exercises;
 
         $clip = $this->format_paratexts($clip);
