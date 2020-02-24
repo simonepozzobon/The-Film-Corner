@@ -221,7 +221,7 @@ export default {
                 }
                 // console.log(this.paratexts);
 
-                this.debug()
+                // this.debug()
 
             })
             // this.content = movies.find(movie => movie.id == id)
