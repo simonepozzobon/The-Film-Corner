@@ -25,9 +25,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Builder;
+use Intervention\Image\Facades\Image;
+
+define('FFMPEG_LIB', '/usr/local/bin/ffmpeg');
 
 class ClipsController extends Controller
 {
+
     public function __construct()
     {
         // set default locale per admin su italiano
@@ -47,40 +51,120 @@ class ClipsController extends Controller
 
     public function test()
     {
-        $request = new Request();
-        $request->replace(
-            [
-                // 'title'=> 'fdjdjgldkf',
-                // 'video'=> 'no',
-                // 'period'=> "Second World War",
-                // 'year'=> '1900',
-                // 'format'=> "4/3",
-                // 'age'=> "14-18",
-                // 'genre'=> "tuo",
-                // 'nationality'=> 'ital',
-                // 'directors' => ["Gianni","Beppe","giovanni"],
-                // 'clip_id' => 20,
-                // 'abstract' => uniqid(),
-                // 'tech_info' => uniqid(),
-                // 'historical_context' => uniqid(),
-                // 'food' => uniqid(),
-                'id' => 16,
-                'period' => 'asfdsaasfasfdsaf',
-                'directors' => json_encode(['Renny Arlin', 'gianni']),
-                'peoples' => json_encode(['Rupert Friend','Richard Coyle','Emanuelle Chriqui']),
-                'year' => 2011,
-                'format' => uniqid(),
-                'age' => '14 - 18',
-                'genre' => 'guerra',
-                'nationality' => 'USA',
-                'topics' => json_encode(['confini','conflitto','guerra','giornalista','Indipendenza']),
-            ]
-        );
+        $clips = $this->generate_thumbnails();
+        dd('completo');
+        // $request = new Request();
+        // $request->replace(
+        //     [
+        //         // 'title'=> 'fdjdjgldkf',
+        //         // 'video'=> 'no',
+        //         // 'period'=> "Second World War",
+        //         // 'year'=> '1900',
+        //         // 'format'=> "4/3",
+        //         // 'age'=> "14-18",
+        //         // 'genre'=> "tuo",
+        //         // 'nationality'=> 'ital',
+        //         // 'directors' => ["Gianni","Beppe","giovanni"],
+        //         // 'clip_id' => 20,
+        //         // 'abstract' => uniqid(),
+        //         // 'tech_info' => uniqid(),
+        //         // 'historical_context' => uniqid(),
+        //         // 'food' => uniqid(),
+        //         'id' => 16,
+        //         'period' => 'asfdsaasfasfdsaf',
+        //         'directors' => json_encode(['Renny Arlin', 'gianni']),
+        //         'peoples' => json_encode(['Rupert Friend','Richard Coyle','Emanuelle Chriqui']),
+        //         'year' => 2011,
+        //         'format' => uniqid(),
+        //         'age' => '14 - 18',
+        //         'genre' => 'guerra',
+        //         'nationality' => 'USA',
+        //         'topics' => json_encode(['confini','conflitto','guerra','giornalista','Indipendenza']),
+        //     ]
+        // );
+        //
+        // // $this->store_details($request);
+        //
+        // // $this->get_initials_edit(39);
+        // $this->store_informations($request);
+    }
 
-        // $this->store_details($request);
+    public function generate_thumbnails()
+    {
+        $clips = Clip::all();
 
-        // $this->get_initials_edit(39);
-        $this->store_informations($request);
+        foreach ($clips as $key => $clip) {
+            echo '----- inizio clip -> '.$clip->id;
+            $clip = $this->generate_thumbnail($clip);
+            $clip = $this->crop_thumbnail($clip);
+            echo 'immagine croppata';
+            echo '----- inizio clip -> '.$clip->id;
+        }
+
+        return $clips;
+    }
+
+    public function crop_thumbnail($clip)
+    {
+        $globalPath = Storage::disk('local')->getDriver()->getAdapter();
+        $path = str_replace('storage', 'public', $clip->thumb);
+        $filePath = $globalPath->applyPathPrefix($path);
+
+        Image::make($filePath)->fit(
+            1920, 1080, function ($constraint) {
+                $constraint->upsize();
+            }
+        )->save();
+
+        return $clip;
+    }
+
+    public function generate_thumbnail($clip)
+    {
+        if (!$clip->thumb || $clip->thumb == null) {
+            $globalPath = Storage::disk('local')->getDriver()->getAdapter();
+            // dump($clip->video);
+            $path = str_replace('storage', 'public', $clip->video);
+            $filename = str_replace('.mp4', '', str_replace('/storage/propaganda/clips/', '', $clip->video));
+            // dump($filename);
+            $filePath = $globalPath->applyPathPrefix($path);
+
+            $timeToSnap = $this->get_clip_thumb_time($filePath);
+            $pathToSave = storage_path('app/public/propaganda/clips/').$filename.'.jpg';
+
+            $saveThumb = $this->save_thumb_at_time($filePath, $timeToSnap, $pathToSave);
+
+            $pathToDB = Storage::disk('local')->url('propaganda/clips/'.$filename.'.jpg');
+            $clip->thumb = $pathToDB;
+            $clip->save();
+            // dump($pathToDB);
+            echo 'completato thumb -> '.$clip->id;
+        } else {
+            echo 'già fatto thumb -> '.$clip->id;
+        }
+
+        return $clip;
+    }
+
+    public function get_clip_thumb_time($path)
+    {
+        $cli = FFMPEG_LIB.' -i '.$path.' 2>&1 | grep \'Duration\' | cut -d \' \' -f 4 | sed s/,//';
+        $duration =  exec($cli);
+
+        $duration = explode(":", $duration);
+        $duration = $duration[0]*3600 + $duration[1]*60+ round($duration[2]);
+        $timeToSnap = $duration / 2;
+
+        return $timeToSnap;
+    }
+
+    public function save_thumb_at_time($filePath, $timeToSnap, $pathToSave)
+    {
+        // prendo il frame e lo salvo
+        $cli = FFMPEG_LIB.' -y -i '.$filePath.' -f mjpeg -vframes 1 -ss '.$timeToSnap.' '.$pathToSave;
+        exec($cli);
+
+        return $cli;
     }
 
     public function upload_caption(Request $request)

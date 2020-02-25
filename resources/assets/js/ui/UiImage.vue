@@ -86,17 +86,19 @@ export default {
             })
         },
         loader: function () {
-            if (this.src) {
-                let img = new Image()
-                img.addEventListener('load', () => {
-                    if (!this.ready) {
-                        this.appendToDOM(img)
-                    }
-                })
-                img.classList.add('ui-image__content')
-                img.alt = this.alt
-                img.src = this.src
-            }
+            this.$nextTick(() => {
+                if (this.src) {
+                    let img = new Image()
+                    img.addEventListener('load', () => {
+                        if (!this.ready) {
+                            this.appendToDOM(img)
+                        }
+                    })
+                    img.classList.add('ui-image__content')
+                    img.alt = this.alt
+                    img.src = this.src
+                }
+            })
         }
     },
     created: function () {

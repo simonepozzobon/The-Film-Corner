@@ -7,8 +7,9 @@
         >
             <div class="ua-single-res__thumb-container">
                 <ui-image
+                    v-if="posterSrc"
                     :src="posterSrc"
-                    :alt="content.title"
+                    :alt="content | translate('title', $root.locale)"
                     :has-margin="false"
                 />
                 <div class="overlay">
@@ -23,7 +24,7 @@
         <div class="ua-single-res__details">
             <div class="ua-single-res__title">
                 <ui-title
-                    :title="content.title"
+                    :title="content | translate('title', $root.locale)"
                     :has-container="false"
                     :has-padding="false"
                     :has-margin="false"
@@ -102,9 +103,11 @@ from '../../../ui'
 
 import SingleHover from './SingleHover.vue'
 import videojs from 'video.js'
+import TranslationFilter from '../../../TranslationFilter'
 
 export default {
     name: 'SingleResult',
+    mixins: [TranslationFilter],
     components: {
         SingleHover,
         UiImage,
@@ -163,6 +166,7 @@ export default {
             ctx.drawImage(player, 0, 0)
 
             this.posterSrc = canvas.toDataURL()
+            console.log(this.posterSrc);
         },
         openResult: function () {
             this.$emit('open-result', this.content)
