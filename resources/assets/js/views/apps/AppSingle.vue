@@ -155,8 +155,7 @@ export default {
             return this.app.title
         },
         path: function () {
-            return 'Studios / ' + this.section + ' / ' + this.category +
-                ' / ' + this.appPath
+            return 'Studios / ' + this.section + ' / ' + this.category + ' / ' + this.appPath
         },
         translatedDescription: function () {
             return this.$options.filters.translate(this.app, 'description', this.$root.locale)
