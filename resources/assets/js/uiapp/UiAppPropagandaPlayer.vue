@@ -148,6 +148,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        isMp4: {
+            type: Boolean,
+            default: false,
+        }
     },
     data: function () {
         return {
@@ -263,6 +267,12 @@ export default {
         if (this.muted) {
             this.playerOptions = Object.assign(this.playerOptions, {
                 muted: true
+            })
+        }
+
+        if (this.isMp4) {
+            this.playerOptions = Object.assign(this.playerOptions, {
+                partialRender: true
             })
         }
         this.changeSrc()

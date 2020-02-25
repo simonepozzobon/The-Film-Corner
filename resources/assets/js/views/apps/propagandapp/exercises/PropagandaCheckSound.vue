@@ -16,6 +16,7 @@
                     title-align="center"
                     :src="clip.video"
                     :muted="true"
+                    :isMp4="true"
                     @play="play"
                     @pause="pause"
                     @stop="stop"
@@ -171,7 +172,25 @@ export default {
         forward: function () {
             this.$refs.audio.forward()
         },
-        addBookmark: function () {},
+        addBookmark: function () {
+            this.pause()
+            let player = this.$refs.audio.player
+            let currentTime = player.getCurrentTime()
+            let endTime = currentTime + 0.1
+
+            let newRegion = {
+                start: currentTime,
+                end: endTime,
+                loop: false,
+                color: 'hsla(100, 100%, 30%, 1)'
+            }
+
+            this.bookmarks.push(newRegion)
+
+            player.addRegion(newRegion)
+
+            console.log('currentTime', currentTime);
+        },
         init: function () {
             if (this.$root.session && this.$root.session.app_id) {
 
