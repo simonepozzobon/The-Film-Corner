@@ -51,8 +51,10 @@ class ClipsController extends Controller
 
     public function test()
     {
-        $clips = $this->generate_thumbnails();
-        dd('completo');
+        // $clips = $this->generate_thumbnails();
+        // $medias = LibraryMedia::all();
+
+        dd('commentato');
         // $request = new Request();
         // $request->replace(
         //     [
@@ -95,7 +97,7 @@ class ClipsController extends Controller
 
         foreach ($clips as $key => $clip) {
             // echo '----- inizio clip -> '.$clip->id;
-            $clip = $this->generate_thumbnail($clip, '');
+            $clip = $this->generate_thumbnail($clip);
             $clip = $this->crop_thumbnail($clip);
             // echo 'immagine croppata';
             // echo '----- inizio clip -> '.$clip->id;

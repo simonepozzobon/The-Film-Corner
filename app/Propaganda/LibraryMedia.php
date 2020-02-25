@@ -13,7 +13,7 @@ class LibraryMedia extends Model
     protected $table = 'library_medias';
 
     public $translatedAttributes = ['title', 'description'];
-    protected $fillable = ['url', 'library_type_id', 'library_id'];
+    protected $fillable = ['url', 'thumb', 'library_type_id', 'library_id'];
 
     public function library()
     {
