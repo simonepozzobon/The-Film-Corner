@@ -57,6 +57,7 @@
         </ui-row>
     </ui-hero-banner>
     <ui-app-channel-results
+        id="channel-result"
         :contents="results"
         :title="currentChannelTitle"
     />
@@ -86,6 +87,17 @@ import {
     UiAppChannelResults
 }
 from '../../../uiapp'
+
+import {
+    gsap
+}
+from 'gsap'
+import {
+    ScrollToPlugin
+}
+from 'gsap/ScrollToPlugin'
+
+gsap.registerPlugin(ScrollToPlugin)
 
 export default {
     name: 'PropagandaHome',
@@ -159,6 +171,14 @@ export default {
                 return channel
             })
             this.currentChannel = selected
+
+            gsap.to(window, {
+                duration: 1,
+                scrollTo: {
+                    y: '#channel-result',
+                    offsetY: 50,
+                }
+            })
         },
         goToChallenges: function () {
             this.$root.goTo('propaganda-challenges')

@@ -54,7 +54,7 @@ import {
 from '../../../uiapp'
 
 export default {
-    name: 'PropagandaHome',
+    name: 'PropagandaSearch',
     components: {
         UiAppChannelResults,
         UiAppSearchForm,

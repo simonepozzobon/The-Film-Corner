@@ -13,9 +13,12 @@
                         class="prop-compare-clips__player"
                         color="dark-gray"
                         :has-age="false"
-                        :title="clip.title"
+                        :title="clip | translate('title', $root.locale)"
                         title-align="center"
                         :src="clip.video"
+                        :clip="clip"
+                        :has-info="true"
+                        @open-info="openInfo"
                     />
                 </div>
                 <div class="prop-compare-clips__right">
@@ -24,16 +27,27 @@
                         class="prop-compare-clips__player"
                         color="dark-gray"
                         :has-age="false"
-                        :title="compare.title"
+                        :title="compare | translate('title', $root.locale)"
                         title-align="center"
-                        :src="compare.video"
+                        :src="compare.video ? compare.video : compare.url"
+                        :clip="compare"
+                        :has-info="true"
+                        @open-info="openInfo"
                     />
                 </div>
             </div>
-            <div class="prop-compare-clips__library">
+            <div
+                class="prop-compare-clips__library"
+                v-if="movies"
+            >
                 <slider-library
-                    :clips="movies"
+                    :movies="movies"
                     @change-video="changeVideo"
+                    @open-modal="openModal"
+                />
+                <slider-modal-panel
+                    ref="modal"
+                    :modal="modal"
                 />
             </div>
         </div>
@@ -42,14 +56,11 @@
 </template>
 
 <script>
-import {
-    movies
-}
-from '../../../../dummies/PropagandAppContent'
-
 import Utility from '../../../../Utilities'
+import TranslationFilter from '../../../../TranslationFilter'
 import PropagandaExerciseTemplate from './PropagandaExerciseTemplate.vue'
 import SliderLibrary from '../../../../uiapp/sub/propaganda/SliderLibrary.vue'
+import SliderModalPanel from '../../../../uiapp/sub/propaganda/SliderModalPanel.vue'
 
 import {
     UiAppPropagandaPlayer,
@@ -57,19 +68,15 @@ import {
 }
 from '../../../../uiapp'
 
-import {
-    UiButton
-}
-from '../../../../ui'
-
 export default {
     name: 'PropagandaCompareClips',
+    mixins: [TranslationFilter],
     components: {
         PropagandaExerciseTemplate,
         SliderLibrary,
+        SliderModalPanel,
         UiAppPropagandaPlayer,
         UiAppCroppedFrames,
-        UiButton,
     },
     data: function () {
         return {
@@ -77,7 +84,8 @@ export default {
             clip: null,
             compare: null,
             frames: [],
-            movies: movies,
+            movies: [],
+            modal: null,
         }
     },
     computed: {
@@ -95,19 +103,38 @@ export default {
             // perform api call
             let url = '/api/v2/propaganda/clip/' + id + '/exercise/' + exerciseId
             this.$http.get(url).then(response => {
-                console.log(response);
-                this.clip = response.data.clip
-                this.compare = this.clip
-                this.content = response.data.exercise
+                console.log(response.data);
+                const {
+                    clip,
+                    exercise
+                } = response.data
+
+                this.clip = clip
+                this.compare = clip
+                this.content = exercise
+                this.movies = exercise.library.medias
             })
 
             // this.clip = movies.find(movie => movie.id == id)
             // this.compare = this.clip
             // this.content = this.clip.exercises.find(exercise => exercise.id == exerciseId)
         },
-        changeVideo: function (clip) {
-            this.compare = Object.assign({}, clip)
+        changeVideo: function (movie) {
+            // console.log('compare changed');
+            this.compare = Object.assign({}, movie)
         },
+        openModal: function (modal) {
+            this.modal = Object.assign({}, modal)
+            this.$nextTick(() => {
+                this.$refs.modal.show()
+            })
+        },
+        openInfo: function (modal) {
+            this.modal = Object.assign({}, modal)
+            this.$nextTick(() => {
+                this.$refs.modal.show()
+            })
+        }
     },
     created: function () {
         this.$root.isApp = true

@@ -23,4 +23,9 @@ class Paratext extends Model
     {
         return $this->morphToMany('App\Propaganda\Media', 'mediable');
     }
+
+    public function type()
+    {
+        return $this->belongsTo('App\Propaganda\ParatextType', 'paratext_type_id');
+    }
 }

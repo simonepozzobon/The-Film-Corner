@@ -9,16 +9,20 @@
     <div class="ua-depth__center">
         <sub-single
             v-for="sub in subs"
-            :key="sub.id"
-            :idx="sub.id"
-            :title="sub.title"
+            :key="sub.idx"
+            :idx="sub.idx"
+            :sub="sub"
             :has-children="sub.hasChildren"
-            :childrens="sub.childrens"
+            :childrens="sub.paratext"
             @open-modal="openModal"
         />
     </div>
     <div class="ua-depth__bottom">
-        <ui-button color="light-gray">
+        <ui-button
+            color="light-gray"
+            :disable="true"
+            class="d-none"
+        >
             Download all content
         </ui-button>
     </div>
@@ -56,6 +60,9 @@ export default {
         openModal: function (idx, subId = null) {
             this.$emit('open-modal', idx, subId)
         }
+    },
+    mounted: function () {
+        // console.log(this.subs);
     },
 }
 </script>

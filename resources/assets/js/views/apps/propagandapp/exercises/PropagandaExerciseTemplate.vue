@@ -15,7 +15,7 @@
                         <ui-block size="auto">
                             <div class="prop-back__app">
                                 <ui-title
-                                    title="Scene"
+                                    :title="$root.getCmd('scene')"
                                     :has-container="false"
                                     :has-margin="false"
                                     :has-padding="false"

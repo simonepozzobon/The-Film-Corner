@@ -27,14 +27,7 @@ export default {
         SubDropdown,
     },
     props: {
-        idx: {
-            type: Number,
-            default: 0,
-        },
-        title: {
-            type: String,
-            default: 'titolo',
-        },
+        idx: [Number, String],
         hasChildren: {
             type: Boolean,
             default: false,
@@ -44,6 +37,51 @@ export default {
             default: function () {
                 return []
             },
+        },
+        sub: {
+            type: Object,
+            default: function () {
+                return {}
+            }
+        }
+    },
+    data: function () {
+        return {}
+    },
+    computed: {
+        title: function () {
+            let keys = ['tech_info', 'abstract', 'historical_context', 'foods']
+            let titles = [{
+                    key: 'tech_info',
+                    title: 'Tecnical Informations'
+                },
+                {
+                    key: 'abstract',
+                    title: 'Abstract'
+                },
+                {
+                    key: 'historical_context',
+                    title: 'Historical Context'
+                },
+                {
+                    key: 'foods',
+                    title: 'Foods for thoughts'
+                }
+            ]
+
+            if (this.sub && this.sub.hasOwnProperty('title')) {
+                return this.sub.title
+            }
+            else if (this.sub && keys.includes(this.sub.key)) {
+                let obj = titles.find(title => title.key == this.sub.key)
+                if (obj) {
+                    return obj.title
+                }
+
+                return 'not-found'
+            }
+
+            return 'no-title'
         },
     },
     methods: {
@@ -55,6 +93,9 @@ export default {
             this.$emit('open-modal', this.idx, id)
         }
     },
+    // mounted: function () {
+    //     console.log('sub', this.sub);
+    // },
 }
 </script>
 
