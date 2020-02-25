@@ -4,16 +4,18 @@ namespace App\Http\Controllers\Api;
 
 use App\Propaganda\Clip;
 use App\Propaganda\Period;
+use App\Propaganda\Library;
 use App\Propaganda\Exercise;
 use App\Propaganda\ParatextType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class PropagandaController extends Controller
 {
     public function test()
     {
-        $clip = $this->get_clip_single(19);
+        $clip = $this->get_exercise_single(19, 1);
         dd($clip);
     }
 
@@ -53,6 +55,7 @@ class PropagandaController extends Controller
         // }
         //
         // dd($exercisesLib);
+
         $clip->exercises = $exercises;
 
         $clip = $this->format_paratexts($clip);
@@ -100,13 +103,36 @@ class PropagandaController extends Controller
         $get_clip = $this->get_clip_single($id);
         $clip = $get_clip['clip'];
 
-        $exercise = collect();
-        $exercises = $clip->exercises;
-        foreach ($exercises as $key => $item) {
-            if ($item->id == $exercise_id) {
-                $exercise = $item;
+        if ($exercise_id == 1) {
+            $library = $clip->libraries()->with('exercise', 'medias')->first();
+            $exercise = $clip->exercises->filter(
+                function ($exercise, $key) use ($exercise_id) {
+                    return $exercise->id == $exercise_id;
+                }
+            )->first();
+
+            $medias = $library->medias->transform(
+                function ($media, $key) {
+                    $url = Storage::disk('local')->url($media->url);
+                    $media->url = $url;
+                    return $media;
+                }
+            );
+
+            $library->medias = $medias;
+
+            $exercise->library = $library;
+        } else {
+            $exercise = collect();
+            $exercises = $clip->exercises;
+            foreach ($exercises as $key => $item) {
+                if ($item->id == $exercise_id) {
+                    $exercise = $item;
+                }
             }
         }
+
+
 
         return [
             'success' => true,

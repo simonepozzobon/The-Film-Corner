@@ -7,15 +7,13 @@
     <!-- slides -->
     <swiper-slide
         class="slider-library__slide"
-        v-for="clip in clips"
-        :key="clip.id"
+        v-for="movie in movies"
+        :key="movie.id"
     >
-        <ui-image
-            class="slider-library__img"
-            :src="clip.image.thumb"
-            :alt="clip.title"
-            :full-width="true"
-            @click="changeVideo(clip)"
+        <slider-preview
+            :movie="movie"
+            @open-modal="openModal"
+            @change-video="changeVideo"
         />
     </swiper-slide>
     <!-- Optional controls -->
@@ -36,6 +34,7 @@
 
 <script>
 import 'swiper/dist/css/swiper.css'
+import SliderPreview from './SliderPreview.vue'
 import {
     swiper,
     swiperSlide
@@ -52,10 +51,11 @@ export default {
     components: {
         swiper,
         swiperSlide,
+        SliderPreview,
         UiImage,
     },
     props: {
-        clips: {
+        movies: {
             type: Array,
             default: function () {
                 return []
@@ -71,8 +71,12 @@ export default {
         }
     },
     methods: {
-        changeVideo: function (clip) {
-            this.$emit('change-video', clip)
+        changeVideo: function (movie) {
+            console.log('library changed', movie);
+            this.$emit('change-video', movie)
+        },
+        openModal: function (movie) {
+            this.$emit('open-modal', movie)
         }
     },
 }

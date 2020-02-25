@@ -4,12 +4,14 @@
     :class="[
         topAlignClass,
         colorClass,
+        hasInfoClass,
     ]"
 >
     <div class="ua-prop-player__container">
         <div class="ua-prop-player__top">
             <div class="ua-prop-player__title">
                 <ui-title
+                    v-if="!hasInfo"
                     :title="lnTitle"
                     tag="h2"
                     font-size="h4"
@@ -18,6 +20,23 @@
                     :has-margin="false"
                     :has-padding="false"
                 />
+
+                <ui-title
+                    v-else
+                    :title="lnTitle"
+                    tag="h3"
+                    font-size="h5"
+                    :has-container="false"
+                    :has-margin="false"
+                    :has-padding="false"
+                />
+            </div>
+            <div
+                v-if="hasInfo"
+                class="ua-prop-player__info"
+                @click.prevent="openInfo"
+            >
+                <span>i</span>
             </div>
             <div
                 class="ua-prop-player__age"
@@ -111,6 +130,20 @@ export default {
                 return []
             },
         },
+        clip: {
+            type: Object,
+            default: function () {
+                return {}
+            },
+        },
+        debug: {
+            type: Boolean,
+            default: false,
+        },
+        hasInfo: {
+            type: Boolean,
+            default: false,
+        },
     },
     data: function () {
         return {
@@ -135,6 +168,12 @@ export default {
         '$root.locale': function (locale) {
             this.translateTitle(locale)
             this.translateAge(locale)
+        },
+        clip: function () {
+            if (this.debug) {
+                console.log('cambiata dentroooo');
+            }
+
         }
     },
     computed: {
@@ -145,11 +184,19 @@ export default {
             if (this.titleAlign == 'center') {
                 return 'ua-prop-player--top-center'
             }
+            return null
         },
         colorClass: function () {
             if (this.color) {
                 return 'ua-prop-player--' + this.color
             }
+            return null
+        },
+        hasInfoClass: function () {
+            if (this.hasInfo) {
+                return 'ua-prop-player--has-info'
+            }
+            return null
         }
     },
     methods: {
@@ -204,6 +251,9 @@ export default {
             this.$emit('forward')
             let position = this.player.currentTime()
         },
+        openInfo: function () {
+            this.$emit('open-info', this.clip)
+        }
     },
     created: function () {
         this.changeSrc()
@@ -242,6 +292,26 @@ export default {
         font-weight: bold;
     }
 
+    &__info {
+        padding: $app-padding-x * 1.1;
+        background-color: $gray-600;
+        color: $green-var;
+        font-size: $h3-font-size;
+        font-weight: $font-weight-bold;
+        width: $spacer * 3;
+        height: $spacer * 3;
+        display: flex;
+        @include border-radius(50%);
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        span {
+            display: block;
+            cursor: pointer;
+        }
+    }
+
     &__age {
         padding: $app-padding-x * 1.1;
         background-color: $red;
@@ -253,6 +323,13 @@ export default {
 
     &--dark-gray {
         background-color: $dark-gray;
+    }
+
+    &--has-info {
+        &__title {
+            font-size: inherit;
+            font-weight: inherit;
+        }
     }
 }
 </style>
