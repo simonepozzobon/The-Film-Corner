@@ -44,7 +44,27 @@ class LibraryController extends Controller
 
         foreach ($medias as $key => $media) {
             $media = $this->generate_thumbnail($media);
+            if ($this->endsWith($media->url, '.mp4')) {
+                $media = $this->crop_thumbnail($media);
+            }
         }
+    }
+
+    public function crop_thumbnail($media)
+    {
+        if ($media->thumb) {
+            $globalPath = Storage::disk('local')->getDriver()->getAdapter();
+            $path = str_replace('storage', 'public', $media->thumb);
+            $filePath = $globalPath->applyPathPrefix($path);
+
+            Image::make($filePath)->fit(
+                1920, 1080, function ($constraint) {
+                    $constraint->upsize();
+                }
+            )->save();
+        }
+
+        return $media;
     }
 
     // https://stackoverflow.com/questions/834303/startswith-and-endswith-functions-in-php
@@ -77,6 +97,8 @@ class LibraryController extends Controller
 
                 $media->thumb = $pathToDB;
                 $media->save();
+
+                $media = $this->crop_thumbnail($media);
             }
         }
 
@@ -136,6 +158,9 @@ class LibraryController extends Controller
         $m->library_type_id = $library->library_type_id;
         $m->library_id = $library->id;
         $m->save();
+
+        $m = $this->generate_thumbnail($m);
+
 
         $current = $m->translateOrNew('it');
         $current->library_media_id = $m->id;

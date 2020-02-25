@@ -108,15 +108,17 @@ class ClipsController extends Controller
 
     public function crop_thumbnail($clip)
     {
-        $globalPath = Storage::disk('local')->getDriver()->getAdapter();
-        $path = str_replace('storage', 'public', $clip->thumb);
-        $filePath = $globalPath->applyPathPrefix($path);
+        if ($clip->thumb) {
+            $globalPath = Storage::disk('local')->getDriver()->getAdapter();
+            $path = str_replace('storage', 'public', $clip->thumb);
+            $filePath = $globalPath->applyPathPrefix($path);
 
-        Image::make($filePath)->fit(
-            1920, 1080, function ($constraint) {
-                $constraint->upsize();
-            }
-        )->save();
+            Image::make($filePath)->fit(
+                1920, 1080, function ($constraint) {
+                    $constraint->upsize();
+                }
+            )->save();
+        }
 
         return $clip;
     }
@@ -124,23 +126,25 @@ class ClipsController extends Controller
     public function generate_thumbnail($clip, $destFolder = 'propaganda/clips/')
     {
         if (!$clip->thumb || $clip->thumb == null) {
-            $globalPath = Storage::disk('local')->getDriver()->getAdapter();
-            // dump($clip->video);
-            $path = str_replace('storage', 'public', $clip->video);
-            $filename = str_replace('.mp4', '', str_replace('/storage/propaganda/clips/', '', $clip->video));
-            // dump($filename);
-            $filePath = $globalPath->applyPathPrefix($path);
+            if ($clip->video != 'no') {
+                $globalPath = Storage::disk('local')->getDriver()->getAdapter();
+                // dump($clip->video);
+                $path = str_replace('storage', 'public', $clip->video);
+                $filename = str_replace('.mp4', '', str_replace('/storage/propaganda/clips/', '', $clip->video));
+                // dump($filename);
+                $filePath = $globalPath->applyPathPrefix($path);
 
-            $timeToSnap = $this->get_clip_thumb_time($filePath);
-            $pathToSave = storage_path('app/public/propaganda/clips/').$filename.'.jpg';
+                $timeToSnap = $this->get_clip_thumb_time($filePath);
+                $pathToSave = storage_path('app/public/propaganda/clips/').$filename.'.jpg';
 
-            $saveThumb = $this->save_thumb_at_time($filePath, $timeToSnap, $pathToSave);
+                $saveThumb = $this->save_thumb_at_time($filePath, $timeToSnap, $pathToSave);
 
-            $pathToDB = Storage::disk('local')->url('propaganda/clips/'.$filename.'.jpg');
-            $clip->thumb = $pathToDB;
-            $clip->save();
-            // dump($pathToDB);
-            // echo 'completato thumb -> '.$clip->id;
+                $pathToDB = Storage::disk('local')->url('propaganda/clips/'.$filename.'.jpg');
+                $clip->thumb = $pathToDB;
+                $clip->save();
+                // dump($pathToDB);
+                // echo 'completato thumb -> '.$clip->id;
+            }
         }
         // else {
         //     // echo 'già fatto thumb -> '.$clip->id;
@@ -392,6 +396,8 @@ class ClipsController extends Controller
 
         $clip->save();
 
+        $clip = $this->generate_thumbnail($clip);
+        $clip = $this->crop_thumbnail($clip);
 
         // Upload Titolo
         $t = $clip->translateOrNew('it');
@@ -558,6 +564,9 @@ class ClipsController extends Controller
             $clip->{$value.'_id'} = $this->check_single_option($value, $request);
         }
         $clip->save();
+
+        $clip = $this->generate_thumbnail($clip);
+        $clip = $this->crop_thumbnail($clip);
 
         foreach ($this->options_multiple as $key => $value) {
             $saved = $this->check_multiple_option($value, $request, $clip);
