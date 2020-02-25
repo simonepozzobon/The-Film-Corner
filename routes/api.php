@@ -81,7 +81,7 @@ Route::prefix('v2')->group(
                 Route::prefix('propaganda')->group(
                     function () {
                         Route::get('clips', 'Api\PropagandaController@get_clips');
-                        Route::get('clip/{id}/exercise/{exercise_id}', 'Api\PropagandaController@get_exercise_single');
+                        Route::get('clip/{id}/exercise/{exercise_id}/{token?}', 'Api\PropagandaController@get_exercise_single');
                         Route::get('clip/{id}', 'Api\PropagandaController@get_clip_single');
                         Route::get('challenge/{id}', 'Api\PropagandaController@get_challenge');
                     }

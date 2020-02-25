@@ -144,6 +144,14 @@ export default {
             type: Boolean,
             default: false,
         },
+        muted: {
+            type: Boolean,
+            default: false,
+        },
+        isMp4: {
+            type: Boolean,
+            default: false,
+        }
     },
     data: function () {
         return {
@@ -256,6 +264,17 @@ export default {
         }
     },
     created: function () {
+        if (this.muted) {
+            this.playerOptions = Object.assign(this.playerOptions, {
+                muted: true
+            })
+        }
+
+        if (this.isMp4) {
+            this.playerOptions = Object.assign(this.playerOptions, {
+                partialRender: true
+            })
+        }
         this.changeSrc()
     },
     mounted: function () {
