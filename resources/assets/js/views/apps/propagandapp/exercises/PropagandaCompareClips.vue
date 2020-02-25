@@ -91,7 +91,12 @@ export default {
     },
     watch: {
         session: function (session) {
-            this.$root.session = session
+            this.$root.session = Object.assign({}, session)
+        },
+        compare: function (clip) {
+            let session = Object.assign({}, this.session)
+            session.content['compare'] = clip
+            this.session = session
         },
     },
     computed: {
@@ -134,9 +139,11 @@ export default {
                 this.movies = exercise.library.medias
 
                 let formattedSession = session
-                formattedSession.content = session.content ? JSON.parse(session.content) : {}
-
-                this.session = formattedSession
+                let content = session.content ? JSON.parse(session.content) : {}
+                formattedSession.content = {
+                    ...content,
+                }
+                this.session = Object.assign({}, formattedSession)
 
                 this.$nextTick(this.init)
             })
