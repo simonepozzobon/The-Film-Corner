@@ -3,6 +3,12 @@
     <div class="cp-preview__title">
         {{ movie | translate('title', $root.locale) }}
     </div>
+    <div class="cp-preview__thumb">
+        <ui-image
+            :src="movie.thumb"
+            :has-margin="false"
+        />
+    </div>
     <div class="cp-preview__modal">
         <ui-button
             :title="$root.getCmd('read_more')"
@@ -74,6 +80,10 @@ export default {
 
     &__title {
         text-align: center;
+    }
+
+    &__thumb {
+        margin-top: $spacer;
     }
 
     &__modal {
