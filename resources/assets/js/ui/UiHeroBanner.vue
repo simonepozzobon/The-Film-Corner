@@ -74,6 +74,7 @@ export default {
 
     &__bg {
         display: none;
+        // position: absolute;
     }
 
     &__container {

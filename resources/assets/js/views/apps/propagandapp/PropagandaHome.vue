@@ -27,9 +27,8 @@
                     class="mr-3"
                     text="search the clips and didactical content through the timeline below or through the"
                 />
-
                 <ui-button
-                    title="Advanced search engine"
+                    :title="$root.getCmd('advanced_search')"
                     color="red"
                     :has-container="false"
                     :has-margin="false"
