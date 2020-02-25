@@ -94,11 +94,11 @@ class ClipsController extends Controller
         $clips = Clip::all();
 
         foreach ($clips as $key => $clip) {
-            echo '----- inizio clip -> '.$clip->id;
-            $clip = $this->generate_thumbnail($clip);
+            // echo '----- inizio clip -> '.$clip->id;
+            $clip = $this->generate_thumbnail($clip, '');
             $clip = $this->crop_thumbnail($clip);
-            echo 'immagine croppata';
-            echo '----- inizio clip -> '.$clip->id;
+            // echo 'immagine croppata';
+            // echo '----- inizio clip -> '.$clip->id;
         }
 
         return $clips;
@@ -119,7 +119,7 @@ class ClipsController extends Controller
         return $clip;
     }
 
-    public function generate_thumbnail($clip)
+    public function generate_thumbnail($clip, $destFolder = 'propaganda/clips/')
     {
         if (!$clip->thumb || $clip->thumb == null) {
             $globalPath = Storage::disk('local')->getDriver()->getAdapter();
@@ -138,12 +138,22 @@ class ClipsController extends Controller
             $clip->thumb = $pathToDB;
             $clip->save();
             // dump($pathToDB);
-            echo 'completato thumb -> '.$clip->id;
-        } else {
-            echo 'già fatto thumb -> '.$clip->id;
+            // echo 'completato thumb -> '.$clip->id;
         }
+        // else {
+        //     // echo 'già fatto thumb -> '.$clip->id;
+        // }
 
         return $clip;
+    }
+
+    public function get_filename($arr, $str)
+    {
+        foreach ($arr as $key => $item) {
+            $str = str_replace($key, '', $str);
+        }
+
+        return $str;
     }
 
     public function get_clip_thumb_time($path)
