@@ -12,13 +12,13 @@
             justify="end"
         >
             <ui-app-propaganda-breadcrumbs
-                :app="content.title"
-                :clip-name="clip.title"
+                :app="content | translate('title', $root.locale)"
+                :clip-name="clip | translate('title', $root.locale)"
                 :clip-id="clip.id"
                 class="prop-app-folder__breadcrumbs"
             />
             <ui-folder-corner
-                :has-times="open"
+                :has-times="isOpen"
                 color="dark-gray"
                 class="prop-app-folder__corner"
                 @click="togglePanel"
@@ -33,7 +33,7 @@
             radius-size="md"
         >
             <ui-title
-                :title="content.title"
+                :title="content | translate('title', $root.locale)"
                 tag="h2"
                 font-size="h2"
                 :has-padding="false"
@@ -63,6 +63,7 @@
 
 <script>
 const clipper = require('text-clipper')
+import TranslationFilter from '../../../TranslationFilter'
 import {
     UiBlock,
     UiBreadcrumbs,
@@ -87,6 +88,7 @@ from '../../../uiapp'
 
 export default {
     name: 'AppFolder',
+    mixins: [TranslationFilter],
     components: {
         UiAppPropagandaBreadcrumbs,
         UiBlock,
@@ -119,9 +121,9 @@ export default {
     },
     data: function () {
         return {
-            open: false,
+            isOpen: true,
             description: null,
-            buttonText: 'Read More',
+            buttonText: null,
         }
     },
     watch: {
@@ -132,26 +134,37 @@ export default {
     methods: {
         setDescription: function () {
             if (this.content) {
-                this.description = this.content.description
+                this.close()
             }
         },
         togglePanel: function () {
-            if (this.open) {
-                this.open = false
-                this.description = this.content.description
-                this.buttonText = 'Read More'
+            if (this.isOpen) {
+                this.close()
             }
             else {
-                this.open = true
-                this.description = clipper(this.content.description, 150, {
-                    html: true
-                })
-                this.buttonText = 'Close'
+                this.open()
             }
+        },
+        open: function () {
+            this.buttonText = this.$root.getCmd('close')
+            this.isOpen = true
+            this.$nextTick(() => {
+                this.description = this.$options.filters.translate(this.content, 'description', this.$root.locale)
+            })
+        },
+        close: function () {
+            this.buttonText = this.$root.getCmd('read_more')
+            this.isOpen = false
+            let description = this.$options.filters.translate(this.content, 'description', this.$root.locale)
+            this.description = clipper(description, 150, {
+                html: true
+            })
         },
     },
     mounted: function () {
-        this.setDescription()
+        this.$nextTick(() => {
+            this.setDescription()
+        })
     },
 }
 </script>

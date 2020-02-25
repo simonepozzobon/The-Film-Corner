@@ -13,7 +13,7 @@
                         class="prop-compare-clips__player"
                         color="dark-gray"
                         :has-age="false"
-                        :title="clip.title"
+                        :title="clip | translate('title', $root.locale)"
                         title-align="center"
                         :src="clip.video"
                     />
@@ -24,7 +24,7 @@
                         class="prop-compare-clips__player"
                         color="dark-gray"
                         :has-age="false"
-                        :title="compare.title"
+                        :title="compare | translate('title', $root.locale)"
                         title-align="center"
                         :src="compare.video"
                     />
@@ -48,6 +48,7 @@ import {
 from '../../../../dummies/PropagandAppContent'
 
 import Utility from '../../../../Utilities'
+import TranslationFilter from '../../../../TranslationFilter'
 import PropagandaExerciseTemplate from './PropagandaExerciseTemplate.vue'
 import SliderLibrary from '../../../../uiapp/sub/propaganda/SliderLibrary.vue'
 
@@ -64,6 +65,7 @@ from '../../../../ui'
 
 export default {
     name: 'PropagandaCompareClips',
+    mixins: [TranslationFilter],
     components: {
         PropagandaExerciseTemplate,
         SliderLibrary,
