@@ -12,9 +12,10 @@
                     class="prop-frame-crop__player"
                     color="dark-gray"
                     :has-age="false"
-                    :title="clip.title"
+                    :title="clip | translate('title', $root.locale)"
                     title-align="center"
                     :src="clip.video"
+                    :muted="true"
                     @play="play"
                     @pause="pause"
                     @stop="stop"
@@ -25,7 +26,7 @@
             <div class="prop-check-sound__player">
                 <audio-player
                     ref="audio"
-                    src="/storage/apps/library/film-specific/sound/whats-going-on/audio/app/mp3/STORIE_SONORE_01_NOIR.mp3"
+                    :src="clip.video"
                 />
             </div>
             <div class="prop-check-sound__btns">
@@ -45,6 +46,7 @@
     <ui-app-note
         class="mt-4"
         color="yellow"
+        @changed="updateNote"
     />
 </propaganda-exercise-template>
 </template>
@@ -56,6 +58,7 @@ import {
 from '../../../../dummies/PropagandAppContent'
 
 import Utility from '../../../../Utilities'
+import TranslationFilter from '../../../../TranslationFilter'
 import PropagandaExerciseTemplate from './PropagandaExerciseTemplate.vue'
 import AudioPlayer from '../../../../uiapp/sub/propaganda/AudioPlayer.vue'
 
@@ -73,6 +76,7 @@ from '../../../../ui'
 
 export default {
     name: 'PropagandaCheckSound',
+    mixins: [TranslationFilter],
     components: {
         AudioPlayer,
         PropagandaExerciseTemplate,
@@ -88,6 +92,19 @@ export default {
             compare: null,
             frames: [],
             movies: movies,
+            notes: null,
+            bookmarks: [],
+            session: null,
+        }
+    },
+    watch: {
+        session: function (session) {
+            this.$root.session = Object.assign({}, session)
+        },
+        notes: function (notes) {
+            let session = Object.assign({}, this.session)
+            session.content['notes'] = notes
+            this.session = session
         }
     },
     computed: {
@@ -97,15 +114,42 @@ export default {
     },
     methods: {
         getData: function () {
+            window.addEventListener('beforeunload', () => {
+                try {
+                    this.deleteEmptySession()
+                }
+                catch (e) {
+
+                }
+                finally {
+
+                }
+            })
+
             let id = this.$route.params.id
             let exerciseId = this.$route.params.exerciseId
             // perform api call
             let url = '/api/v2/propaganda/clip/' + id + '/exercise/' + exerciseId
             this.$http.get(url).then(response => {
                 console.log(response);
-                this.clip = response.data.clip
-                this.compare = this.clip
-                this.content = response.data.exercise
+                const {
+                    clip,
+                    exercise,
+                    session
+                } = response.data
+
+                this.clip = clip
+                this.compare = clip
+                this.content = exercise
+
+                let formattedSession = session
+                let content = session.content ? JSON.parse(session.content) : {}
+                formattedSession.content = {
+                    ...content,
+                }
+                this.session = Object.assign({}, formattedSession)
+
+                this.$nextTick(this.init)
             })
 
             // this.clip = movies.find(movie => movie.id == id)
@@ -128,6 +172,23 @@ export default {
             this.$refs.audio.forward()
         },
         addBookmark: function () {},
+        init: function () {
+            if (this.$root.session && this.$root.session.app_id) {
+
+            }
+        },
+        deleteEmptySession: function () {
+            // verificare se è vuota
+            if (Boolean(this.session.is_empty)) {
+                this.$http.delete('/api/v2/session/' + this.session.token + '/true')
+            }
+            this.$nextTick(() => {
+                this.$root.session = null
+            })
+        },
+        updateNote: function (notes) {
+            this.notes = notes
+        }
     },
     created: function () {
         this.$root.isApp = true

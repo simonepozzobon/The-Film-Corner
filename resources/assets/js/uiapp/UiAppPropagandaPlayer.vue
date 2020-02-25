@@ -144,6 +144,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        muted: {
+            type: Boolean,
+            default: false,
+        },
     },
     data: function () {
         return {
@@ -256,6 +260,11 @@ export default {
         }
     },
     created: function () {
+        if (this.muted) {
+            this.playerOptions = Object.assign(this.playerOptions, {
+                muted: true
+            })
+        }
         this.changeSrc()
     },
     mounted: function () {
