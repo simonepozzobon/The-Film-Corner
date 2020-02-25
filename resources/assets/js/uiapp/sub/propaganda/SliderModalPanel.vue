@@ -79,11 +79,11 @@ export default {
             src: null,
         }
     },
-    watch: {
-        modal: function () {
-            console.log('modal changed');
-        }
-    },
+    // watch: {
+    //     modal: function () {
+    //         // console.log('modal changed');
+    //     }
+    // },
     computed: {
         player: function () {
             return this.$refs.player.player
@@ -102,7 +102,6 @@ export default {
     methods: {
         show: function () {
             if (this.$refs.modal) {
-                console.log('modal showing', this.modal);
                 this.src = null
 
                 if (this.modal.hasOwnProperty('video')) {
