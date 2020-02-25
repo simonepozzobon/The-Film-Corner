@@ -7,6 +7,7 @@
                     <ui-container
                         :contain="true"
                         ref="folder"
+                        v-if="content"
                     >
                         <ui-row>
                             <ui-block
@@ -16,12 +17,13 @@
                                 justify="end"
                             >
 
-                                <ui-app-challenges-breadcrumbs :app="content.title" />
+                                <ui-app-challenges-breadcrumbs :app="content | translate('title', $root.locale)" />
 
                                 <ui-folder-corner
+                                    @click="togglePanel"
                                     color="dark-gray"
                                     cross="white"
-                                    :has-times="false"
+                                    :has-times="open"
                                 />
 
                             </ui-block>
@@ -36,7 +38,7 @@
                                 <ui-title
                                     tag="h2"
                                     font-size="h2"
-                                    :title="content.title"
+                                    :title="content | translate('title', $root.locale)"
                                     class="pt-5"
                                     color="white"
                                 />
@@ -61,7 +63,7 @@
                                 radius-size="md"
                             >
                                 <ui-special-text
-                                    text="Watch the affiches of the TFC projects community."
+                                    :text="$root.getCmd('watch_propaganda_affiches')"
                                     class="pt-5"
                                     color="white"
                                 />
@@ -77,7 +79,7 @@
                         class="prop-upload"
                     >
                         <ui-app-block
-                            title="Upload your affiche"
+                            :title="$root.getCmd('upload_propaganda_affiche')"
                             title-color="white"
                             color="dark"
                         >
@@ -86,7 +88,7 @@
                                     type="text"
                                     name="title"
                                     class="form-control"
-                                    placeholder="Title"
+                                    :placeholder="$root.getCmd('title')"
                                     v-model="title"
                                 >
                             </div>
@@ -103,8 +105,16 @@
                                         class="custom-file-label"
                                         for="inputGroupFile04"
                                     >
-                                        Choose file
+                                        {{ $root.getCmd('select_file') }}
                                     </label>
+                                </div>
+                            </div>
+                            <div class="form-group form-disclaimer">
+                                <div class="form-disclaimer__icon">
+                                    <span>i</span>
+                                </div>
+                                <div class="form-disclaimer__warning">
+                                    {{ $root.getCmd('upload_disclaimer') }}
                                 </div>
                             </div>
                             <ui-button
@@ -113,9 +123,8 @@
                                 color="yellow"
                                 align="center"
                                 @click="upload"
-                            >
-                                Upload
-                            </ui-button>
+                                :title="$root.getCmd('upload')"
+                            />
                         </ui-app-block>
                     </ui-container>
                 </ui-container>
@@ -134,6 +143,8 @@ import {
 from '../../../../dummies/PropagandAppContent'
 
 import Utility from '../../../../Utilities'
+import TranslationFilter from '../../../../TranslationFilter'
+
 import {
     UiBlock,
     UiBreadcrumbs,
@@ -161,7 +172,8 @@ import {
 from '../../../../uiapp'
 
 export default {
-    name: 'ChallengeSingle',
+    name: 'ChallengeAffiche',
+    mixins: [TranslationFilter],
     components: {
         UiAppBlock,
         UiAppChallengesBreadcrumbs,
@@ -187,12 +199,12 @@ export default {
             content: null,
             open: false,
             description: null,
-            buttonText: 'Open existing session',
+            buttonText: null,
         }
     },
     watch: {
         content: function (content) {
-            this.description = content.description
+            this.description = this.$options.filters.translate(content, 'description', this.$root.locale)
         },
     },
     computed: {},
@@ -200,9 +212,16 @@ export default {
         getData: function () {
             let id = 4
             // perform api call
-            this.content = challenges.find(challenge => challenge.id == id)
+            this.$http.get(`/api/v2/propaganda/challenge/${id}`).then(response => {
+                console.log(response.data);
+                if (response.data.success) {
+                    this.content = response.data.challenge
+                }
+            }).catch(err => {
+                this.content = challenges.find(challenge => challenge.id == id)
+            })
 
-            this.debug()
+            // this.debug()
         },
         debug: function () {
             console.log(this.content);
@@ -214,6 +233,21 @@ export default {
             this.file = files[0]
             this.error_msg = null
             console.log(files);
+        },
+        togglePanel: function () {
+            if (this.open) {
+                this.open = false
+                this.description = this.$options.filters.translate(this.content, 'description', this.$root.locale)
+                this.buttonText = this.$root.getCmd('open_existing_session')
+            }
+            else {
+                this.open = true
+                let description = this.$options.filters.translate(this.content, 'description', this.$root.locale)
+                this.description = clipper(description, 150, {
+                    html: true
+                })
+                this.buttonText = this.$root.getCmd('read_more')
+            }
         },
         upload: function () {
             let data = new FormData()
@@ -252,6 +286,37 @@ export default {
 
 <style lang="scss" scoped>
 @import '~styles/shared';
+
+.form-disclaimer {
+    margin-top: $spacer * 2;
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    &__icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $gray-600;
+        width: $spacer * 3;
+        height: $spacer * 3;
+        @include border-radius(50%);
+
+        span {
+            color: $danger;
+            font-weight: $font-weight-bold;
+            font-size: $h3-font-size;
+        }
+    }
+
+    &__warning {
+        line-height: 1;
+        display: block;
+        color: $white;
+        margin-left: $spacer;
+    }
+}
+
 .propaganda-back {
     padding-top: 90px;
     background-image: url("/img/grafica/propaganda/bg-app-80.jpg");

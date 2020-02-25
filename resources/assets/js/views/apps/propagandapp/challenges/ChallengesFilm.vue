@@ -7,6 +7,7 @@
                     <ui-container
                         :contain="true"
                         ref="folder"
+                        v-if="content"
                     >
                         <ui-row>
                             <ui-block
@@ -16,7 +17,7 @@
                                 justify="end"
                             >
 
-                                <ui-app-challenges-breadcrumbs :app="content.title" />
+                                <ui-app-challenges-breadcrumbs :app="content | translate('title', $root.locale)" />
 
                                 <ui-folder-corner
                                     @click="togglePanel"
@@ -37,7 +38,7 @@
                                 <ui-title
                                     tag="h2"
                                     font-size="h2"
-                                    :title="content.title"
+                                    :title="content | translate('title', $root.locale)"
                                     class="pt-5"
                                     color="white"
                                 />
@@ -47,27 +48,84 @@
                                     align="justify"
                                     v-html="description"
                                 />
-                                <div
-                                    class="pb-4"
-                                    v-if="!content.hasOwnProperty('disableSessions') && content.disableSessions != true"
-                                >
-                                    <ui-button
-                                        color="light"
-                                        display="inline-block"
-                                        @click="startApp"
-                                    >
-                                        Start a new session
-                                    </ui-button>
-                                    <ui-button
-                                        color="light"
-                                        display="inline-block"
-                                        @click="togglePanel"
-                                    >
-                                        {{ buttonText }}
-                                    </ui-button>
+                            </ui-block>
+                        </ui-row>
+                    </ui-container>
+                    <ui-container
+                        :contain="true"
+                        class="prop-films"
+                    >
+                        <ui-row justify="center">
+                            <ui-block
+                                size="auto"
+                                color="dark-gray"
+                                :radius="true"
+                                radius-size="md"
+                            >
+                                <ui-special-text
+                                    :text="$root.getCmd('watch_propaganda_films')"
+                                    class="pt-5"
+                                    color="white"
+                                />
+
+                                <div class="prop-affiches__container">
+                                    <ui-image-slider :images="[]" />
                                 </div>
                             </ui-block>
                         </ui-row>
+                    </ui-container>
+                    <ui-container
+                        :contain="true"
+                        class="prop-upload"
+                    >
+                        <ui-app-block
+                            :title="$root.getCmd('upload_propaganda_film')"
+                            title-color="white"
+                            color="dark"
+                        >
+                            <div class="form-group">
+                                <input
+                                    type="text"
+                                    name="title"
+                                    class="form-control"
+                                    :placeholder="$root.getCmd('title')"
+                                    v-model="title"
+                                >
+                            </div>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input
+                                        type="file"
+                                        class="custom-file-input"
+                                        accept="video/*, image/*"
+                                        @change="filesChange($event.target.name, $event.target.files)"
+                                    >
+
+                                    <label
+                                        class="custom-file-label"
+                                        for="inputGroupFile04"
+                                    >
+                                        {{ $root.getCmd('select_file') }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group form-disclaimer">
+                                <div class="form-disclaimer__icon">
+                                    <span>i</span>
+                                </div>
+                                <div class="form-disclaimer__warning">
+                                    {{ $root.getCmd('upload_disclaimer') }}
+                                </div>
+                            </div>
+                            <ui-button
+                                class="mt-4"
+                                :has-margin="false"
+                                color="yellow"
+                                align="center"
+                                @click="upload"
+                                :title="$root.getCmd('upload')"
+                            />
+                        </ui-app-block>
                     </ui-container>
                     <!-- <ui-app-session-manager
                         :app="this.app"
@@ -90,6 +148,7 @@ import {
 from '../../../../dummies/PropagandAppContent'
 
 import Utility from '../../../../Utilities'
+import TranslationFilter from '../../../../TranslationFilter'
 import {
     UiBlock,
     UiBreadcrumbs,
@@ -104,6 +163,7 @@ import {
     UiSpecialText,
     UiTitle,
     UiRow,
+    UiImageSlider,
 }
 from '../../../../ui'
 
@@ -111,11 +171,13 @@ import {
     UiAppDepthTexts,
     UiAppChallengesBreadcrumbs,
     UiAppPropagandaPlayer,
+    UiAppBlock,
 }
 from '../../../../uiapp'
 
 export default {
-    name: 'ChallengeSingle',
+    name: 'ChallengePropagandaFilm',
+    mixins: [TranslationFilter],
     components: {
         UiAppChallengesBreadcrumbs,
         UiBlock,
@@ -131,6 +193,8 @@ export default {
         UiSpecialText,
         UiTitle,
         UiRow,
+        UiImageSlider,
+        UiAppBlock,
     },
     data: function () {
         return {
@@ -139,12 +203,12 @@ export default {
             content: null,
             open: false,
             description: null,
-            buttonText: 'Open existing session',
+            buttonText: null,
         }
     },
     watch: {
         content: function (content) {
-            this.description = content.description
+            this.description = this.$options.filters.translate(content, 'description', this.$root.locale)
         },
     },
     computed: {},
@@ -152,7 +216,14 @@ export default {
         getData: function () {
             let id = 1
             // perform api call
-            this.content = challenges.find(challenge => challenge.id == id)
+            this.$http.get(`/api/v2/propaganda/challenge/${id}`).then(response => {
+                console.log(response.data);
+                if (response.data.success) {
+                    this.content = response.data.challenge
+                }
+            }).catch(err => {
+                this.content = challenges.find(challenge => challenge.id == id)
+            })
 
             // this.debug()
         },
@@ -166,20 +237,27 @@ export default {
             console.log(this.content.slug);
             this.$root.goTo('propaganda-film-app')
         },
+        filesChange: function (name, files) {
+            this.file = files[0]
+            this.error_msg = null
+            console.log(files);
+        },
         togglePanel: function () {
             if (this.open) {
                 this.open = false
-                this.description = this.content.description
-                this.buttonText = 'Open existing session'
+                this.description = this.$options.filters.translate(this.content, 'description', this.$root.locale)
+                this.buttonText = this.$root.getCmd('open_existing_session')
             }
             else {
                 this.open = true
-                this.description = clipper(this.content.description, 150, {
+                let description = this.$options.filters.translate(this.content, 'description', this.$root.locale)
+                this.description = clipper(description, 150, {
                     html: true
                 })
-                this.buttonText = 'Close Panel'
+                this.buttonText = this.$root.getCmd('read_more')
             }
         },
+        upload: function () {},
     },
     created: function () {
         this.getData()
@@ -190,6 +268,37 @@ export default {
 
 <style lang="scss" scoped>
 @import '~styles/shared';
+
+.form-disclaimer {
+    margin-top: $spacer * 2;
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    &__icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $gray-600;
+        width: $spacer * 3;
+        height: $spacer * 3;
+        @include border-radius(50%);
+
+        span {
+            color: $danger;
+            font-weight: $font-weight-bold;
+            font-size: $h3-font-size;
+        }
+    }
+
+    &__warning {
+        line-height: 1;
+        display: block;
+        color: $white;
+        margin-left: $spacer;
+    }
+}
+
 .propaganda-back {
     padding-top: 90px;
     background-image: url("/img/grafica/propaganda/bg-app-80.jpg");
@@ -208,6 +317,21 @@ export default {
     &__content {
         padding: $spacer * 2;
     }
+}
+
+.prop-films {
+    margin-top: $spacer * 2;
+
+    &__container {
+        position: relative;
+        max-width: 100%;
+        overflow: hidden;
+        padding-bottom: $spacer * 4;
+    }
+}
+
+.prop-upload {
+    margin-top: $spacer * 2;
 }
 
 .prop-ex-container {

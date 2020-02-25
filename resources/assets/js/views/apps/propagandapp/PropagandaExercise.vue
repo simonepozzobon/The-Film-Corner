@@ -209,12 +209,13 @@ export default {
         togglePanel: function () {
             if (this.open) {
                 this.open = false
-                this.description = this.content.description
+                this.description = this.$options.filters.translate(this.content, 'description', this.$root.locale)
                 this.buttonText = this.$root.getCmd('open_existing_session')
             }
             else {
                 this.open = true
-                this.description = clipper(this.content.description, 150, {
+                let description = this.$options.filters.translate(this.content, 'description', this.$root.locale)
+                this.description = clipper(description, 150, {
                     html: true
                 })
                 this.buttonText = this.$root.getCmd('close_panel')

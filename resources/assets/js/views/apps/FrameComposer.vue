@@ -114,6 +114,9 @@ export default {
 
             this.canvas = new fabric.Canvas(canvas, {
                 backgroundColor: '#f3f3f3',
+                // selectionBorderColor: 'rgba(255, 255, 255, 0.8)',
+                // selectionColor: 'rgba(255, 255, 255, 0.8)',
+                // selectionLineWidth: 2,
                 centeredScaling: true,
             })
 
@@ -253,14 +256,16 @@ export default {
                 let obj = objs[i].toJSON()
                 let layer = layers.filter(layer => layer.uuid == obj.uuid)[0]
                 let layerInverse = layers.filter(layer => layer.uuid != obj.uuid)
-                if (hasToActive) {
-                    layer.setActive()
-                    layerInverse.forEach(asset => {
-                        asset.unsetActive()
-                    })
-                }
-                else {
-                    layer.unsetActive()
+                if (layer) {
+                    if (hasToActive) {
+                        layer.setActive()
+                        layerInverse.forEach(asset => {
+                            asset.unsetActive()
+                        })
+                    }
+                    else {
+                        layer.unsetActive()
+                    }
                 }
             }
         },
@@ -450,6 +455,14 @@ export default {
             this.addToCanvas(index, libraryID)
         },
         selectLayer: function (idx) {
+
+            this.objs[idx].set({
+                borderColor: 'white',
+                cornerColor: 'white',
+                cornerSize: 10,
+                transparentCorners: true
+            })
+
             this.canvas.setActiveObject(this.objs[idx])
             this.canvas.renderAll()
         },
