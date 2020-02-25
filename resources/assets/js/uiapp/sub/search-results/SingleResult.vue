@@ -7,18 +7,18 @@
         >
             <div class="ua-single-res__thumb-container">
                 <ui-image
-                    v-if="posterSrc"
-                    :src="posterSrc"
+                    v-if="content.thumb"
+                    :src="content.thumb"
                     :alt="content | translate('title', $root.locale)"
                     :has-margin="false"
                 />
                 <div class="overlay">
                     <single-hover />
                 </div>
-                <video
+                <!-- <video
                     ref="player"
                     class="video-js d-none"
-                ></video>
+                ></video> -->
             </div>
         </div>
         <div class="ua-single-res__details">
@@ -134,13 +134,13 @@ export default {
             }
         }
     },
-    watch: {
-        'content.src': function (src) {
-            if (this.player && this.playerReady) {
-                this.setSrc()
-            }
-        },
-    },
+    // watch: {
+    //     'content.src': function (src) {
+    //         if (this.player && this.playerReady) {
+    //             this.setSrc()
+    //         }
+    //     },
+    // },
     methods: {
         initPlayer: function () {
             this.player = videojs(this.$refs.player, this.options, () => {
@@ -179,13 +179,13 @@ export default {
         },
     },
     mounted: function () {
-        this.initPlayer()
+        // this.initPlayer()
     },
-    beforeDestroy: function () {
-        if (this.player) {
-            this.player.dispose()
-        }
-    }
+    // beforeDestroy: function () {
+    //     if (this.player) {
+    //         this.player.dispose()
+    //     }
+    // }
 }
 </script>
 
