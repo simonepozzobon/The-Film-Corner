@@ -203,7 +203,7 @@ export default {
             content: null,
             open: false,
             description: null,
-            buttonText: this.$root.getCmd('open_existing_session'),
+            buttonText: null,
         }
     },
     watch: {
@@ -266,7 +266,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '~styles/shared';
 
 .form-disclaimer {
