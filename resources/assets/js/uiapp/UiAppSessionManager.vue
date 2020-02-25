@@ -12,6 +12,7 @@
             :color="colorClass"
             :radius="true"
             radius-size="md"
+            :class="uaSessionColorClass"
         >
             <transition-group
                 tag="div"
@@ -119,9 +120,22 @@ export default {
             }
         },
     },
+    computed: {
+        uaSessionColorClass: function () {
+            if (this.colorClass == 'dark-gray') {
+                return 'ua-session-text-light'
+            }
+
+            return null
+        },
+    },
     methods: {
         setDefault: function () {
-            this.colorClass = this.app.category.color_class ? this.app.category.color_class : 'gray-dark'
+            this.colorClass = 'dark-gray'
+            if (this.app.category && this.app.category.color_class) {
+                this.colorClass = this.app.category.color_class
+            }
+            console.log(this.colorClass);
         },
         deleteSession: function (idx) {
             let url = '/api/v2/session/' + idx + '/false'
@@ -170,6 +184,7 @@ export default {
                 // className: '+=app-sessions--visible'
             })
             this.master.progress(1).progress(0)
+            this.setDefault()
         },
         play: function () {
             if (this.master) {
@@ -222,5 +237,9 @@ export default {
 
 .app-session-list-enter-active {
     transition-delay: 0.2s;
+}
+
+.ua-session-text-light .ua-session {
+    color: $white;
 }
 </style>

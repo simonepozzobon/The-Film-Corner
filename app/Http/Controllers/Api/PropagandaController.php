@@ -108,6 +108,7 @@ class PropagandaController extends Controller
     public function get_exercise_single($id, $exercise_id, $token = null)
     {
         $get_clip = $this->get_clip_single($id);
+        $user = Auth::user();
         $clip = $get_clip['clip'];
         $app = App::find(19);
 
@@ -122,6 +123,13 @@ class PropagandaController extends Controller
             $app = App::find(21);
             break;
         }
+
+        $sessions = $user->sessions()->where(
+            [
+                ['app_id', $app->id],
+                ['is_empty', '!=', 1]
+            ]
+        )->get();
 
         if ($exercise_id == 1) {
             $library = $clip->libraries()->with('exercise', 'medias')->first();
@@ -162,6 +170,8 @@ class PropagandaController extends Controller
             $session->save();
             $session->refresh();
             $session->app = $session->app;
+        } else if ($token == 'navigation') {
+            $session = null;
         } else {
             $session = Session::where('token', $token)->with('app')->first();
         }
@@ -171,6 +181,7 @@ class PropagandaController extends Controller
             'clip' => $clip,
             'exercise' => $exercise,
             'session' => $session,
+            'sessions' => $sessions,
         ];
     }
 

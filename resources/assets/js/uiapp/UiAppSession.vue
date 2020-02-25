@@ -79,7 +79,11 @@ export default {
             type: String,
             default: null,
         },
-        isShared: [Boolean, String, Number]
+        isShared: [Boolean, String, Number],
+        color: {
+            type: String,
+            default: null,
+        },
     },
     data: function () {
         return {
@@ -103,6 +107,12 @@ export default {
             }
             return false
         },
+        textColorClass: function () {
+            if (this.color == 'dark-gray') {
+                return 'ua-session--text-light'
+            }
+            return null
+        }
     },
     methods: {
         init: function () {
@@ -157,7 +167,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '~styles/shared';
 
 .ua-session {

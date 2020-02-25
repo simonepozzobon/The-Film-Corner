@@ -181,11 +181,19 @@ export default {
             let exerciseId = this.$route.params.exerciseId
 
             // perform api call
-            let url = '/api/v2/propaganda/clip/' + id + '/exercise/' + exerciseId
+            let url = '/api/v2/propaganda/clip/' + id + '/exercise/' + exerciseId + '/navigation'
             this.$http.get(url).then(response => {
                 // console.log(response);
-                this.clip = response.data.clip
-                this.content = response.data.exercise
+                const {
+                    clip,
+                    exercise,
+                    sessions
+                } = response.data
+
+                this.clip = clip
+                this.content = exercise
+                this.sessions = sessions
+
                 this.buttonText = this.$root.getCmd('open_existing_session')
 
                 this.translateExercise()

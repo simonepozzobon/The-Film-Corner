@@ -1,7 +1,7 @@
 <template>
-    <div
-        class="ui-block-head"
-        :class="[
+<div
+    class="ui-block-head"
+    :class="[
                 sizeClass,
                 alignClass,
                 justifyClass,
@@ -11,28 +11,32 @@
                 fullHeightClass,
                 colorVariationClass,
             ]"
-        ref="block"
-        v-if="hasContainer">
-
-        <div
-            class="ui-block-head__container"
-            :class="colorClass"
-            ref="container">
-
-            <ui-title
-                class="ui-block-head__head"
-                :title="title"
-                align="center"/>
-
-            <div class="ui-block-head__content">
-                <slot></slot>
-            </div>
-        </div>
-    </div>
+    ref="block"
+    v-if="hasContainer"
+>
 
     <div
-        class="ui-block-head"
-        :class="[
+        class="ui-block-head__container"
+        :class="colorClass"
+        ref="container"
+    >
+
+        <ui-title
+            class="ui-block-head__head"
+            :title="title"
+            align="center"
+            :color="titleColorClass"
+        />
+
+        <div class="ui-block-head__content">
+            <slot></slot>
+        </div>
+    </div>
+</div>
+
+<div
+    class="ui-block-head"
+    :class="[
                 sizeClass,
                 alignClass,
                 justifyClass,
@@ -43,19 +47,21 @@
                 colorVariationClass,
                 colorClass,
             ]"
-        ref="block"
-        v-else>
+    ref="block"
+    v-else
+>
 
-        <ui-title
-            class="ui-block-head__head"
-            :title="title"
-            align="center"/>
+    <ui-title
+        class="ui-block-head__head"
+        :title="title"
+        align="center"
+    />
 
-        <div class="ui-block-head__content">
-            <slot></slot>
-        </div>
-
+    <div class="ui-block-head__content">
+        <slot></slot>
     </div>
+
+</div>
 </template>
 
 <script>
@@ -113,66 +119,78 @@ export default {
         },
     },
     computed: {
-        sizeClass: function() {
+        sizeClass: function () {
             if (this.size == 'auto') {
                 return 'col'
             }
             return 'col-md-' + this.size
         },
-        colorClass: function() {
+        colorClass: function () {
             if (this.color && this.transparent) {
-                return 'ui-block-head--transparent-'+this.color
-            } else if (this.color) {
+                return 'ui-block-head--transparent-' + this.color
+            }
+            else if (this.color) {
                 return 'bg-' + this.color
             }
         },
-        colorVariationClass: function() {
+        titleColorClass: function () {
+            if (this.color == 'dark-gray') {
+                return 'white'
+            }
+            return null
+        },
+        colorVariationClass: function () {
             if (this.color && !this.transparent) {
                 return 'ui-block-head--' + this.color
             }
         },
-        alignClass: function() {
+        alignClass: function () {
             if (this.align == 'start') {
                 return 'ui-block-head--align-start'
-            } else if (this.align == 'between') {
+            }
+            else if (this.align == 'between') {
                 return 'ui-block-head--align-between'
-            } else if (this.align == 'end') {
+            }
+            else if (this.align == 'end') {
                 return 'ui-block-head--align-end'
             }
         },
-        justifyClass: function() {
+        justifyClass: function () {
             if (this.justify == 'start') {
                 return 'ui-block-head--justify-start'
-            } else if (this.justify == 'between') {
+            }
+            else if (this.justify == 'between') {
                 return 'ui-block-head--justify-between'
-            } else if (this.justify == 'center') {
+            }
+            else if (this.justify == 'center') {
                 return 'ui-block-head--justify-center'
-            } else if (this.justify == 'end') {
+            }
+            else if (this.justify == 'end') {
                 return 'ui-block-head--justify-end'
             }
         },
-        directionClass: function() {
+        directionClass: function () {
             if (this.direction == 'row') {
                 return 'ui-block-head--flex-row'
             }
         },
-        radiusClass: function() {
+        radiusClass: function () {
             if (this.radius && !this.radiusSize) {
                 return 'ui-block-head--radius'
-            } else if (this.radius && this.radiusSize) {
-                return 'ui-block-head--radius-'+this.radiusSize
+            }
+            else if (this.radius && this.radiusSize) {
+                return 'ui-block-head--radius-' + this.radiusSize
             }
         },
-        radiusSizeClass: function() {
-            if (this.radiusSize) {
-            }
+        radiusSizeClass: function () {
+            if (this.radiusSize) {}
         },
-        transparentClass: function() {
+        transparentClass: function () {
             if (this.transparent) {
                 return 'ui-block-head--transparent'
             }
         },
-        fullHeightClass: function() {
+        fullHeightClass: function () {
             if (this.fullHeight) {
                 return 'ui-block-head--full-height'
             }
@@ -244,7 +262,6 @@ export default {
         }
     }
 
-
     &--align-start &__container {
         align-items: flex-start;
     }
@@ -255,7 +272,7 @@ export default {
 
     &--flex-row &__container {
         flex-direction: row;
-        align-items: center
+        align-items: center;
     }
 
     &--flex-row#{&}--align-start &__container {
@@ -291,5 +308,4 @@ export default {
         justify-content: flex-start;
     }
 }
-
 </style>
