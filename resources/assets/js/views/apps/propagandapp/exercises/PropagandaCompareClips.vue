@@ -121,6 +121,18 @@ export default {
             return '_' + Math.random().toString(36).substr(2, 9)
         },
         getData: function () {
+            window.addEventListener('beforeunload', () => {
+                try {
+                    this.deleteEmptySession()
+                }
+                catch (e) {
+
+                }
+                finally {
+
+                }
+            })
+
             let id = this.$route.params.id
             let exerciseId = this.$route.params.exerciseId
             // perform api call
