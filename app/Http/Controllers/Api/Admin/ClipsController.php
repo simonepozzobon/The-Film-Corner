@@ -19,13 +19,14 @@ use App\Propaganda\Exercise;
 use App\Propaganda\ParatextType;
 use App\Propaganda\ClipTranslation;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Builder;
 use Intervention\Image\Facades\Image;
+use \Done\Subtitles\Subtitles;
 
 define('FFMPEG_LIB', '/usr/local/bin/ffmpeg');
 
@@ -198,7 +199,14 @@ class ClipsController extends Controller
             $src = $file->storeAs($path, $filename);
             $src = Storage::disk('local')->url($src);
 
-            $caption->src = $src;
+            $globalPath = Storage::disk('local')->getDriver()->getAdapter();
+            $srt = str_replace('/storage', 'public', $src);
+            $filePath = $globalPath->applyPathPrefix($srt);
+            $destPath = str_replace('.srt', '.vtt', $filePath);
+            $subtitles = Subtitles::convert($filePath, $destPath);
+
+            $caption->src = str_replace('.srt', '.vtt', $src);
+            // $caption->src = $src;
             $caption->save();
 
             $clip = $clip->fresh($this->options);

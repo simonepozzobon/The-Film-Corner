@@ -19,6 +19,7 @@
         "laravel/scout": "^3.0",
         "laravel/tinker": "~1.0",
         "maatwebsite/excel": "^2.1",
+        "mantas-done/subtitles": "^0.3.9",
         "mews/purifier": "^2.0",
         "pragmarx/tracker": "^3.2",
         "predis/predis": "^1.1",

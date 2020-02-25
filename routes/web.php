@@ -11,9 +11,10 @@ use App\Events\UserSignin;
 |--------------------------------------------------------------------------
 */
 
+Route::get('/test', 'Api\Admin\CaptionConversionController@get_captions');
 // Route::get('/test', 'Api\LoadController@test');
 // Route::get('/test', 'Api\Admin\ClipsController@test');
-Route::get('/test', 'Api\Admin\LibraryController@test_web');
+// Route::get('/test', 'Api\Admin\LibraryController@test_web');
 // Route::get('/test', 'Api\TranslationController@get_translations');
 // Route::get('/test', 'Api\Admin\ClipsController@test');
 // Route::get('/test', 'Api\PropagandaController@test');
