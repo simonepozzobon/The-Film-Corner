@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use Auth;
+use App\App;
 use App\Propaganda\Clip;
 use App\Propaganda\Period;
 use App\Propaganda\Library;
@@ -11,6 +13,11 @@ use App\Propaganda\Challenge;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+
+use App\Notifications\SharedSession;
+use App\Session;
+use App\Network;
+
 
 class PropagandaController extends Controller
 {
@@ -30,7 +37,7 @@ class PropagandaController extends Controller
         ];
     }
 
-    public function get_clip_single($id)
+    public function get_clip_single($id, $token = null)
     {
         $clip = Clip::with('period', 'format', 'age', 'directors', 'details', 'peoples', 'topics', 'paratexts.type', 'paratexts.medias', 'libraries.exercise')->where('id', $id)->first();
         $exercises = collect();
@@ -60,7 +67,6 @@ class PropagandaController extends Controller
         $clip->exercises = $exercises;
 
         $clip = $this->format_paratexts($clip);
-
 
         return [
             'success' => true,
@@ -99,10 +105,23 @@ class PropagandaController extends Controller
         return $clip;
     }
 
-    public function get_exercise_single($id, $exercise_id)
+    public function get_exercise_single($id, $exercise_id, $token = null)
     {
         $get_clip = $this->get_clip_single($id);
         $clip = $get_clip['clip'];
+        $app = App::find(19);
+
+        switch ($exercise_id) {
+        case 1:
+            $app = App::find(19);
+            break;
+        case 2:
+            $app = App::find(20);
+            break;
+        case 3:
+            $app = App::find(21);
+            break;
+        }
 
         if ($exercise_id == 1) {
             $library = $clip->libraries()->with('exercise', 'medias')->first();
@@ -133,12 +152,25 @@ class PropagandaController extends Controller
             }
         }
 
-
+        if (!$token || $token == false) {
+            $session = new Session();
+            $session->user_id = Auth::user() ? Auth::user()->id : 1;
+            $session->app_id = $app->id;
+            $session->title = 'empty';
+            $session->token = uniqid();
+            $session->content = json_encode([]);
+            $session->save();
+            $session->refresh();
+            $session->app = $session->app;
+        } else {
+            $session = Session::where('token', $token)->with('app')->first();
+        }
 
         return [
             'success' => true,
             'clip' => $clip,
             'exercise' => $exercise,
+            'session' => $session,
         ];
     }
 

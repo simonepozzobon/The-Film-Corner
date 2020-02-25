@@ -152,9 +152,8 @@ from '../ui'
 
 import {
     gsap,
-    TweenMax
 }
-from 'gsap/all'
+from 'gsap'
 
 export default {
     name: 'AppNav',
@@ -182,10 +181,11 @@ export default {
             })
         },
         show: function () {
-            let master = TweenMax.fromTo(this.$refs.menu, .5, {
+            let master = gsap.fromTo(this.$refs.menu, {
                 y: -150,
                 autoAlpha: 0,
             }, {
+                duration: .5,
                 y: 0,
                 autoAlpha: 1,
                 onComplete: () => {
@@ -194,10 +194,11 @@ export default {
             })
         },
         hide: function () {
-            let master = TweenMax.fromTo(this.$refs.menu, .5, {
+            let master = gsap.fromTo(this.$refs.menu, {
                 y: 0,
                 autoAlpha: 1,
             }, {
+                duration: .5,
                 y: -150,
                 autoAlpha: 0,
                 onComplete: () => {
@@ -209,6 +210,7 @@ export default {
             this.$refs.saveSession.hide()
         },
         addTitle: function () {
+            console.log('qui', this);
             if (this.title == null && this.$root.session.title != 'empty') {
                 this.title = this.$root.session.title
             }

@@ -86,7 +86,13 @@ export default {
             frames: [],
             movies: [],
             modal: null,
+            session: null,
         }
+    },
+    watch: {
+        session: function (session) {
+            this.$root.session = session
+        },
     },
     computed: {
         player: function () {
@@ -97,6 +103,18 @@ export default {
         },
     },
     methods: {
+        uniqid: function () {
+            let ts = String(new Date().getTime()),
+                i = 0,
+                out = ''
+            for (i = 0; i < ts.length; i += 2) {
+                out += Number(ts.substr(i, 2)).toString(36)
+            }
+            return ('d' + out)
+        },
+        uniqidSimple: function () {
+            return '_' + Math.random().toString(36).substr(2, 9)
+        },
         getData: function () {
             let id = this.$route.params.id
             let exerciseId = this.$route.params.exerciseId
@@ -106,18 +124,40 @@ export default {
                 console.log(response.data);
                 const {
                     clip,
-                    exercise
+                    exercise,
+                    session
                 } = response.data
 
                 this.clip = clip
                 this.compare = clip
                 this.content = exercise
                 this.movies = exercise.library.medias
+
+                let formattedSession = session
+                formattedSession.content = session.content ? JSON.parse(session.content) : {}
+
+                this.session = formattedSession
+
+                this.$nextTick(this.init)
             })
 
             // this.clip = movies.find(movie => movie.id == id)
             // this.compare = this.clip
             // this.content = this.clip.exercises.find(exercise => exercise.id == exerciseId)
+        },
+        init: function () {
+            if (this.$root.session && this.$root.session.app_id) {
+
+            }
+        },
+        deleteEmptySession: function () {
+            // verificare se è vuota
+            if (Boolean(this.session.is_empty)) {
+                this.$http.delete('/api/v2/session/' + this.session.token + '/true')
+            }
+            this.$nextTick(() => {
+                this.$root.session = null
+            })
         },
         changeVideo: function (movie) {
             // console.log('compare changed');

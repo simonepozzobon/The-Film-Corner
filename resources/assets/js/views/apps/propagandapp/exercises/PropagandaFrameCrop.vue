@@ -12,7 +12,7 @@
                     class="prop-frame-crop__player"
                     color="dark-gray"
                     :has-age="false"
-                    :title="clip.title"
+                    :title="clip | translate('title', $root.locale)"
                     title-align="center"
                     :src="clip.video"
                 />
@@ -20,7 +20,7 @@
             <div class="prop-frame-crop__btns">
                 <ui-button
                     class="prop-frame-crop__btn"
-                    title="Frame crop"
+                    :title="$root.getCmd('crop_a_frame')"
                     :has-container="false"
                     :has-padding="false"
                     :has-margin="false"
@@ -30,7 +30,7 @@
                 />
                 <ui-button
                     class="prop-frame-crop__btn"
-                    title="Delete All"
+                    :title="$root.getCmd('delete_all')"
                     :has-container="false"
                     :has-padding="false"
                     :has-margin="false"
@@ -57,6 +57,7 @@ import {
 from '../../../../dummies/PropagandAppContent'
 
 import Utility from '../../../../Utilities'
+import TranslationFilter from '../../../../TranslationFilter'
 import PropagandaExerciseTemplate from './PropagandaExerciseTemplate.vue'
 
 import {
@@ -72,6 +73,7 @@ from '../../../../ui'
 
 export default {
     name: 'PropagandaFrameCrop',
+    mixins: [TranslationFilter],
     components: {
         PropagandaExerciseTemplate,
         UiAppPropagandaPlayer,
@@ -83,6 +85,20 @@ export default {
             content: null,
             clip: null,
             frames: [],
+            session: null,
+        }
+    },
+    watch: {
+        session: function (session) {
+            // console.log('changing session', session);
+            this.$root.session = Object.assign({}, session)
+        },
+        frames: function (frames) {
+            // console.log('changing frames');
+            let session = Object.assign({}, this.session)
+            session.content['frames'] = frames
+
+            this.session = session
         }
     },
     computed: {
@@ -91,23 +107,75 @@ export default {
         },
     },
     methods: {
+        uniqid: function () {
+            let ts = String(new Date().getTime()),
+                i = 0,
+                out = ''
+            for (i = 0; i < ts.length; i += 2) {
+                out += Number(ts.substr(i, 2)).toString(36)
+            }
+            return ('d' + out)
+        },
+        uniqidSimple: function () {
+            return '_' + Math.random().toString(36).substr(2, 9)
+        },
         getData: function () {
+            window.addEventListener('beforeunload', () => {
+                try {
+                    this.deleteEmptySession()
+                }
+                catch (e) {
+
+                }
+                finally {
+
+                }
+            })
+
             let id = this.$route.params.id
             let exerciseId = this.$route.params.exerciseId
             // perform api call
             let url = '/api/v2/propaganda/clip/' + id + '/exercise/' + exerciseId
             this.$http.get(url).then(response => {
-                console.log(response);
-                this.clip = response.data.clip
-                this.content = response.data.exercise
+                const {
+                    clip,
+                    exercise,
+                    session
+                } = response.data
+
+                this.clip = clip
+                this.content = exercise
+
+                let formattedSession = session
+                let content = session.content ? JSON.parse(session.content) : {}
+                formattedSession.content = {
+                    ...content,
+                }
+                this.session = Object.assign({}, formattedSession)
+
+                this.$nextTick(this.init)
             })
 
             // this.clip = movies.find(movie => movie.id == id)
             // this.content = this.clip.exercises.find(exercise => exercise.id == exerciseId)
         },
+        init: function () {
+            if (this.$root.session && this.$root.session.app_id) {
+
+            }
+        },
+        deleteEmptySession: function () {
+            // verificare se è vuota
+            if (Boolean(this.session.is_empty)) {
+                this.$http.delete('/api/v2/session/' + this.session.token + '/true')
+            }
+            this.$nextTick(() => {
+                this.$root.session = null
+            })
+        },
         cropFrame: function () {
             let video = this.player.el().querySelector('video')
-            let canvas = document.createElement('CANVAS')
+            let canvas = document.createElement('canvas')
             canvas.width = video.videoWidth
             canvas.height = video.videoHeight
 
@@ -115,13 +183,15 @@ export default {
 
             let dataUri = canvas.toDataURL('image/jpeg')
 
+            let frames = this.frames
             let frame = {
                 id: Utility.uuid(),
                 text: null,
                 img: dataUri,
             }
 
-            this.frames.push(frame)
+            frames.push(frame)
+            this.frames = Object.assign([], frames)
         },
         deleteAll: function () {
             this.frames = []
@@ -131,9 +201,10 @@ export default {
             if (idx > -1) {
                 this.frames[idx].text = value
             }
+
         },
         deleteFrame: function (id) {
-            this.frames = this.frames.filter(frame => frame.id != id)
+            this.frames = Object.assign([], this.frames.filter(frame => frame.id != id))
         },
     },
     created: function () {
