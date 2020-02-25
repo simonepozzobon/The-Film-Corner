@@ -33,11 +33,8 @@
                     color="white"
                     align="center"
                     size="lg"
-                >
-                    The app map proposal has been designed on the basis of the previous discussion among partners in order to create an interactive didactical resource that could join history and film around the topic of propaganda.
-                    The app is aimed at building paths around different sub-topics related to propaganda that would help teachers conveying concepts and ideas around this topic through the general action of promoting analysis and reflection around
-                    the use of film language in order to convey certain moods and feelings, that is at the very heart of propaganda.
-                </ui-paragraph>
+                    v-html="catDescription"
+                />
 
                 <ui-button
                     color="red"
@@ -66,8 +63,12 @@ import {
     UiRow,
 }
 from '../../../ui'
+
+import TranslationFilter from '../../../TranslationFilter'
+
 export default {
-    name: 'PropagandaHome',
+    name: 'PropagandaIntro',
+    mixins: [TranslationFilter],
     components: {
         UiBlock,
         UiButton,
@@ -80,13 +81,44 @@ export default {
         UiTitle,
         UiRow,
     },
+    data: function () {
+        return {
+            cat: null,
+        }
+    },
+    computed: {
+        catTitle: function () {
+            if (this.cat) {
+                return this.$options.filters.translate(this.cat, 'name', this.$root.locale)
+            }
+            return null
+        },
+        catDescription: function () {
+            if (this.cat) {
+                return this.$options.filters.translate(this.cat, 'description', this.$root.locale)
+            }
+            return null
+        },
+    },
     methods: {
         goToHome: function () {
             this.$root.goTo('propaganda-home')
         },
-        leave: function () {
-
-        }
+        leave: function () {},
+        getData: function () {
+            this.$http.get('/api/v2/get-cat/propagandapp')
+                .then(response => {
+                    if (response.data.success) {
+                        this.cat = response.data.pavilion
+                        if (this.cat.img) {
+                            this.image = this.cat.img
+                        }
+                    }
+                })
+        },
+    },
+    created: function () {
+        this.getData()
     },
 }
 </script>
