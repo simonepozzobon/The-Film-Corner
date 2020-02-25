@@ -83,6 +83,7 @@ Route::prefix('v2')->group(
                         Route::get('clips', 'Api\PropagandaController@get_clips');
                         Route::get('clip/{id}/exercise/{exercise_id}', 'Api\PropagandaController@get_exercise_single');
                         Route::get('clip/{id}', 'Api\PropagandaController@get_clip_single');
+                        Route::get('challenge/{id}', 'Api\PropagandaController@get_challenge');
                     }
                 );
 
@@ -134,11 +135,13 @@ Route::prefix('v2')->group(
                         Route::post('/create-informations', 'Api\Admin\ClipsController@store_informations');
                         Route::post('/create-details', 'Api\Admin\ClipsController@store_details_new');
 
-                        Route::prefix('translations')->group(function () {
-                            Route::post('title', 'Api\Admin\ClipsController@store_title_translation');
-                            Route::post('details', 'Api\Admin\ClipsController@store_details_translation');
-                            Route::post('paratext', 'Api\Admin\ClipsController@store_paratext_translation');
-                        });
+                        Route::prefix('translations')->group(
+                            function () {
+                                Route::post('title', 'Api\Admin\ClipsController@store_title_translation');
+                                Route::post('details', 'Api\Admin\ClipsController@store_details_translation');
+                                Route::post('paratext', 'Api\Admin\ClipsController@store_paratext_translation');
+                            }
+                        );
 
                         Route::prefix('exercises')->group(
                             function () {
@@ -164,10 +167,12 @@ Route::prefix('v2')->group(
 
                         Route::prefix('libraries')->group(
                             function () {
-                                Route::prefix('captions')->group(function () {
-                                    Route::post('upload', 'Api\Admin\LibraryController@upload_caption');
-                                    Route::post('destroy', 'Api\Admin\LibraryController@destroy_caption');
-                                });
+                                Route::prefix('captions')->group(
+                                    function () {
+                                        Route::post('upload', 'Api\Admin\LibraryController@upload_caption');
+                                        Route::post('destroy', 'Api\Admin\LibraryController@destroy_caption');
+                                    }
+                                );
 
                                 Route::post('translations', 'Api\Admin\LibraryController@upload_translations');
 

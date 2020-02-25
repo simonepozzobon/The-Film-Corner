@@ -7,6 +7,7 @@ use App\Propaganda\Period;
 use App\Propaganda\Library;
 use App\Propaganda\Exercise;
 use App\Propaganda\ParatextType;
+use App\Propaganda\Challenge;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -138,6 +139,16 @@ class PropagandaController extends Controller
             'success' => true,
             'clip' => $clip,
             'exercise' => $exercise,
+        ];
+    }
+
+    public function get_challenge($id)
+    {
+        $challenge = Challenge::find($id);
+
+        return [
+            'success' => true,
+            'challenge' => $challenge
         ];
     }
 }

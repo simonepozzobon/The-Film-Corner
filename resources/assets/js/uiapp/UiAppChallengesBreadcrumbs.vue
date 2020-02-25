@@ -30,7 +30,7 @@
             @click.stop.prevent="goToChallenges"
             class="ui-breadcrumbs__link"
         >
-            Creative Challenges
+            {{ $root.getCmd('creative_challenges') }}
         </a>
     </div>
     <div class="ui-breadcrumbs__divider">

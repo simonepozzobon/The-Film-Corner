@@ -30,7 +30,7 @@
                             />
                         </div>
                     </ui-block>
-                    <ui-block
+                    <!-- <ui-block
                         :size="6"
                         :has-container="false"
                     >
@@ -48,7 +48,7 @@
                                 @click="$root.goTo('propaganda-role-playing')"
                             />
                         </div>
-                    </ui-block>
+                    </ui-block> -->
                     <ui-block
                         :size="6"
                         :has-container="false"
@@ -111,6 +111,14 @@ export default {
         UiContainer,
         UiRow,
         UiTitle,
+    },
+    methods: {
+        getData: function () {
+
+        },
+    },
+    created: function () {
+        this.getData()
     },
 }
 </script>
