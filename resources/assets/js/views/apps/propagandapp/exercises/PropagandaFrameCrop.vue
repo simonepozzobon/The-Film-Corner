@@ -43,7 +43,7 @@
         </div>
     </template>
     <ui-app-cropped-frames
-        :frames="this.frames"
+        :frames="frames"
         @delete-frame="deleteFrame"
         @changed="updateFrame"
         color="yellow"
@@ -137,6 +137,13 @@ export default {
             let exerciseId = this.$route.params.exerciseId
             // perform api call
             let url = '/api/v2/propaganda/clip/' + id + '/exercise/' + exerciseId
+
+            // console.log('session', this.$root.session);
+            if (this.$root.session && this.$root.session.app_id == 20 && this.$root.session.token) {
+                url = '/api/v2/propaganda/clip/' + id + '/exercise/' + exerciseId + '/' + this.$root.session.token
+            }
+
+            // url = '/api/v2/propaganda/clip/' + id + '/exercise/' + exerciseId + '/5e560d6e67b3c'
             this.$http.get(url).then(response => {
                 const {
                     clip,
@@ -152,7 +159,9 @@ export default {
                 formattedSession.content = {
                     ...content,
                 }
+
                 this.session = Object.assign({}, formattedSession)
+                // console.log('formatted', this.session);
 
                 this.$nextTick(this.init)
             })
@@ -161,8 +170,8 @@ export default {
             // this.content = this.clip.exercises.find(exercise => exercise.id == exerciseId)
         },
         init: function () {
-            if (this.$root.session && this.$root.session.app_id) {
-
+            if (this.session.content.frames.length > 0) {
+                this.frames = this.session.content.frames
             }
         },
         deleteEmptySession: function () {
