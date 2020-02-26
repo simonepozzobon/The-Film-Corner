@@ -83,6 +83,8 @@ Route::prefix('v2')->group(
                         Route::get('clips', 'Api\PropagandaController@get_clips');
                         Route::get('clip/{id}/exercise/{exercise_id}/{token?}', 'Api\PropagandaController@get_exercise_single');
                         Route::get('clip/{id}', 'Api\PropagandaController@get_clip_single');
+
+                        Route::post('challenge/apps/upload-content', 'Api\PropagandaController@upload_challenge_content');
                         Route::get('challenge/{id}', 'Api\PropagandaController@get_challenge');
                     }
                 );

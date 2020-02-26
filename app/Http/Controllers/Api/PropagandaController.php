@@ -5,19 +5,21 @@ namespace App\Http\Controllers\Api;
 use Auth;
 use App\App;
 use App\User;
+use App\Session;
+use App\Network;
 use App\Propaganda\Clip;
 use App\Propaganda\Period;
 use App\Propaganda\Library;
 use App\Propaganda\Exercise;
-use App\Propaganda\ParatextType;
 use App\Propaganda\Challenge;
+use App\Propaganda\ParatextType;
+use App\Propaganda\ChallengeLibrary;
+use App\Propaganda\ChallengeLibraryMedia;
+
 use Illuminate\Http\Request;
+use App\Notifications\SharedSession;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
-
-use App\Notifications\SharedSession;
-use App\Session;
-use App\Network;
 
 
 class PropagandaController extends Controller
@@ -191,9 +193,31 @@ class PropagandaController extends Controller
         ];
     }
 
+    public function upload_challenge_content(Request $request)
+    {
+        $media = new ChallengeLibraryMedia();
+        $media->challenge_library_id = $request->challenge_id;
+        $media->title = $request->title;
+
+        $file = $request->file('media');
+        $extension = $file->getClientOriginalExtension();
+        $original_name = $file->getClientOriginalName();
+
+        $filename = uniqid() . '.' . $extension;
+        $path = 'public/propaganda/users';
+        $src = $file->storeAs($path, $filename);
+
+        $media->url = $src;
+        $media->library_type_id = 0;
+        $media->save();
+
+        return $media;
+    }
+
     public function get_challenge($id)
     {
         $challenge = Challenge::find($id);
+        $libraries = ChallengeLibrary::where('challenge_id', $id)->with('medias')->get();
 
         return [
             'success' => true,

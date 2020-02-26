@@ -104,7 +104,7 @@
                                             name="title"
                                             class="form-control"
                                             :placeholder="$root.getCmd('title')"
-                                            v-model="title"
+                                            v-model="interviewTitle"
                                         >
                                     </div>
                                     <div class="input-group">
@@ -112,7 +112,7 @@
                                             <input
                                                 type="file"
                                                 class="custom-file-input"
-                                                accept="video/*, image/*"
+                                                accept="video/*, image/*, audio/*"
                                                 @change="filesChange($event.target.name, $event.target.files)"
                                             >
 
@@ -218,6 +218,7 @@ export default {
             open: false,
             description: null,
             buttonText: null,
+            interviewTitle: null,
         }
     },
     watch: {
@@ -273,27 +274,12 @@ export default {
         },
         upload: function () {
             let data = new FormData()
-            data.append('token', 'dummy')
-            data.append('title', this.title)
+            data.append('title', this.interviewTitle)
             data.append('media', this.file)
-            data.append('slug', this.app.slug)
-            data.append('category_slug', this.app.category.slug)
-            data.append('studio_slug', this.app.category.section.slug)
-            data.append('_method', 'put')
+            data.append('challenge_id', 3)
 
-            let config = {
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                },
-                onUploadProgress: function (progressEvent) {
-                    let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
-                    console.log(progressEvent, percentCompleted);
-                }.bind(this)
-            }
-
-            this.$http.post('/api/v2/contest-upload', data, config).then(response => {
+            this.$http.post('/api/v2/propaganda/challenge/apps/upload-content', data).then(response => {
                 console.log(response.data);
-                this.saveContent()
             }).catch(err => {
                 console.log(err);
             })
