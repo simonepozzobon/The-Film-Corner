@@ -60,7 +60,7 @@
                 ref="player"
                 :options="playerOptions"
                 :playsinline="true"
-                @ready="$emit('ready')"
+                @ready="onPlayerReady"
             />
         </div>
         <div class="ua-prop-player__controls">
@@ -151,7 +151,13 @@ export default {
         isMp4: {
             type: Boolean,
             default: false,
-        }
+        },
+        captions: {
+            type: Array,
+            default: function () {
+                return []
+            },
+        },
     },
     data: function () {
         return {
@@ -159,6 +165,8 @@ export default {
             loaderVisible: false,
             playerOptions: {
                 aspectRatio: '16:9',
+                language: this.$root.locale,
+                languages: ['en', 'it', 'fr', 'sl', 'ka', 'sr'],
                 sources: [{
                     type: 'video/mp4',
                     src: '/video/empty-session.mp4'
@@ -176,6 +184,8 @@ export default {
         '$root.locale': function (locale) {
             this.translateTitle(locale)
             this.translateAge(locale)
+
+            this.translateCaptions(locale)
         },
         clip: function () {
             if (this.debug) {
@@ -261,6 +271,52 @@ export default {
         },
         openInfo: function () {
             this.$emit('open-info', this.clip)
+        },
+        translateCaptions: function () {
+            // console.log('translateCaption', this.captions);
+            if (this.player) {
+                let tracks = this.player.textTracks()
+                for (let i = 0; i < tracks.length; i++) {
+                    let track = tracks[i]
+                    if (track.kind == 'subtitles' && track.mode == 'showing') {
+                        track.mode = 'disabled'
+                    }
+                }
+
+                for (let i = 0; i < tracks.length; i++) {
+                    let track = tracks[i]
+                    if (track.kind == 'subtitles' && track.language == this.$root.locale) {
+                        track.mode = 'showing'
+                    }
+                }
+            }
+        },
+        onPlayerReady: function () {
+            // console.log(this.captions);
+            for (let i = 0; i < this.captions.length; i++) {
+                let caption = this.captions[i]
+
+                this.player.addRemoteTextTrack({
+                    src: caption.src,
+                    kind: 'subtitles',
+                    srclang: caption.locale,
+                    label: caption.locale
+                }, true)
+
+                let tracks = this.player.textTracks()
+
+                for (let j = 0; j < tracks.length; j++) {
+                    let track = tracks[j]
+
+                    if (track.kind == 'subtitles' && track.language == this.$root.locale) {
+                        track.mode = 'showing'
+                    }
+                }
+            }
+            // this.$nextTick(() => {
+            //     console.log(this.player.textTracks());
+            // })
+            this.$emit('ready')
         }
     },
     created: function () {
@@ -275,6 +331,7 @@ export default {
                 partialRender: true
             })
         }
+
         this.changeSrc()
     },
     mounted: function () {

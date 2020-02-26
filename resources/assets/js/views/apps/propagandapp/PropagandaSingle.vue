@@ -17,6 +17,7 @@
                             :translations="content.translations"
                             :ages="content.age.translations"
                             :src="content.video"
+                            :captions="content.captions"
                         />
                     </ui-block>
                     <ui-block

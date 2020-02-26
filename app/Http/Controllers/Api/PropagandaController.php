@@ -29,7 +29,7 @@ class PropagandaController extends Controller
 
     public function get_clips()
     {
-        $periods = Period::with('clips.period', 'clips.format', 'clips.age', 'clips.directors', 'clips.peoples', 'clips.topics')->get();
+        $periods = Period::with('clips.period', 'clips.format', 'clips.age', 'clips.directors', 'clips.peoples', 'clips.topics', 'clips.captions')->get();
 
         return [
             'success' => true,
@@ -39,7 +39,7 @@ class PropagandaController extends Controller
 
     public function get_clip_single($id, $token = null)
     {
-        $clip = Clip::with('period', 'format', 'age', 'directors', 'details', 'peoples', 'topics', 'paratexts.type', 'paratexts.medias', 'libraries.exercise')->where('id', $id)->first();
+        $clip = Clip::with('period', 'format', 'age', 'directors', 'details', 'peoples', 'topics', 'captions', 'paratexts.type', 'paratexts.medias', 'libraries.exercise')->where('id', $id)->first();
         $exercises = collect();
 
         if ($clip->exercise_1 == 1) {
