@@ -146,7 +146,7 @@ export default {
             }
 
 
-            url = '/api/v2/propaganda/clip/' + id + '/exercise/' + exerciseId + '/5e56141cc778e'
+            // url = '/api/v2/propaganda/clip/' + id + '/exercise/' + exerciseId + '/5e56141cc778e'
             this.$http.get(url).then(response => {
                 // console.log(response.data);
                 const {
