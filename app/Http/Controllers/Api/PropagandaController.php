@@ -272,6 +272,17 @@ class PropagandaController extends Controller
                 $media->save();
 
                 $media = $this->crop_thumbnail($media);
+            } else if ($media->library_type_id == 2) {
+                $filename = str_replace('/storage/propaganda/users/', '', $media->url);
+                $path = str_replace('storage', 'public', $media->url);
+                $newPath = '/public/propaganda/users/thumb-' . $filename;
+
+                Storage::copy($path, $newPath);
+                $src = str_replace('public', 'storage', $newPath);
+
+                $media->thumb = $src;
+                $media->save();
+                $media = $this->crop_thumbnail($media);
             }
         }
 

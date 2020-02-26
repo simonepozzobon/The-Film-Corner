@@ -21,6 +21,9 @@
                 :playsinline="true"
             />
         </div>
+        <div v-else-if="type == 'image'">
+            <ui-image :src="modal.url" />
+        </div>
     </div>
     <template slot="modal-footer">
         <ui-button
@@ -40,6 +43,7 @@ import {
     UiButton,
     UiParagraph,
     UiTitle,
+    UiImage,
 }
 from '../../../ui'
 
@@ -55,6 +59,7 @@ export default {
         UiButton,
         UiParagraph,
         UiTitle,
+        UiImage,
         videoPlayer,
     },
     props: {
