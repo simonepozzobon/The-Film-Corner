@@ -188,7 +188,7 @@ export default {
         },
         clip: function () {
             if (this.debug) {
-                console.log('cambiata dentroooo');
+                // console.log('cambiata dentroooo');
             }
 
         }
@@ -236,9 +236,7 @@ export default {
             if (this.src) {
                 delete this.playerOptions.poster
                 this.playerOptions.sources[0].src = this.src
-                console.log('dentro cambia', this.src);
-
-
+                // console.log('dentro cambia', this.src);
             }
         },
         play: function () {
@@ -278,7 +276,7 @@ export default {
             if (this.player) {
                 let tracks = this.player.textTracks()
 
-                console.log(tracks.length);
+                // console.log(tracks.length);
 
                 for (let i = 0; i < tracks.length; i++) {
                     let track = tracks[i]
@@ -296,7 +294,7 @@ export default {
             }
         },
         onPlayerReady: function () {
-            console.log('player ready');
+            // console.log('player ready');
             for (let i = 0; i < this.captions.length; i++) {
                 let caption = this.captions[i]
 

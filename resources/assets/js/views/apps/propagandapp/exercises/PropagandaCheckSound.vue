@@ -15,6 +15,7 @@
                     :title="clip | translate('title', $root.locale)"
                     title-align="center"
                     :src="clip.video"
+                    :captions="clip.captions"
                     :muted="true"
                     :isMp4="true"
                     @play="play"
@@ -28,6 +29,7 @@
                 <audio-player
                     ref="audio"
                     :src="clip.video"
+                    @ready="setPlayerReady"
                 />
             </div>
             <div class="prop-check-sound__btns">
@@ -48,6 +50,7 @@
         class="mt-4"
         color="yellow"
         @changed="updateNote"
+        :initial="notes"
     />
 </propaganda-exercise-template>
 </template>
@@ -96,6 +99,8 @@ export default {
             notes: null,
             bookmarks: [],
             session: null,
+            playerReady: false,
+            initialized: false,
         }
     },
     watch: {
@@ -111,6 +116,16 @@ export default {
             let session = Object.assign({}, this.session)
             session.content['notes'] = notes
             this.session = session
+        },
+        initialized: function (v) {
+            if (this.playerReady) {
+                this.init()
+            }
+        },
+        playerReady: function (v) {
+            if (this.initialized) {
+                this.init()
+            }
         }
     },
     computed: {
@@ -131,6 +146,9 @@ export default {
         uniqidSimple: function () {
             return '_' + Math.random().toString(36).substr(2, 9)
         },
+        setPlayerReady: function () {
+            this.playerReady = true
+        },
         getData: function () {
             window.addEventListener('beforeunload', () => {
                 try {
@@ -148,6 +166,13 @@ export default {
             let exerciseId = this.$route.params.exerciseId
             // perform api call
             let url = '/api/v2/propaganda/clip/' + id + '/exercise/' + exerciseId
+            // console.log('session', this.$root.session);
+            if (this.$root.session && this.$root.session.app_id == 20 && this.$root.session.token) {
+                url = '/api/v2/propaganda/clip/' + id + '/exercise/' + exerciseId + '/' + this.$root.session.token
+            }
+
+            url = '/api/v2/propaganda/clip/' + id + '/exercise/' + exerciseId + '/5e553d29488d3'
+
             this.$http.get(url).then(response => {
                 console.log(response);
                 const {
@@ -167,12 +192,33 @@ export default {
                 }
                 this.session = Object.assign({}, formattedSession)
 
-                this.$nextTick(this.init)
+                this.$nextTick(() => {
+                    this.initialized = true
+                })
             })
 
             // this.clip = movies.find(movie => movie.id == id)
             // this.compare = this.clip
             // this.content = this.clip.exercises.find(exercise => exercise.id == exerciseId)
+        },
+        init: function () {
+            console.log(this.session);
+            if (this.session.content.bookmarks.length > 0) {
+                let bookmarks = []
+                let player = this.$refs.audio.player
+
+                for (let i = 0; i < this.session.content.bookmarks.length; i++) {
+                    let bookmark = this.session.content.bookmarks[i]
+                    console.log(this.player);
+                    player.addRegion(bookmark)
+                    bookmarks.push(bookmark)
+                }
+                this.bookmarks = bookmarks
+            }
+
+            if (this.session.content.notes) {
+                this.notes = this.session.content.notes
+            }
         },
         play: function () {
             this.$refs.audio.play()
@@ -205,11 +251,6 @@ export default {
 
             this.bookmarks.push(newRegion)
             player.addRegion(newRegion)
-        },
-        init: function () {
-            if (this.$root.session && this.$root.session.app_id) {
-
-            }
         },
         deleteEmptySession: function () {
             // verificare se è vuota

@@ -68,9 +68,20 @@
                                     color="white"
                                 />
 
-                                <div class="prop-affiches__container">
-                                    <ui-image-slider :images="images" />
+                                <div
+                                    class="ch-affiches"
+                                    v-if="library && library.medias.length > 0"
+                                >
+                                    <affiches-slider
+                                        :affiches="library.medias"
+                                        @open-modal="openModal"
+                                    />
                                 </div>
+                                <challenge-modal
+                                    ref="modal"
+                                    :modal="modal"
+                                    type="image"
+                                />
                             </ui-block>
                         </ui-row>
                     </ui-container>
@@ -89,7 +100,7 @@
                                     name="title"
                                     class="form-control"
                                     :placeholder="$root.getCmd('title')"
-                                    v-model="title"
+                                    v-model="challengeTitle"
                                 >
                             </div>
                             <div class="input-group">
@@ -97,7 +108,7 @@
                                     <input
                                         type="file"
                                         class="custom-file-input"
-                                        accept="video/*, image/*"
+                                        accept="image/*"
                                         @change="filesChange($event.target.name, $event.target.files)"
                                     >
 
@@ -123,6 +134,8 @@
                                 color="yellow"
                                 align="center"
                                 @click="upload"
+                                :has-spinner="isLoading"
+                                :disable="isLoading"
                                 :title="$root.getCmd('upload')"
                             />
                         </ui-app-block>
@@ -144,6 +157,8 @@ from '../../../../dummies/PropagandAppContent'
 
 import Utility from '../../../../Utilities'
 import TranslationFilter from '../../../../TranslationFilter'
+import ChallengeModal from '../../../../uiapp/sub/propaganda/ChallengeModal.vue'
+import AffichesSlider from '../../../../uiapp/sub/propaganda/AffichesSlider.vue'
 
 import {
     UiBlock,
@@ -191,15 +206,21 @@ export default {
         UiSpecialText,
         UiTitle,
         UiRow,
+        ChallengeModal,
+        AffichesSlider,
     },
     data: function () {
         return {
-            images: subsPics,
+            images: [],
             title: null,
+            challengeTitle: null,
+            isLoading: false,
             content: null,
             open: false,
             description: null,
             buttonText: null,
+            library: null,
+            modal: null,
         }
     },
     watch: {
@@ -215,7 +236,13 @@ export default {
             this.$http.get(`/api/v2/propaganda/challenge/${id}`).then(response => {
                 console.log(response.data);
                 if (response.data.success) {
-                    this.content = response.data.challenge
+                    const {
+                        challenge,
+                        library
+                    } = response.data
+
+                    this.content = challenge
+                    this.library = library
                 }
             }).catch(err => {
                 this.content = challenges.find(challenge => challenge.id == id)
@@ -250,30 +277,35 @@ export default {
             }
         },
         upload: function () {
+            this.isLoading = true
             let data = new FormData()
-            data.append('token', 'dummy')
-            data.append('title', this.title)
+            data.append('title', this.challengeTitle)
             data.append('media', this.file)
-            data.append('slug', this.app.slug)
-            data.append('category_slug', this.app.category.slug)
-            data.append('studio_slug', this.app.category.section.slug)
-            data.append('_method', 'put')
+            data.append('challenge_id', 4)
+            data.append('library_type_id', 2)
 
-            let config = {
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                },
-                onUploadProgress: function (progressEvent) {
-                    let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
-                    console.log(progressEvent, percentCompleted);
-                }.bind(this)
-            }
-
-            this.$http.post('/api/v2/contest-upload', data, config).then(response => {
+            this.$http.post('/api/v2/propaganda/challenge/apps/upload-content', data).then(response => {
                 console.log(response.data);
-                this.saveContent()
+                this.isLoading = false
+
+                if (response.data.success) {
+                    let library = this.library
+                    this.library = null
+
+                    library.medias.push(response.data.media)
+
+                    this.library = Object.assign({}, library)
+                }
             }).catch(err => {
                 console.log(err);
+                this.isLoading = false
+            })
+        },
+        openModal: function (affiche) {
+            console.log('opening-modal');
+            this.modal = Object.assign({}, affiche)
+            this.$nextTick(() => {
+                this.$refs.modal.show()
             })
         },
     },
@@ -335,6 +367,11 @@ export default {
     &__content {
         padding: $spacer * 2;
     }
+}
+
+.ch-affiches {
+    width: 90%;
+    padding-bottom: $spacer * 2;
 }
 
 .prop-affiches {

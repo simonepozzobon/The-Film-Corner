@@ -139,8 +139,16 @@ export default {
             let exerciseId = this.$route.params.exerciseId
             // perform api call
             let url = '/api/v2/propaganda/clip/' + id + '/exercise/' + exerciseId
+
+            // console.log('session', this.$root.session);
+            if (this.$root.session && this.$root.session.app_id == 20 && this.$root.session.token) {
+                url = '/api/v2/propaganda/clip/' + id + '/exercise/' + exerciseId + '/' + this.$root.session.token
+            }
+
+
+            url = '/api/v2/propaganda/clip/' + id + '/exercise/' + exerciseId + '/5e56141cc778e'
             this.$http.get(url).then(response => {
-                console.log(response.data);
+                // console.log(response.data);
                 const {
                     clip,
                     exercise,
@@ -148,17 +156,25 @@ export default {
                 } = response.data
 
                 this.clip = clip
-                this.compare = clip
+                // this.compare = clip
                 this.content = exercise
                 this.movies = exercise.library.medias
 
                 let formattedSession = session
                 let content = session.content ? JSON.parse(session.content) : {}
-                formattedSession.content = {
-                    ...content,
-                }
-                this.session = Object.assign({}, formattedSession)
 
+                if (!content.hasOwnProperty('compare')) {
+                    this.compare = clip
+                }
+                else {
+                    this.compare = content.compare
+                }
+
+                formattedSession.content = {
+                    ...content
+                }
+
+                this.session = Object.assign({}, formattedSession)
                 this.$nextTick(this.init)
             })
 
@@ -167,9 +183,10 @@ export default {
             // this.content = this.clip.exercises.find(exercise => exercise.id == exerciseId)
         },
         init: function () {
-            if (this.$root.session && this.$root.session.app_id) {
-
-            }
+            // if (this.session.content.compare) {
+            //     // this.compare = this.session.content.compare
+            //     console.log(this.session.content.compare);
+            // }
         },
         deleteEmptySession: function () {
             // verificare se è vuota
@@ -183,7 +200,7 @@ export default {
         changeVideo: function (movie) {
             // console.log('compare changed');
             this.compare = Object.assign({}, movie)
-            console.log(this.compare);
+            // console.log(this.compare);
         },
         openModal: function (modal) {
             this.modal = Object.assign({}, modal)

@@ -17,4 +17,9 @@ class Challenge extends Model
     {
         return with(new static)->getTable();
     }
+
+    public function library()
+    {
+        return $this->hasMany('App\Propaganda\ChallengeLibrary');
+    }
 }

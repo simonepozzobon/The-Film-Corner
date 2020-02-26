@@ -22,7 +22,7 @@
                             />
 
                             <ui-button
-                                title="go"
+                                :title="$root.getCmd('open')"
                                 color="yellow"
                                 align="center"
                                 :block="true"
@@ -60,7 +60,7 @@
                                 color="white"
                             />
                             <ui-button
-                                title="go"
+                                :title="$root.getCmd('open')"
                                 color="yellow"
                                 align="center"
                                 :block="true"
@@ -79,7 +79,7 @@
                                 color="white"
                             />
                             <ui-button
-                                title="go"
+                                :title="$root.getCmd('open')"
                                 color="yellow"
                                 align="center"
                                 :block="true"
@@ -88,6 +88,12 @@
                         </div>
                     </ui-block>
                 </ui-row>
+                <ui-button
+                    :title="$root.getCmd('back')"
+                    align="center"
+                    color="yellow"
+                    @click="$root.goTo('propaganda-challenges')"
+                />
             </ui-container>
         </div>
     </div>

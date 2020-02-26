@@ -36,7 +36,7 @@
                                 <ui-title
                                     tag="h2"
                                     font-size="h2"
-                                    :title="content.title"
+                                    :title="$root.getCmd('interview_database')"
                                     class="pt-5"
                                     color="white"
                                 />
@@ -44,7 +44,7 @@
                                     color="white"
                                     class="pt-5 prop-ex-container__paragraph"
                                     align="justify"
-                                    v-html="description"
+                                    v-html="$root.getCmd('interview_database_text')"
                                 />
                             </ui-block>
                         </ui-row>
@@ -105,6 +105,7 @@ import {
 from '../../../../dummies/PropagandAppContent'
 
 import Utility from '../../../../Utilities'
+import TranslationFilter from '../../../../TranslationFilter'
 import {
     UiBlock,
     UiBreadcrumbs,
@@ -132,7 +133,8 @@ import {
 from '../../../../uiapp'
 
 export default {
-    name: 'ChallengeSingle',
+    name: 'ChallengeInterviewsDB',
+    mixins: [TranslationFilter],
     components: {
         UiAppBlock,
         UiAppChallengesBreadcrumbs,
@@ -162,9 +164,7 @@ export default {
         }
     },
     watch: {
-        content: function (content) {
-            this.description = content.description
-        },
+        content: function (content) {},
     },
     computed: {},
     methods: {
@@ -185,33 +185,6 @@ export default {
             this.file = files[0]
             this.error_msg = null
             console.log(files);
-        },
-        upload: function () {
-            let data = new FormData()
-            data.append('token', 'dummy')
-            data.append('title', this.title)
-            data.append('media', this.file)
-            data.append('slug', this.app.slug)
-            data.append('category_slug', this.app.category.slug)
-            data.append('studio_slug', this.app.category.section.slug)
-            data.append('_method', 'put')
-
-            let config = {
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                },
-                onUploadProgress: function (progressEvent) {
-                    let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
-                    console.log(progressEvent, percentCompleted);
-                }.bind(this)
-            }
-
-            this.$http.post('/api/v2/contest-upload', data, config).then(response => {
-                console.log(response.data);
-                this.saveContent()
-            }).catch(err => {
-                console.log(err);
-            })
         },
     },
     created: function () {
