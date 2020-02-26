@@ -39,7 +39,6 @@ mix
         port: 3020,
         browser: 'google chrome',
         files: [
-            'app/{*,**/*}.*',
-            'resources/{*,**/*}.*',
+            'public/{*,**/*}.*',
         ]
     })
