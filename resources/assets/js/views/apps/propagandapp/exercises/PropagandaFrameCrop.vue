@@ -15,6 +15,7 @@
                     :title="clip | translate('title', $root.locale)"
                     title-align="center"
                     :src="clip.video"
+                    :captions="clip.captions"
                 />
             </div>
             <div class="prop-frame-crop__btns">

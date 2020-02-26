@@ -15,6 +15,7 @@
                     :title="clip | translate('title', $root.locale)"
                     title-align="center"
                     :src="clip.video"
+                    :captions="clip.captions"
                     :muted="true"
                     :isMp4="true"
                     @play="play"
