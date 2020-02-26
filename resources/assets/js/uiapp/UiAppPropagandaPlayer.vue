@@ -165,7 +165,6 @@ export default {
             loaderVisible: false,
             playerOptions: {
                 aspectRatio: '16:9',
-                language: this.$root.locale,
                 languages: ['en', 'it', 'fr', 'sl', 'ka', 'sr'],
                 sources: [{
                     type: 'video/mp4',
@@ -238,6 +237,8 @@ export default {
                 delete this.playerOptions.poster
                 this.playerOptions.sources[0].src = this.src
                 console.log('dentro cambia', this.src);
+
+
             }
         },
         play: function () {
@@ -276,6 +277,9 @@ export default {
             // console.log('translateCaption', this.captions);
             if (this.player) {
                 let tracks = this.player.textTracks()
+
+                console.log(tracks.length);
+
                 for (let i = 0; i < tracks.length; i++) {
                     let track = tracks[i]
                     if (track.kind == 'subtitles' && track.mode == 'showing') {
@@ -292,7 +296,7 @@ export default {
             }
         },
         onPlayerReady: function () {
-            // console.log(this.captions);
+            console.log('player ready');
             for (let i = 0; i < this.captions.length; i++) {
                 let caption = this.captions[i]
 

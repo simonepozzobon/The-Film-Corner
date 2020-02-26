@@ -13,9 +13,20 @@ use \Done\Subtitles\Subtitles;
 
 class CaptionConversionController extends Controller
 {
-    public function get_captions()
+    public function get_library_captions()
     {
         $captions = LibraryCaption::all();
+
+        foreach ($captions as $key => $caption) {
+            $caption = $this->convert_single_caption($caption);
+        }
+
+        dd('complet');
+    }
+
+    public function get_captions()
+    {
+        $captions = Caption::all();
 
         foreach ($captions as $key => $caption) {
             $caption = $this->convert_single_caption($caption);

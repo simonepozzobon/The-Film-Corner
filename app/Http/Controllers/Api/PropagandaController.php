@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Auth;
 use App\App;
+use App\User;
 use App\Propaganda\Clip;
 use App\Propaganda\Period;
 use App\Propaganda\Library;
@@ -23,7 +24,7 @@ class PropagandaController extends Controller
 {
     public function test()
     {
-        $clip = $this->get_exercise_single(19, 1);
+        $clip = $this->get_exercise_single(23, 1, null, true);
         dd($clip);
     }
 
@@ -105,10 +106,13 @@ class PropagandaController extends Controller
         return $clip;
     }
 
-    public function get_exercise_single($id, $exercise_id, $token = null)
+    public function get_exercise_single($id, $exercise_id, $token = null, $isTest = false)
     {
         $get_clip = $this->get_clip_single($id);
-        $user = Auth::user();
+
+        $user = $isTest ? User::find(2) : Auth::user();
+        // $user = User::find(2);
+
         $clip = $get_clip['clip'];
         $app = App::find(19);
 
@@ -132,7 +136,7 @@ class PropagandaController extends Controller
         )->get();
 
         if ($exercise_id == 1) {
-            $library = $clip->libraries()->with('exercise', 'medias')->first();
+            $library = $clip->libraries()->with('exercise', 'medias.library_captions')->first();
             $exercise = $clip->exercises->filter(
                 function ($exercise, $key) use ($exercise_id) {
                     return $exercise->id == $exercise_id;
@@ -143,11 +147,13 @@ class PropagandaController extends Controller
                 function ($media, $key) {
                     $url = Storage::disk('local')->url($media->url);
                     $media->url = $url;
+                    $media->captions = $media->library_captions;
                     return $media;
                 }
             );
 
             $library->medias = $medias;
+            // dd($library->medias);
 
             $exercise->library = $library;
         } else {
