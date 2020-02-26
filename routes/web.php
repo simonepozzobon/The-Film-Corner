@@ -11,7 +11,8 @@ use App\Events\UserSignin;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/test', 'Api\PropagandaController@test');
+// Route::get('/test', 'Api\PropagandaController@test');
+Route::get('/test', 'Api\PropagandaController@test_conversion');
 Route::get('/convert-librarycaptions', 'Api\Admin\CaptionConversionController@get_library_captions');
 Route::get('/convert-captions', 'Api\Admin\CaptionConversionController@get_captions');
 Route::get('/generate-thumb-clips', 'Api\Admin\ClipsController@generate_thumbnails');

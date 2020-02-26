@@ -138,6 +138,8 @@
                                         color="yellow"
                                         align="center"
                                         @click="upload"
+                                        :has-spinner="isLoading"
+                                        :disable="isLoading"
                                         :title="$root.getCmd('upload')"
                                     />
                                 </div>
@@ -219,6 +221,7 @@ export default {
             description: null,
             buttonText: null,
             interviewTitle: null,
+            isLoading: false,
         }
     },
     watch: {
@@ -273,6 +276,8 @@ export default {
             }
         },
         upload: function () {
+            this.isLoading = true
+
             let data = new FormData()
             data.append('title', this.interviewTitle)
             data.append('media', this.file)
@@ -280,8 +285,10 @@ export default {
 
             this.$http.post('/api/v2/propaganda/challenge/apps/upload-content', data).then(response => {
                 console.log(response.data);
+                this.isLoading = false
             }).catch(err => {
                 console.log(err);
+                this.isLoading = false
             })
         },
     },

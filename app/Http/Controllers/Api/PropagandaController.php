@@ -19,8 +19,10 @@ use App\Propaganda\ChallengeLibraryMedia;
 use Illuminate\Http\Request;
 use App\Notifications\SharedSession;
 use App\Http\Controllers\Controller;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
+define('FFMPEG_LIB', '/usr/local/bin/ffmpeg');
 
 class PropagandaController extends Controller
 {
@@ -207,21 +209,110 @@ class PropagandaController extends Controller
         $path = 'public/propaganda/users';
         $src = $file->storeAs($path, $filename);
 
-        $media->url = $src;
-        $media->library_type_id = 0;
+        $media->url = Storage::disk('local')->url($src);
+        $media->library_type_id = isset($request->library_type_id) ? $request->library_type_id : 0;
         $media->save();
 
-        return $media;
+        $media = $this->generate_thumbnail($media);
+
+        return [
+            'success' => true,
+            'media' => $media,
+        ];
     }
 
     public function get_challenge($id)
     {
         $challenge = Challenge::find($id);
-        $libraries = ChallengeLibrary::where('challenge_id', $id)->with('medias')->get();
+        $library = ChallengeLibrary::where('challenge_id', $id)->with('medias')->first();
 
         return [
             'success' => true,
-            'challenge' => $challenge
+            'challenge' => $challenge,
+            'library' => $library,
         ];
+    }
+
+    // https://stackoverflow.com/questions/834303/startswith-and-endswith-functions-in-php
+    public function endsWith($haystack, $needle)
+    {
+        $length = strlen($needle);
+        if ($length == 0) {
+            return true;
+        }
+
+        return (substr($haystack, -$length) === $needle);
+    }
+
+    public function test_conversion()
+    {
+        $media = ChallengeLibraryMedia::find(1);
+
+        $this->generate_thumbnail($media);
+    }
+
+    public function generate_thumbnail($media)
+    {
+
+        if (!$media->thumb || $media->thumb == null) {
+            if ($this->endsWith($media->url, '.mp4')) {
+                // dump('è un video');
+                $globalPath = Storage::disk('local')->getDriver()->getAdapter();
+                $filename = str_replace('.mp4', '', str_replace('/storage/propaganda/users/', '', $media->url));
+                $path = str_replace('storage', 'public', $media->url);
+                $filePath = $globalPath->applyPathPrefix($path);
+
+                $timeToSnap = $this->get_clip_thumb_time($filePath);
+
+                $pathToSave = storage_path('app/public/propaganda/users/').$filename.'.jpg';
+                $saveThumb = $this->save_thumb_at_time($filePath, $timeToSnap, $pathToSave);
+                $pathToDB = Storage::disk('local')->url('propaganda/users/'.$filename.'.jpg');
+
+                $media->thumb = $pathToDB;
+                $media->save();
+
+                $media = $this->crop_thumbnail($media);
+            }
+        }
+
+        return $media;
+    }
+
+    public function get_clip_thumb_time($path)
+    {
+        $cli = FFMPEG_LIB.' -i '.$path.' 2>&1 | grep \'Duration\' | cut -d \' \' -f 4 | sed s/,//';
+        $duration =  exec($cli);
+
+        $duration = explode(":", $duration);
+        $duration = $duration[0]*3600 + $duration[1]*60+ round($duration[2]);
+        $timeToSnap = $duration / 2;
+
+        return $timeToSnap;
+    }
+
+    public function save_thumb_at_time($filePath, $timeToSnap, $pathToSave)
+    {
+        // prendo il frame e lo salvo
+        $cli = FFMPEG_LIB.' -y -i '.$filePath.' -f mjpeg -vframes 1 -ss '.$timeToSnap.' '.$pathToSave;
+        exec($cli);
+
+        return $cli;
+    }
+
+    public function crop_thumbnail($media)
+    {
+        if ($media->thumb) {
+            $globalPath = Storage::disk('local')->getDriver()->getAdapter();
+            $path = str_replace('storage', 'public', $media->thumb);
+            $filePath = $globalPath->applyPathPrefix($path);
+
+            Image::make($filePath)->fit(
+                400, 600, function ($constraint) {
+                    $constraint->upsize();
+                }
+            )->save();
+        }
+
+            return $media;
     }
 }

@@ -68,9 +68,20 @@
                                     color="white"
                                 />
 
-                                <div class="prop-affiches__container">
-                                    <ui-image-slider :images="[]" />
+                                <div
+                                    class="ch-film"
+                                    v-if="library && library.medias.length > 0"
+                                >
+                                    <video-slider
+                                        :movies="library.medias"
+                                        @open-modal="openModal"
+                                    />
                                 </div>
+                                <challenge-modal
+                                    ref="modal"
+                                    type="video"
+                                    :modal="modal"
+                                />
                             </ui-block>
                         </ui-row>
                     </ui-container>
@@ -89,7 +100,7 @@
                                     name="title"
                                     class="form-control"
                                     :placeholder="$root.getCmd('title')"
-                                    v-model="title"
+                                    v-model="challengeTitle"
                                 >
                             </div>
                             <div class="input-group">
@@ -97,7 +108,7 @@
                                     <input
                                         type="file"
                                         class="custom-file-input"
-                                        accept="video/*, image/*"
+                                        accept="video/mp4"
                                         @change="filesChange($event.target.name, $event.target.files)"
                                     >
 
@@ -122,17 +133,13 @@
                                 :has-margin="false"
                                 color="yellow"
                                 align="center"
+                                :has-spinner="isLoading"
+                                :disable="isLoading"
                                 @click="upload"
                                 :title="$root.getCmd('upload')"
                             />
                         </ui-app-block>
                     </ui-container>
-                    <!-- <ui-app-session-manager
-                        :app="this.app"
-                        :open="open"
-                        :app-sessions="sessions"
-                        @open-session="startApp"
-                    /> -->
                 </ui-container>
             </div>
         </div>
@@ -175,6 +182,9 @@ import {
 }
 from '../../../../uiapp'
 
+import VideoSlider from '../../../../uiapp/sub/propaganda/VideoSlider.vue'
+import ChallengeModal from '../../../../uiapp/sub/propaganda/ChallengeModal.vue'
+
 export default {
     name: 'ChallengePropagandaFilm',
     mixins: [TranslationFilter],
@@ -195,15 +205,22 @@ export default {
         UiRow,
         UiImageSlider,
         UiAppBlock,
+        VideoSlider,
+        ChallengeModal,
     },
     data: function () {
         return {
             clip: null,
             title: null,
+            challengeTitle: null,
+            file: null,
+            isLoading: false,
             content: null,
             open: false,
             description: null,
             buttonText: null,
+            library: null,
+            modal: null,
         }
     },
     watch: {
@@ -219,7 +236,13 @@ export default {
             this.$http.get(`/api/v2/propaganda/challenge/${id}`).then(response => {
                 console.log(response.data);
                 if (response.data.success) {
-                    this.content = response.data.challenge
+                    const {
+                        challenge,
+                        library
+                    } = response.data
+
+                    this.content = challenge
+                    this.library = library
                 }
             }).catch(err => {
                 this.content = challenges.find(challenge => challenge.id == id)
@@ -257,7 +280,39 @@ export default {
                 this.buttonText = this.$root.getCmd('read_more')
             }
         },
-        upload: function () {},
+        upload: function () {
+            this.isLoading = true
+
+            let data = new FormData()
+            data.append('title', this.challengeTitle)
+            data.append('media', this.file)
+            data.append('challenge_id', 1)
+            data.append('library_type_id', 1)
+
+            this.$http.post('/api/v2/propaganda/challenge/apps/upload-content', data).then(response => {
+                // console.log(response.data);
+                this.isLoading = false
+
+                if (response.data.success) {
+                    let library = this.library
+                    this.library = null
+
+                    library.medias.push(response.data.media)
+
+                    this.library = Object.assign({}, library)
+                }
+            }).catch(err => {
+                // console.log(err);
+                this.isLoading = false
+            })
+        },
+        openModal: function (movie) {
+            console.log('opening-modal');
+            this.modal = Object.assign({}, movie)
+            this.$nextTick(() => {
+                this.$refs.modal.show()
+            })
+        },
     },
     created: function () {
         this.getData()
@@ -317,6 +372,11 @@ export default {
     &__content {
         padding: $spacer * 2;
     }
+}
+
+.ch-film {
+    width: 90%;
+    padding-bottom: $spacer * 2;
 }
 
 .prop-films {
