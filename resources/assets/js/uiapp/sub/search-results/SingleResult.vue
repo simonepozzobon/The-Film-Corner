@@ -7,23 +7,24 @@
         >
             <div class="ua-single-res__thumb-container">
                 <ui-image
-                    :src="posterSrc"
-                    :alt="content.title"
+                    v-if="content.thumb"
+                    :src="content.thumb"
+                    :alt="content | translate('title', $root.locale)"
                     :has-margin="false"
                 />
                 <div class="overlay">
                     <single-hover />
                 </div>
-                <video
+                <!-- <video
                     ref="player"
                     class="video-js d-none"
-                ></video>
+                ></video> -->
             </div>
         </div>
         <div class="ua-single-res__details">
             <div class="ua-single-res__title">
                 <ui-title
-                    :title="content.title"
+                    :title="content | translate('title', $root.locale)"
                     :has-container="false"
                     :has-padding="false"
                     :has-margin="false"
@@ -102,9 +103,11 @@ from '../../../ui'
 
 import SingleHover from './SingleHover.vue'
 import videojs from 'video.js'
+import TranslationFilter from '../../../TranslationFilter'
 
 export default {
     name: 'SingleResult',
+    mixins: [TranslationFilter],
     components: {
         SingleHover,
         UiImage,
@@ -131,13 +134,13 @@ export default {
             }
         }
     },
-    watch: {
-        'content.src': function (src) {
-            if (this.player && this.playerReady) {
-                this.setSrc()
-            }
-        },
-    },
+    // watch: {
+    //     'content.src': function (src) {
+    //         if (this.player && this.playerReady) {
+    //             this.setSrc()
+    //         }
+    //     },
+    // },
     methods: {
         initPlayer: function () {
             this.player = videojs(this.$refs.player, this.options, () => {
@@ -163,6 +166,7 @@ export default {
             ctx.drawImage(player, 0, 0)
 
             this.posterSrc = canvas.toDataURL()
+            console.log(this.posterSrc);
         },
         openResult: function () {
             this.$emit('open-result', this.content)
@@ -175,13 +179,13 @@ export default {
         },
     },
     mounted: function () {
-        this.initPlayer()
+        // this.initPlayer()
     },
-    beforeDestroy: function () {
-        if (this.player) {
-            this.player.dispose()
-        }
-    }
+    // beforeDestroy: function () {
+    //     if (this.player) {
+    //         this.player.dispose()
+    //     }
+    // }
 }
 </script>
 

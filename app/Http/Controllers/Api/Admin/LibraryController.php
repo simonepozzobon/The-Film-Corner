@@ -9,11 +9,16 @@ use App\Propaganda\Exercise;
 use App\Propaganda\LibraryMedia;
 use App\Propaganda\LibraryCaption;
 use App\Propaganda\LibraryType;
+use \Done\Subtitles\Subtitles;
 
 use File;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+use \Done\Subtitles\Subtitles;
+
+define('FFMPEG_LIB', '/usr/local/bin/ffmpeg');
 
 class LibraryController extends Controller
 {
@@ -27,6 +32,100 @@ class LibraryController extends Controller
         $this->options_multiple = ['directors', 'peoples', 'topics', 'captions'];
         $this->options_mixed = ['paratexts', 'libraries.exercise', 'libraries.medias.library_captions'];
         $this->options = array_merge($this->options_single, $this->options_multiple, $this->options_mixed);
+    }
+
+    public function test_web()
+    {
+        $this->generate_thumbnails();
+        dd('test');
+    }
+
+    public function generate_thumbnails()
+    {
+        $medias = LibraryMedia::all();
+
+        foreach ($medias as $key => $media) {
+            $media = $this->generate_thumbnail($media);
+            if ($this->endsWith($media->url, '.mp4')) {
+                $media = $this->crop_thumbnail($media);
+            }
+        }
+    }
+
+    public function crop_thumbnail($media)
+    {
+        if ($media->thumb) {
+            $globalPath = Storage::disk('local')->getDriver()->getAdapter();
+            $path = str_replace('storage', 'public', $media->thumb);
+            $filePath = $globalPath->applyPathPrefix($path);
+
+            Image::make($filePath)->fit(
+                1920, 1080, function ($constraint) {
+                    $constraint->upsize();
+                }
+            )->save();
+        }
+
+        return $media;
+    }
+
+    // https://stackoverflow.com/questions/834303/startswith-and-endswith-functions-in-php
+    public function endsWith($haystack, $needle)
+    {
+        $length = strlen($needle);
+        if ($length == 0) {
+            return true;
+        }
+
+        return (substr($haystack, -$length) === $needle);
+    }
+
+    public function generate_thumbnail($media)
+    {
+
+        if (!$media->thumb || $media->thumb == null) {
+            if ($this->endsWith($media->url, '.mp4')) {
+                // dump('è un video');
+                $globalPath = Storage::disk('local')->getDriver()->getAdapter();
+                $filename = str_replace('.mp4', '', str_replace('public/propaganda/libraries/', '', $media->url));
+
+                $filePath = $globalPath->applyPathPrefix($media->url);
+
+                $timeToSnap = $this->get_clip_thumb_time($filePath);
+
+                $pathToSave = storage_path('app/public/propaganda/libraries/').$filename.'.jpg';
+                $saveThumb = $this->save_thumb_at_time($filePath, $timeToSnap, $pathToSave);
+                $pathToDB = Storage::disk('local')->url('propaganda/libraries/'.$filename.'.jpg');
+
+                $media->thumb = $pathToDB;
+                $media->save();
+
+                $media = $this->crop_thumbnail($media);
+            }
+        }
+
+        return $media;
+    }
+
+    public function get_clip_thumb_time($path)
+    {
+        $cli = FFMPEG_LIB.' -i '.$path.' 2>&1 | grep \'Duration\' | cut -d \' \' -f 4 | sed s/,//';
+        $duration =  exec($cli);
+
+        $duration = explode(":", $duration);
+        $duration = $duration[0]*3600 + $duration[1]*60+ round($duration[2]);
+        $timeToSnap = $duration / 2;
+
+        return $timeToSnap;
+    }
+
+    public function save_thumb_at_time($filePath, $timeToSnap, $pathToSave)
+    {
+        // prendo il frame e lo salvo
+        $cli = FFMPEG_LIB.' -y -i '.$filePath.' -f mjpeg -vframes 1 -ss '.$timeToSnap.' '.$pathToSave;
+        exec($cli);
+
+        return $cli;
     }
 
     public function upload_media(Request $request)
@@ -61,6 +160,9 @@ class LibraryController extends Controller
         $m->library_type_id = $library->library_type_id;
         $m->library_id = $library->id;
         $m->save();
+
+        $m = $this->generate_thumbnail($m);
+
 
         $current = $m->translateOrNew('it');
         $current->library_media_id = $m->id;
@@ -150,7 +252,14 @@ class LibraryController extends Controller
             $src = $file->storeAs($path, $filename);
             $src = Storage::disk('local')->url($src);
 
-            $caption->src = $src;
+            $globalPath = Storage::disk('local')->getDriver()->getAdapter();
+            $srt = str_replace('/storage', 'public', $src);
+            $filePath = $globalPath->applyPathPrefix($srt);
+            $destPath = str_replace('.srt', '.vtt', $filePath);
+            $subtitles = Subtitles::convert($filePath, $destPath);
+
+            $caption->src = str_replace('.srt', '.vtt', $src);
+            // $caption->src = $src;
             $caption->save();
 
             $clip = $media->library->clip;

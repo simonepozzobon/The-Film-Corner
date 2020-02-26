@@ -12,7 +12,7 @@ class Clip extends Model
 
     public $translatedAttributes = ['title'];
 
-    protected $fillable = ['video', 'year', 'nationality'];
+    protected $fillable = ['video', 'thumb', 'year', 'nationality'];
 
     // One to many
     public function period()

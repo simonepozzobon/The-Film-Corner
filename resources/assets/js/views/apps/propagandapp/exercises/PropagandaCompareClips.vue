@@ -17,6 +17,7 @@
                         title-align="center"
                         :src="clip.video"
                         :clip="clip"
+                        :captions="clip.captions"
                         :has-info="true"
                         @open-info="openInfo"
                     />
@@ -31,6 +32,7 @@
                         title-align="center"
                         :src="compare.video ? compare.video : compare.url"
                         :clip="compare"
+                        :captions="compare.captions"
                         :has-info="true"
                         @open-info="openInfo"
                     />
@@ -181,6 +183,7 @@ export default {
         changeVideo: function (movie) {
             // console.log('compare changed');
             this.compare = Object.assign({}, movie)
+            console.log(this.compare);
         },
         openModal: function (modal) {
             this.modal = Object.assign({}, modal)
