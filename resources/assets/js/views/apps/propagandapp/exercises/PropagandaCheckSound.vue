@@ -206,6 +206,7 @@ export default {
             if (this.session.content.bookmarks.length > 0) {
                 let bookmarks = []
                 let player = this.$refs.audio.player
+
                 for (let i = 0; i < this.session.content.bookmarks.length; i++) {
                     let bookmark = this.session.content.bookmarks[i]
                     console.log(this.player);
