@@ -9,7 +9,6 @@ use App\Propaganda\Exercise;
 use App\Propaganda\LibraryMedia;
 use App\Propaganda\LibraryCaption;
 use App\Propaganda\LibraryType;
-use \Done\Subtitles\Subtitles;
 
 use File;
 use Illuminate\Http\Request;
