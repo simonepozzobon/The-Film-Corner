@@ -194,7 +194,7 @@ export default {
     },
     data: function () {
         return {
-            images: subsPics,
+            images: [],
             title: null,
             content: null,
             open: false,
