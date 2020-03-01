@@ -1,72 +1,64 @@
 <template>
-<div
-    class="roadmap-dot"
-    :class="[
-        isActiveClass,
-    ]"
-    @click="clicked"
->
-    <div class="roadmap-dot__wrapper">
-        <div class="roadmap-dot__period">
-            {{ point.year }}
-        </div>
-        <div
-            class="roadmap-dot__circle"
-            :class="bgClass"
-        >
-        </div>
-        <div class="roadmap-dot__label">
-            {{ point.title }}
+    <div class="roadmap-dot" :class="[isActiveClass]" @click="clicked">
+        <div class="roadmap-dot__wrapper">
+            <div class="roadmap-dot__period">
+                {{ point.year }}
+            </div>
+            <div class="roadmap-dot__circle" :class="bgClass"></div>
+            <div class="roadmap-dot__label">
+                {{ point | translate("title", $root.locale) }}
+            </div>
         </div>
     </div>
-</div>
 </template>
 
 <script>
+import TranslationFilter from "../TranslationFilter";
 export default {
-    name: 'UiRoadmapDot',
+    name: "UiRoadmapDot",
+    mixins: [TranslationFilter],
     props: {
         point: {
             type: Object,
-            default: function () {
-                return {}
-            },
+            default: function() {
+                return {};
+            }
         },
         isActive: {
             type: Boolean,
-            default: false,
-        },
-    },
-    computed: {
-        colorClass: function () {
-            if (this.point.color) {
-                return 'roadmap-dot--' + this.point.color
-            }
-            return null
-        },
-        isActiveClass: function () {
-            if (this.isActive) {
-                return 'roadmap-dot--is-active'
-            }
-            return null
-        },
-        bgClass: function () {
-            if (this.point.color) {
-                return 'bg-' + this.point.color
-            }
-            return null
-        },
-    },
-    methods: {
-        clicked: function () {
-            this.$emit('click', this.point)
+            default: false
         }
     },
-}
+    computed: {
+        colorClass: function() {
+            if (this.point.color) {
+                return "roadmap-dot--" + this.point.color;
+            }
+            return null;
+        },
+        isActiveClass: function() {
+            if (this.isActive) {
+                return "roadmap-dot--is-active";
+            }
+            return null;
+        },
+        bgClass: function() {
+            if (this.point.color) {
+                return "bg-" + this.point.color;
+            }
+            return null;
+        }
+    },
+    methods: {
+        clicked: function() {
+            this.$emit("click", this.point);
+        }
+    }
+};
 </script>
 
 <style lang="scss" scoped>
-@import '~styles/shared';
+@import "~styles/shared";
 $size-close: $spacer * 2 !default;
 $size-hover: $spacer * 4 !default;
 
@@ -91,7 +83,7 @@ $size-hover: $spacer * 4 !default;
 
     &__circle {
         position: absolute;
-        content: '';
+        content: "";
         cursor: pointer;
         width: $size-close;
         height: $size-close;
