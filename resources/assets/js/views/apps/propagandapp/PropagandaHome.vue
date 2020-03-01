@@ -5,45 +5,53 @@
             :full-width="true"
         >
             <ui-row align="center" ver-align="center">
-                <ui-title
-                    :title="title"
-                    font-size="h1"
-                    align="center"
-                    :uppercase="false"
-                    :has-container="true"
-                />
+                <div class="col-12">
+                    <ui-row :full-width="true" align="center">
+                        <ui-title
+                            :title="title"
+                            font-size="h1"
+                            align="center"
+                            :uppercase="false"
+                            :has-container="true"
+                        />
+                    </ui-row>
 
-                <ui-row :full-width="true" ver-align="center" align="center">
-                    <ui-special-text
-                        :has-padding="false"
-                        display="inline-block"
-                        class="mr-3"
-                        text="search the clips and didactical content through the timeline below or through the"
-                    />
-                    <ui-button
-                        :title="$root.getCmd('advanced_search')"
-                        color="red"
-                        :has-container="false"
-                        :has-margin="false"
-                        @click="$root.goTo('propaganda-search')"
-                        :disable="true"
-                    />
-                </ui-row>
+                    <ui-row :full-width="true" align="center">
+                        <ui-special-text
+                            :has-padding="false"
+                            display="inline-block"
+                            class="mr-3"
+                            :text="$root.getCmd('search_the_clips_intro_home')"
+                        />
+                    </ui-row>
+                    <ui-row :full-width="true" align="center">
+                        <ui-button
+                            :title="$root.getCmd('advanced_search')"
+                            color="red"
+                            :has-container="false"
+                            :has-margin="false"
+                            @click="$root.goTo('propaganda-search')"
+                            :disable="true"
+                        />
+                    </ui-row>
 
-                <ui-roadmap
-                    :channels="channels"
-                    @select-channel="selectChannel"
-                />
-
-                <ui-row align="center" :full-width="true">
-                    <ui-button
-                        :title="$root.getCmd('go_to_the_creative_challenges')"
-                        color="yellow"
-                        :has-container="false"
-                        :has-margin="false"
-                        @click="goToChallenges"
+                    <ui-roadmap
+                        :channels="channels"
+                        @select-channel="selectChannel"
                     />
-                </ui-row>
+
+                    <ui-row align="center" :full-width="true">
+                        <ui-button
+                            :title="
+                                $root.getCmd('go_to_the_creative_challenges')
+                            "
+                            color="yellow"
+                            :has-container="false"
+                            :has-margin="false"
+                            @click="goToChallenges"
+                        />
+                    </ui-row>
+                </div>
             </ui-row>
         </ui-hero-banner>
         <ui-app-channel-results
