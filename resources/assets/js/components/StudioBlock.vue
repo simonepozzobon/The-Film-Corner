@@ -1,162 +1,139 @@
 <template>
-<ui-block
-    :size="4"
-    :color="studio.color_class"
-    :radius="true"
-    :transparent="true"
-    :full-height="true"
->
-    <ui-title
-        :title="nameTranslated"
-        align="center"
-        size="h4"
-        color="white"
-        :hoverable="true"
-        :x-padding="true"
-        @click.native="goToPavilion($event, studio.slug)"
-    />
+    <ui-block
+        :size="4"
+        :color="studio.color_class"
+        :radius="true"
+        :transparent="true"
+        :full-height="true"
+    >
+        <ui-title
+            :title="nameTranslated"
+            align="center"
+            size="h4"
+            color="white"
+            :hoverable="true"
+            :x-padding="true"
+            @click.native="goToPavilion($event, studio.slug)"
+        />
 
-    <div v-if="studio.slug == 'cultural-approach'">
-        <ul
-            class="block-menu block-menu--var"
-            v-if="curlturalApproach"
-        >
-            <li
-                class="block-menu__menu-head"
-                @click="goToPropaganda(studio.slug)"
-            >
-                Propagand<b>app</b>
-            </li>
-            <li
-                class="block-menu__menu-item"
-                @click="goToPropaganda(studio.slug)"
-            >
-                Go to the challenges
-            </li>
-        </ul>
-        <ul
-            class="block-menu block-menu--var"
-            v-else
-        >
-            <li class="block-menu__menu-head">
-                Propagand<b>app</b>
-            </li>
-            <li>
-                Under Construction
-            </li>
-        </ul>
-        <ul
-            class="block-menu block-menu--var"
-            v-if="curlturalApproach"
-        >
-            <li class="block-menu__menu-head">
-                Art<b>app</b>
-            </li>
-            <li>
-                Go to the challenges
-            </li>
-        </ul>
-        <ul
-            class="block-menu block-menu--var"
-            v-else
-        >
-            <li class="block-menu__menu-head">
-                Art<b>app</b>
-            </li>
-            <li>
-                Under Construction
-            </li>
-        </ul>
-    </div>
-
-    <div v-else>
-        <div v-for="cat in studio.categories">
-            <ul
-                class="block-menu"
-                v-if="cat.active == 1"
-            >
+        <div v-if="studio.slug == 'cultural-approach'">
+            <ul class="block-menu block-menu--var" v-if="curlturalApproach">
                 <li
                     class="block-menu__menu-head"
-                    @click="goToCat(cat.slug)"
+                    @click="goToPropaganda(studio.slug)"
                 >
-                    {{cat | translate('name', $root.locale)}}
+                    Propagand<b>app</b>
                 </li>
-                <studio-block-app-loop :apps="cat.apps" />
+                <li
+                    class="block-menu__menu-item"
+                    @click="goToPropaganda(studio.slug)"
+                >
+                    Go to the challenges
+                </li>
+            </ul>
+            <ul class="block-menu block-menu--var" v-else>
+                <li class="block-menu__menu-head">Propagand<b>app</b></li>
+                <li>
+                    Under Construction
+                </li>
+            </ul>
+            <ul class="block-menu block-menu--var" v-if="artApp">
+                <li class="block-menu__menu-head">Art<b>app</b></li>
+                <li>
+                    Go to the challenges
+                </li>
+            </ul>
+            <ul class="block-menu block-menu--var" v-else>
+                <li class="block-menu__menu-head">Art<b>app</b></li>
+                <li>
+                    Under Construction
+                </li>
             </ul>
         </div>
-    </div>
 
-</ui-block>
+        <div v-else>
+            <div v-for="cat in studio.categories">
+                <ul class="block-menu" v-if="cat.active == 1">
+                    <li
+                        class="block-menu__menu-head"
+                        @click="goToCat(cat.slug)"
+                    >
+                        {{ cat | translate("name", $root.locale) }}
+                    </li>
+                    <studio-block-app-loop :apps="cat.apps" />
+                </ul>
+            </div>
+        </div>
+    </ui-block>
 </template>
 
 <script>
-import {
-    UiBlock,
-    UiTitle
-}
-from '../ui'
-import StudioBlockAppLoop from './StudioBlockAppLoop.vue'
-import TranslationFilter from '../TranslationFilter'
+import { UiBlock, UiTitle } from "../ui";
+import StudioBlockAppLoop from "./StudioBlockAppLoop.vue";
+import TranslationFilter from "../TranslationFilter";
 
 export default {
-    name: 'StudioBlock',
+    name: "StudioBlock",
     mixins: [TranslationFilter],
     components: {
         UiBlock,
         UiTitle,
-        StudioBlockAppLoop,
+        StudioBlockAppLoop
     },
     props: {
         studio: {
             type: Object,
-            default: function () {
-                return {}
-            },
-        },
+            default: function() {
+                return {};
+            }
+        }
     },
-    data: function () {
+    data: function() {
         return {
             name: null,
-            curlturalApproach: false,
-        }
+            curlturalApproach: true,
+            artApp: false
+        };
     },
     watch: {
-        '$root.locale': function (locale) {
-
-        }
+        "$root.locale": function(locale) {}
     },
     computed: {
-        nameTranslated: function () {
+        nameTranslated: function() {
             // return this.$translations.getContent(this.studio.name, 'name', 'sections')
-            return this.$options.filters.translate(this.studio, 'name', this.$root.locale)
-        },
+            return this.$options.filters.translate(
+                this.studio,
+                "name",
+                this.$root.locale
+            );
+        }
     },
     methods: {
-        goToPavilion: function (event, slug) {
-            event.preventDefault()
-            this.$root.goToWithParams('pavilion-home', {
+        goToPavilion: function(event, slug) {
+            event.preventDefault();
+            this.$root.goToWithParams("pavilion-home", {
                 pavilion: slug
-            })
+            });
         },
-        goToCat: function (slug) {
-            this.$root.goToWithParams('cat-home', {
+        goToCat: function(slug) {
+            this.$root.goToWithParams("cat-home", {
                 cat: slug
-            })
+            });
         },
-        goToApp: function (slug) {
-            this.$root.goToWithParams('app-home', {
+        goToApp: function(slug) {
+            this.$root.goToWithParams("app-home", {
                 app: slug
-            })
+            });
         },
-        goToPropaganda: function (slug) {
-            this.$root.goTo('propaganda-intro')
-        },
-    },
-}
+        goToPropaganda: function(slug) {
+            this.$root.goTo("propaganda-intro");
+        }
+    }
+};
 </script>
 
 <style lang="scss" scoped>
-@import '~styles/shared';
+@import "~styles/shared";
 .block-menu {
     text-align: center;
     list-style-type: none;
