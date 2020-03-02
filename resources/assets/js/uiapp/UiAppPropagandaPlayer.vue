@@ -1,350 +1,349 @@
 <template>
-<div
-    class="ua-prop-player"
-    :class="[
-        topAlignClass,
-        colorClass,
-        hasInfoClass,
-    ]"
->
-    <div class="ua-prop-player__container">
-        <div class="ua-prop-player__top">
-            <div class="ua-prop-player__title">
-                <ui-title
-                    v-if="!hasInfo"
-                    :title="lnTitle"
-                    tag="h2"
-                    font-size="h4"
-                    :align="titleAlign"
-                    :has-container="false"
-                    :has-margin="false"
-                    :has-padding="false"
-                />
+    <div
+        class="ua-prop-player"
+        :class="[topAlignClass, colorClass, hasInfoClass]"
+    >
+        <div class="ua-prop-player__container">
+            <div class="ua-prop-player__top">
+                <div class="ua-prop-player__title">
+                    <ui-title
+                        v-if="!hasInfo"
+                        :title="lnTitle"
+                        tag="h2"
+                        font-size="h4"
+                        :align="titleAlign"
+                        :has-container="false"
+                        :has-margin="false"
+                        :has-padding="false"
+                    />
 
-                <ui-title
-                    v-else
-                    :title="lnTitle"
-                    tag="h3"
-                    font-size="h5"
-                    :has-container="false"
-                    :has-margin="false"
-                    :has-padding="false"
+                    <ui-title
+                        v-else
+                        :title="lnTitle"
+                        tag="h3"
+                        font-size="h5"
+                        :has-container="false"
+                        :has-margin="false"
+                        :has-padding="false"
+                    />
+                </div>
+                <div
+                    v-if="hasInfo"
+                    class="ua-prop-player__info"
+                    @click.prevent="openInfo"
+                >
+                    <span>i</span>
+                </div>
+                <div class="ua-prop-player__age" v-if="hasAge">
+                    <ui-title
+                        :title="age"
+                        tag="h3"
+                        font-size="h5"
+                        :has-container="false"
+                        :has-margin="false"
+                        :has-padding="false"
+                        :uppercase="false"
+                        color="white"
+                    />
+                </div>
+            </div>
+            <div class="ua-prop-player__center">
+                <video-player
+                    class="video-player-box ua-video-preview__player"
+                    ref="player"
+                    :options="playerOptions"
+                    :playsinline="true"
+                    @ready="onPlayerReady"
                 />
             </div>
-            <div
-                v-if="hasInfo"
-                class="ua-prop-player__info"
-                @click.prevent="openInfo"
-            >
-                <span>i</span>
-            </div>
-            <div
-                class="ua-prop-player__age"
-                v-if="hasAge"
-            >
-                <ui-title
-                    :title="age"
-                    tag="h3"
-                    font-size="h5"
-                    :has-container="false"
-                    :has-margin="false"
-                    :has-padding="false"
-                    :uppercase="false"
-                    color="white"
+            <div class="ua-prop-player__controls">
+                <controls
+                    :color="color"
+                    @play="play"
+                    @pause="pause"
+                    @stop="stop"
+                    @backward="backward"
+                    @forward="forward"
                 />
             </div>
-        </div>
-        <div class="ua-prop-player__center">
-            <video-player
-                class="video-player-box ua-video-preview__player"
-                ref="player"
-                :options="playerOptions"
-                :playsinline="true"
-                @ready="onPlayerReady"
-            />
-        </div>
-        <div class="ua-prop-player__controls">
-            <controls
-                :color="color"
-                @play="play"
-                @pause="pause"
-                @stop="stop"
-                @backward="backward"
-                @forward="forward"
-            />
         </div>
     </div>
-</div>
 </template>
 
 <script>
-import Controls from './sub/propaganda/Controls.vue'
+import Controls from "./sub/propaganda/Controls.vue";
 
-import {
-    UiTitle,
-}
-from '../ui'
+import { UiTitle } from "../ui";
 
-import {
-    videoPlayer
-}
-from 'vue-video-player'
+import { videoPlayer } from "vue-video-player";
 
 export default {
-    name: 'UiAppPropagandaPlayer',
+    name: "UiAppPropagandaPlayer",
     components: {
         Controls,
         UiTitle,
-        videoPlayer,
+        videoPlayer
     },
     props: {
         title: {
             type: String,
-            default: 'titolo',
+            default: "titolo"
         },
         src: {
             type: String,
-            default: null,
+            default: null
         },
         titleAlign: {
             type: String,
-            default: null,
+            default: null
         },
         hasAge: {
             type: Boolean,
-            default: true,
+            default: true
         },
         color: {
             type: String,
-            default: null,
+            default: null
         },
         translations: {
             type: Array,
-            default: function () {
-                return []
-            },
+            default: function() {
+                return [];
+            }
         },
         ages: {
             type: Array,
-            default: function () {
-                return []
-            },
+            default: function() {
+                return [];
+            }
         },
         clip: {
             type: Object,
-            default: function () {
-                return {}
-            },
+            default: function() {
+                return {};
+            }
         },
         debug: {
             type: Boolean,
-            default: false,
+            default: false
         },
         hasInfo: {
             type: Boolean,
-            default: false,
+            default: false
         },
         muted: {
             type: Boolean,
-            default: false,
+            default: false
         },
         isMp4: {
             type: Boolean,
-            default: false,
+            default: false
         },
         captions: {
             type: Array,
-            default: function () {
-                return []
-            },
-        },
+            default: function() {
+                return [];
+            }
+        }
     },
-    data: function () {
+    data: function() {
         return {
             master: null,
             loaderVisible: false,
             playerOptions: {
-                aspectRatio: '16:9',
-                languages: ['en', 'it', 'fr', 'sl', 'ka', 'sr'],
-                sources: [{
-                    type: 'video/mp4',
-                    src: '/video/empty-session.mp4'
-                }],
-                poster: '/video/empty-session.png',
+                aspectRatio: "16:9",
+                languages: ["en", "it", "fr", "sl", "ka", "sr"],
+                sources: [
+                    {
+                        type: "video/mp4",
+                        src: "/video/empty-session.mp4"
+                    }
+                ],
+                poster: "/video/empty-session.png"
             },
             lnTitle: null,
-            age: null,
-        }
+            age: null
+        };
     },
     watch: {
-        src: function (src) {
-            this.changeSrc()
+        src: function(src) {
+            this.changeSrc();
         },
-        '$root.locale': function (locale) {
-            this.translateTitle(locale)
-            this.translateAge(locale)
+        "$root.locale": function(locale) {
+            this.translateTitle(locale);
+            this.translateAge(locale);
 
-            this.translateCaptions(locale)
+            this.translateCaptions(locale);
         },
-        clip: function () {
+        clip: function() {
             if (this.debug) {
                 // console.log('cambiata dentroooo');
             }
-
         }
     },
     computed: {
-        player: function () {
-            return this.$refs.player.player
+        player: function() {
+            return this.$refs.player.player;
         },
-        topAlignClass: function () {
-            if (this.titleAlign == 'center') {
-                return 'ua-prop-player--top-center'
+        topAlignClass: function() {
+            if (this.titleAlign == "center") {
+                return "ua-prop-player--top-center";
             }
-            return null
+            return null;
         },
-        colorClass: function () {
+        colorClass: function() {
             if (this.color) {
-                return 'ua-prop-player--' + this.color
+                return "ua-prop-player--" + this.color;
             }
-            return null
+            return null;
         },
-        hasInfoClass: function () {
+        hasInfoClass: function() {
             if (this.hasInfo) {
-                return 'ua-prop-player--has-info'
+                return "ua-prop-player--has-info";
             }
-            return null
+            return null;
         }
     },
     methods: {
-        translateTitle: function (locale = 'en') {
-            let translation = this.translations.find(translation => translation.locale == locale)
+        translateTitle: function(locale = "en") {
+            let translation = this.translations.find(
+                translation => translation.locale == locale
+            );
             if (translation) {
-                this.lnTitle = translation.title
-            }
-            else {
-                this.lnTitle = this.title
+                this.lnTitle = translation.title;
+            } else {
+                this.lnTitle = this.title;
             }
         },
-        translateAge: function (locale = 'en') {
-            let translation = this.ages.find(translation => translation.locale == locale)
+        translateAge: function(locale = "en") {
+            let translation = this.ages.find(
+                translation => translation.locale == locale
+            );
             if (translation) {
-                this.age = translation.title
+                this.age = translation.title;
             }
         },
-        changeSrc: function () {
+        changeSrc: function() {
             if (this.src) {
-                delete this.playerOptions.poster
-                this.playerOptions.sources[0].src = this.src
+                delete this.playerOptions.poster;
+                this.playerOptions.sources[0].src = this.src;
                 // console.log('dentro cambia', this.src);
             }
         },
-        play: function () {
-            this.player.play()
-            this.$emit('play')
+        play: function() {
+            this.player.play();
+            this.$emit("play");
         },
-        pause: function () {
-            this.player.pause()
-            this.$emit('pause')
+        pause: function() {
+            this.player.pause();
+            this.$emit("pause");
         },
-        stop: function () {
-            this.player.pause()
-            this.player.currentTime(0)
-            this.$emit('stop')
+        stop: function() {
+            this.player.pause();
+            this.player.currentTime(0);
+            this.$emit("stop");
         },
-        backward: function () {
-            this.player.pause()
-            this.$emit('backward')
-            let position = this.player.currentTime()
+        backward: function() {
+            this.player.pause();
+            this.$emit("backward");
+            let position = this.player.currentTime();
             if (position >= 5) {
-                this.player.currentTime(position - 5)
+                this.player.currentTime(position - 5);
+            } else {
+                this.player.currentTime(0);
             }
-            else {
-                this.player.currentTime(0)
-            }
         },
-        forward: function () {
-            this.player.pause()
-            this.$emit('forward')
-            let position = this.player.currentTime()
+        forward: function() {
+            this.player.pause();
+            this.$emit("forward");
+            let position = this.player.currentTime();
         },
-        openInfo: function () {
-            this.$emit('open-info', this.clip)
+        openInfo: function() {
+            this.$emit("open-info", this.clip);
         },
-        translateCaptions: function () {
+        translateCaptions: function() {
             // console.log('translateCaption', this.captions);
             if (this.player) {
-                let tracks = this.player.textTracks()
+                let tracks = this.player.textTracks();
 
                 // console.log(tracks.length);
 
                 for (let i = 0; i < tracks.length; i++) {
-                    let track = tracks[i]
-                    if (track.kind == 'subtitles' && track.mode == 'showing') {
-                        track.mode = 'disabled'
+                    let track = tracks[i];
+                    if (track.kind == "subtitles" && track.mode == "showing") {
+                        track.mode = "disabled";
                     }
                 }
 
                 for (let i = 0; i < tracks.length; i++) {
-                    let track = tracks[i]
-                    if (track.kind == 'subtitles' && track.language == this.$root.locale) {
-                        track.mode = 'showing'
+                    let track = tracks[i];
+                    if (
+                        track.kind == "subtitles" &&
+                        track.language == this.$root.locale
+                    ) {
+                        track.mode = "showing";
                     }
                 }
             }
         },
-        onPlayerReady: function () {
+        onPlayerReady: function() {
             // console.log('player ready');
             for (let i = 0; i < this.captions.length; i++) {
-                let caption = this.captions[i]
+                let caption = this.captions[i];
 
-                this.player.addRemoteTextTrack({
-                    src: caption.src,
-                    kind: 'subtitles',
-                    srclang: caption.locale,
-                    label: caption.locale
-                }, true)
+                this.player.addRemoteTextTrack(
+                    {
+                        src: caption.src,
+                        kind: "subtitles",
+                        srclang: caption.locale,
+                        label: caption.locale
+                    },
+                    true
+                );
 
-                let tracks = this.player.textTracks()
+                let tracks = this.player.textTracks();
 
                 for (let j = 0; j < tracks.length; j++) {
-                    let track = tracks[j]
+                    let track = tracks[j];
 
-                    if (track.kind == 'subtitles' && track.language == this.$root.locale) {
-                        track.mode = 'showing'
+                    if (
+                        track.kind == "subtitles" &&
+                        track.language == this.$root.locale
+                    ) {
+                        track.mode = "showing";
                     }
                 }
             }
             // this.$nextTick(() => {
             //     console.log(this.player.textTracks());
             // })
-            this.$emit('ready')
+            this.$emit("ready");
         }
     },
-    created: function () {
+    created: function() {
         if (this.muted) {
             this.playerOptions = Object.assign(this.playerOptions, {
                 muted: true
-            })
+            });
         }
 
         if (this.isMp4) {
             this.playerOptions = Object.assign(this.playerOptions, {
                 partialRender: true
-            })
+            });
         }
 
-        this.changeSrc()
+        this.changeSrc();
     },
-    mounted: function () {
-        this.translateTitle(this.$root.locale)
-        this.translateAge(this.$root.locale)
-    },
-}
+    mounted: function() {
+        this.translateTitle(this.$root.locale);
+        this.translateAge(this.$root.locale);
+    }
+};
 </script>
 
 <style lang="scss" scoped>
-@import '~styles/shared';
+@import "~styles/shared";
 
 .ua-prop-player {
     width: 100%;
