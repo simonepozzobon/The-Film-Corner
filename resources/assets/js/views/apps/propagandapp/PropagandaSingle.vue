@@ -57,6 +57,7 @@
                                 :has-container="false"
                                 :has-margin="false"
                                 display="inline-block"
+                                @click="$root.goTo('propaganda-home')"
                             />
                         </ui-block>
                     </ui-row>
