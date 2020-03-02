@@ -245,18 +245,19 @@ export default {
         },
         backward: function() {
             this.player.pause();
-            this.$emit("backward");
             let position = this.player.currentTime();
             if (position >= 5) {
                 this.player.currentTime(position - 5);
             } else {
                 this.player.currentTime(0);
             }
+            this.$emit("backward");
         },
         forward: function() {
             this.player.pause();
-            this.$emit("forward");
             let position = this.player.currentTime();
+            this.player.currentTime(position + 5);
+            this.$emit("forward");
         },
         openInfo: function() {
             this.$emit("open-info", this.clip);

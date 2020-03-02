@@ -35,7 +35,7 @@
                 <div class="prop-check-sound__btns">
                     <ui-button
                         class="prop-check-sound__btn"
-                        title="Insert Bookmark"
+                        :title="$root.getCmd('insert_bookmark')"
                         :has-container="false"
                         :has-padding="false"
                         :has-margin="false"
@@ -225,18 +225,23 @@ export default {
         },
         play: function() {
             this.$refs.audio.play();
+            // this.$refs.player.play();
         },
         pause: function() {
             this.$refs.audio.pause();
+            // this.$refs.player.pause();
         },
         stop: function() {
             this.$refs.audio.stop();
+            // this.$refs.player.stop();
         },
         backward: function() {
             this.$refs.audio.backward();
+            // this.$refs.player.backward();
         },
         forward: function() {
             this.$refs.audio.forward();
+            // this.$refs.player.forward();
         },
         addBookmark: function() {
             this.pause();
