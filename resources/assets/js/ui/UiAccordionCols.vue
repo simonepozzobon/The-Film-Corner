@@ -1,79 +1,77 @@
 <template>
-<ui-row class="pb-4 ui-accordion-cols">
-    <div class="col-md-6">
-        <ui-accordion-single
-            v-for="keyword in cols.left"
-            :key="keyword.id"
-            :idx="keyword.id"
-            :title="keyword | translate('name', $root.locale)"
-            :content="keyword | translate('description', $root.locale)"
-        />
-    </div>
-    <div class="col-md-6">
-        <ui-accordion-single
-            v-for="keyword in cols.right"
-            :key="keyword.id"
-            :idx="keyword.id"
-            :title="keyword | translate('name', $root.locale)"
-            :content="keyword | translate('description', $root.locale)"
-        />
-    </div>
-</ui-row>
+    <ui-row class="pb-4 ui-accordion-cols">
+        <div class="col-md-6">
+            <ui-accordion-single
+                v-for="keyword in cols.left"
+                :key="keyword.id"
+                :idx="keyword.id"
+                :title="keyword | translate('name', $root.locale)"
+                :content="keyword | translate('description', $root.locale)"
+            />
+        </div>
+        <div class="col-md-6">
+            <ui-accordion-single
+                v-for="keyword in cols.right"
+                :key="keyword.id"
+                :idx="keyword.id"
+                :title="keyword | translate('name', $root.locale)"
+                :content="keyword | translate('description', $root.locale)"
+            />
+        </div>
+    </ui-row>
 </template>
 
 <script>
-import UiAccordionSingle from './UiAccordionSingle.vue'
-import UiBlock from './UiBlock.vue'
-import UiRow from './UiRow.vue'
+import UiAccordionSingle from "./UiAccordionSingle.vue";
+import UiBlock from "./UiBlock.vue";
+import UiRow from "./UiRow.vue";
 
-import TranslationFilter from '../TranslationFilter'
+import TranslationFilter from "../TranslationFilter";
 
 export default {
-    name: 'UiAccordionCols',
+    name: "UiAccordionCols",
     mixins: [TranslationFilter],
     components: {
         UiAccordionSingle,
         UiBlock,
-        UiRow,
+        UiRow
     },
     props: {
         keywords: {
             type: Array,
-            default: function () {}
+            default: function() {}
         }
     },
-    data: function () {
+    data: function() {
         return {
             isOpen: false,
             cols: {
                 left: [],
-                right: [],
+                right: []
             }
-        }
+        };
     },
     watch: {
-        'keywords': function (keywords) {
-
-        }
+        keywords: function(keywords) {}
     },
     methods: {
-        split: function () {
-            let half = Math.ceil(this.keywords.length / 2)
+        split: function() {
+            let half = Math.ceil(this.keywords.length / 2);
             this.cols = {
                 left: this.keywords.slice(0, half),
                 right: this.keywords.slice(half, this.keywords.length)
-            }
+            };
             console.log(this.cols);
         }
     },
-    mounted: function () {
-        this.split()
+    mounted: function() {
+        this.split();
     }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import '~styles/shared';
+@import "~styles/shared";
 
 .ui-accordion-cols {
     padding-left: $spacer * 4;
