@@ -1,106 +1,123 @@
 <template>
-<div class="ua-depth-single">
-    <sub-dropdown
-        v-if="hasChildren"
-        :title="title"
-        :items="childrens"
-        @open-sub="openSub"
-    />
-    <a
-        v-else
-        href="#"
-        @click.stop.prevent="openDepth"
-        class="ua-depth-single__link"
-    >
-        {{ title }}
-    </a>
-
-</div>
+    <div class="ua-depth-single">
+        <sub-dropdown
+            v-if="hasChildren"
+            :title="titleTranslated"
+            :items="childrens"
+            @open-sub="openSub"
+        />
+        <a
+            v-else
+            href="#"
+            @click.stop.prevent="openDepth"
+            class="ua-depth-single__link"
+        >
+            {{ titleTranslated }}
+        </a>
+    </div>
 </template>
 
 <script>
-import SubDropdown from './SubDropdown.vue'
+import SubDropdown from "./SubDropdown.vue";
 
 export default {
-    name: 'SubSingle',
+    name: "SubSingle",
     components: {
-        SubDropdown,
+        SubDropdown
     },
     props: {
         idx: [Number, String],
         hasChildren: {
             type: Boolean,
-            default: false,
+            default: false
         },
         childrens: {
             type: Array,
-            default: function () {
-                return []
-            },
+            default: function() {
+                return [];
+            }
         },
         sub: {
             type: Object,
-            default: function () {
-                return {}
+            default: function() {
+                return {};
             }
         }
     },
-    data: function () {
-        return {}
+    data: function() {
+        return {};
     },
     computed: {
-        title: function () {
-            let keys = ['tech_info', 'abstract', 'historical_context', 'foods']
-            let titles = [{
-                    key: 'tech_info',
-                    title: 'Tecnical Informations'
+        title: function() {
+            let keys = ["tech_info", "abstract", "historical_context", "foods"];
+            let titles = [
+                {
+                    key: "tech_info",
+                    title: "Tecnical Informations"
                 },
                 {
-                    key: 'abstract',
-                    title: 'Abstract'
+                    key: "abstract",
+                    title: "Abstract"
                 },
                 {
-                    key: 'historical_context',
-                    title: 'Historical Context'
+                    key: "historical_context",
+                    title: "Historical Context"
                 },
                 {
-                    key: 'foods',
-                    title: 'Foods for thoughts'
+                    key: "foods",
+                    title: "Foods for thoughts"
                 }
-            ]
+            ];
 
-            if (this.sub && this.sub.hasOwnProperty('title')) {
-                return this.sub.title
-            }
-            else if (this.sub && keys.includes(this.sub.key)) {
-                let obj = titles.find(title => title.key == this.sub.key)
+            if (this.sub && this.sub.hasOwnProperty("title")) {
+                return this.sub.title;
+            } else if (this.sub && keys.includes(this.sub.key)) {
+                let obj = titles.find(title => title.key == this.sub.key);
                 if (obj) {
-                    return obj.title
+                    return obj.title;
                 }
 
-                return 'not-found'
+                return "not-found";
             }
 
-            return 'no-title'
+            return "no-title";
         },
-    },
-    methods: {
-        openDepth: function () {
-            this.$emit('open-modal', this.idx, null)
-        },
-        openSub: function (id) {
-            console.log('dentro', this.idx, id);
-            this.$emit('open-modal', this.idx, id)
+        titleTranslated: function() {
+            switch (this.title) {
+                case "Tecnical Informations":
+                    return this.$root.getCmd("paratext_technical_info");
+                case "Abstract":
+                    return this.$root.getCmd("paratext_abstract");
+                case "Historical Context":
+                    return this.$root.getCmd("paratext_historical_context");
+                case "Foods for thoughts":
+                    return this.$root.getCmd("paratext_foods");
+                case "Articles":
+                    return this.$root.getCmd("paratext_articles");
+                case "Posters":
+                    return this.$root.getCmd("paratext_poster");
+                default:
+                    return this.title;
+            }
         }
     },
+    methods: {
+        openDepth: function() {
+            this.$emit("open-modal", this.idx, null);
+        },
+        openSub: function(id) {
+            console.log("dentro", this.idx, id);
+            this.$emit("open-modal", this.idx, id);
+        }
+    }
     // mounted: function () {
     //     console.log('sub', this.sub);
     // },
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import '~styles/shared';
+@import "~styles/shared";
 
 .ua-depth-single {
     &__link {
