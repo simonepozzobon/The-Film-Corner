@@ -296,7 +296,9 @@ export default {
         this.$root.isApp = true;
     },
     mounted: function () {
-        this.getData();
+        this.$nextTick(() => {
+            this.getData();
+        })
     },
     beforeDestroy: function () {
         this.$root.isApp = false;

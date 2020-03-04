@@ -1,60 +1,66 @@
 <template>
-    <propaganda-exercise-template
-        :content="content"
-        :clip="clip"
-        v-if="content && clip"
-    >
-        <template slot="preview">
-            <div class="prop-compare-clips">
-                <div class="prop-compare-clips__preview">
-                    <div class="prop-compare-clips__left">
-                        <ui-app-propaganda-player
-                            ref="player"
-                            class="prop-compare-clips__player"
-                            color="dark-gray"
-                            :has-age="false"
-                            :title="clip | translate('title', $root.locale)"
-                            title-align="center"
-                            :src="clip.video"
-                            :clip="clip"
-                            :captions="clip.captions"
-                            :has-info="true"
-                            @open-info="openInfo"
-                        />
-                    </div>
-                    <div class="prop-compare-clips__right">
-                        <ui-app-propaganda-player
-                            ref="right"
-                            class="prop-compare-clips__player"
-                            color="dark-gray"
-                            :has-age="false"
-                            :title="compare | translate('title', $root.locale)"
-                            title-align="center"
-                            :src="compare.video ? compare.video : compare.url"
-                            :clip="compare"
-                            :captions="compare.captions"
-                            :has-info="true"
-                            @open-info="openInfo"
-                        />
-                    </div>
-                </div>
-                <div class="prop-compare-clips__library" v-if="movies">
-                    <slider-library
-                        :movies="movies"
-                        @change-video="changeVideo"
-                        @open-modal="openModal"
+<propaganda-exercise-template
+    :content="content"
+    :clip="clip"
+    v-if="content && clip"
+>
+    <template slot="preview">
+        <div class="prop-compare-clips">
+            <div class="prop-compare-clips__preview">
+                <div class="prop-compare-clips__left">
+                    <ui-app-propaganda-player
+                        ref="player"
+                        class="prop-compare-clips__player"
+                        color="dark-gray"
+                        :has-age="false"
+                        :title="clip | translate('title', $root.locale)"
+                        title-align="center"
+                        :src="clip.video"
+                        :clip="clip"
+                        :captions="clip.captions"
+                        :has-info="true"
+                        @open-info="openInfo"
                     />
-                    <slider-modal-panel ref="modal" :modal="modal" />
+                </div>
+                <div class="prop-compare-clips__right">
+                    <ui-app-propaganda-player
+                        ref="right"
+                        class="prop-compare-clips__player"
+                        color="dark-gray"
+                        :has-age="false"
+                        :title="compare | translate('title', $root.locale)"
+                        title-align="center"
+                        :src="compare.video ? compare.video : compare.url"
+                        :clip="compare"
+                        :captions="compare.captions"
+                        :has-info="true"
+                        @open-info="openInfo"
+                    />
                 </div>
             </div>
-        </template>
-        <ui-app-note
-            class="mt-4"
-            color="yellow"
-            @changed="updateNote"
-            :initial="notes"
-        />
-    </propaganda-exercise-template>
+            <div
+                class="prop-compare-clips__library"
+                v-if="movies"
+            >
+                <slider-library
+                    :movies="movies"
+                    @change-video="changeVideo"
+                    @open-modal="openModal"
+                />
+                <slider-modal-panel
+                    ref="modal"
+                    :modal="modal"
+                />
+            </div>
+        </div>
+    </template>
+    <ui-app-note
+        class="mt-4"
+        color="yellow"
+        @changed="updateNote"
+        :initial="notes"
+    />
+</propaganda-exercise-template>
 </template>
 
 <script>
@@ -68,7 +74,8 @@ import {
     UiAppPropagandaPlayer,
     UiAppCroppedFrames,
     UiAppNote
-} from "../../../../uiapp";
+}
+from "../../../../uiapp";
 
 export default {
     name: "PropagandaCompareClips",
@@ -81,7 +88,7 @@ export default {
         UiAppCroppedFrames,
         UiAppNote
     },
-    data: function() {
+    data: function () {
         return {
             content: null,
             clip: null,
@@ -94,33 +101,33 @@ export default {
         };
     },
     watch: {
-        session: function(session) {
+        session: function (session) {
             this.$root.session = Object.assign({}, session);
         },
-        compare: function(clip) {
+        compare: function (clip) {
             let session = Object.assign({}, this.session);
             session.content["compare"] = clip;
             this.session = session;
         },
-        notes: function(notes) {
+        notes: function (notes) {
             let session = Object.assign({}, this.session);
             session.content["notes"] = notes;
             this.session = session;
         }
     },
     computed: {
-        player: function() {
+        player: function () {
             return this.$refs.player.player;
         },
-        playerRight: function() {
+        playerRight: function () {
             return this.$refs.right.player;
         }
     },
     methods: {
-        updateNote: function(notes) {
+        updateNote: function (notes) {
             this.notes = notes;
         },
-        uniqid: function() {
+        uniqid: function () {
             let ts = String(new Date().getTime()),
                 i = 0,
                 out = "";
@@ -129,21 +136,21 @@ export default {
             }
             return "d" + out;
         },
-        uniqidSimple: function() {
+        uniqidSimple: function () {
             return (
                 "_" +
                 Math.random()
-                    .toString(36)
-                    .substr(2, 9)
+                .toString(36)
+                .substr(2, 9)
             );
         },
-        getData: function() {
+        getData: function () {
             window.addEventListener("beforeunload", () => {
                 try {
                     this.deleteEmptySession();
-                } catch (e) {
-                } finally {
                 }
+                catch (e) {}
+                finally {}
             });
 
             let id = this.$route.params.id;
@@ -163,7 +170,11 @@ export default {
             // url = `/api/v2/propaganda/clip/${id}/exercise/${exerciseId}/5e5c64cc4155d`;
             this.$http.get(url).then(response => {
                 // console.log("sessione", response.data);
-                const { clip, exercise, session } = response.data;
+                const {
+                    clip,
+                    exercise,
+                    session
+                } = response.data;
 
                 this.clip = clip;
                 // this.compare = clip
@@ -171,15 +182,16 @@ export default {
                 this.movies = exercise.library.medias;
 
                 let formattedSession = session;
-                let content = session.content
-                    ? JSON.parse(session.content)
-                    : {};
+                let content = session.content ?
+                    JSON.parse(session.content) :
+                    {};
 
                 console.log(content);
 
                 if (!content.hasOwnProperty("compare")) {
                     this.compare = clip;
-                } else {
+                }
+                else {
                     this.compare = content.compare;
                 }
 
@@ -199,13 +211,13 @@ export default {
             // this.compare = this.clip
             // this.content = this.clip.exercises.find(exercise => exercise.id == exerciseId)
         },
-        init: function() {
+        init: function () {
             // if (this.session.content.compare) {
             //     // this.compare = this.session.content.compare
             //     console.log(this.session.content.compare);
             // }
         },
-        deleteEmptySession: function() {
+        deleteEmptySession: function () {
             // verificare se è vuota
             if (Boolean(this.session.is_empty)) {
                 this.$http.delete(`/api/v2/session/${this.session.token}/true`);
@@ -214,31 +226,33 @@ export default {
                 this.$root.session = null;
             });
         },
-        changeVideo: function(movie) {
+        changeVideo: function (movie) {
             // console.log('compare changed');
             this.compare = Object.assign({}, movie);
             // console.log(this.compare);
         },
-        openModal: function(modal) {
+        openModal: function (modal) {
             this.modal = Object.assign({}, modal);
             this.$nextTick(() => {
                 this.$refs.modal.show();
             });
         },
-        openInfo: function(modal) {
+        openInfo: function (modal) {
             this.modal = Object.assign({}, modal);
             this.$nextTick(() => {
                 this.$refs.modal.show();
             });
         }
     },
-    created: function() {
+    created: function () {
         this.$root.isApp = true;
     },
-    mounted: function() {
-        this.getData();
+    mounted: function () {
+        this.$nextTick(() => {
+            this.getData();
+        })
     },
-    beforeDestroy: function() {
+    beforeDestroy: function () {
         this.$root.isApp = false;
     }
 };
