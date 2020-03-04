@@ -157,7 +157,7 @@ export default {
             this.playerReady = true;
         },
         setPlayerCurrentTime: function (progress, time) {
-            console.log(progress, time);
+            // console.log(progress, time);
             if (this.$refs.player && this.$refs.player.player) {
                 this.$refs.player.player.currentTime(time)
             }
