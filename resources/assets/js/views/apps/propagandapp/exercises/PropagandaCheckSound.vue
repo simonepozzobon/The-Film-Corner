@@ -199,8 +199,7 @@ export default {
                 this.content = exercise;
 
                 let formattedSession = session;
-                let content = session.content ?
-                    JSON.parse(session.content) : {};
+                let content = session.content ? JSON.parse(session.content) : {};
                 formattedSession.content = {
                     ...content
                 };
