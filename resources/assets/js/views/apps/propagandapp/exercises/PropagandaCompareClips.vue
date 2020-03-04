@@ -161,9 +161,10 @@ export default {
             // console.log('session', this.$root.session);
             if (
                 this.$root.session &&
-                this.$root.session.app_id == 20 &&
+                this.$root.session.app_id == 19 &&
                 this.$root.session.token
             ) {
+                console.log('opening session');
                 url = `/api/v2/propaganda/clip/${id}/exercise/${exerciseId}/${this.$root.session.token}`;
             }
 
@@ -183,8 +184,7 @@ export default {
 
                 let formattedSession = session;
                 let content = session.content ?
-                    JSON.parse(session.content) :
-                    {};
+                    JSON.parse(session.content) : {};
 
                 console.log(content);
 

@@ -178,9 +178,10 @@ export default {
             // console.log('session', this.$root.session);
             if (
                 this.$root.session &&
-                this.$root.session.app_id == 20 &&
+                this.$root.session.app_id == 21 &&
                 this.$root.session.token
             ) {
+                console.log('apri sessions');
                 url = `/api/v2/propaganda/clip/${id}/exercise/${exerciseId}/${this.$root.session.token}`;
             }
 
