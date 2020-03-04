@@ -89,6 +89,11 @@ export default {
                 this.isReady = true
                 this.$emit("ready");
             });
+
+            this.player.on('seek', (progress) => {
+                let currentTime = this.player.getCurrentTime()
+                this.$emit('seek', progress, currentTime)
+            })
             if (this.src) {
                 this.changeSrc(this.src);
             }

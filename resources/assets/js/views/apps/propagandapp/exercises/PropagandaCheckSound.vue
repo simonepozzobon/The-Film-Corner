@@ -31,6 +31,7 @@
                     :src="clip.video"
                     :has-spinner="true"
                     @ready="setPlayerReady"
+                    @seek="setPlayerCurrentTime"
                 />
             </div>
             <div class="prop-check-sound__btns">
@@ -127,7 +128,7 @@ export default {
             if (this.initialized) {
                 this.init();
             }
-        }
+        },
     },
     computed: {
         player: function () {
@@ -154,6 +155,12 @@ export default {
         },
         setPlayerReady: function () {
             this.playerReady = true;
+        },
+        setPlayerCurrentTime: function (progress, time) {
+            console.log(progress, time);
+            if (this.$refs.player && this.$refs.player.player) {
+                this.$refs.player.player.currentTime(time)
+            }
         },
         getData: function () {
             window.addEventListener("beforeunload", () => {
