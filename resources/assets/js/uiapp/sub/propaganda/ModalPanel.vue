@@ -48,12 +48,14 @@
                 slot="pagination"
             ></div>
             <div
-                class="swiper-button-prev"
+                class="swiper-button-prev ua-prop-modal__slider-prev"
                 slot="button-prev"
+                @click="slidePrev"
             ></div>
             <div
-                class="swiper-button-next"
+                class="swiper-button-next ua-prop-modal__slider-next"
                 slot="button-next"
+                @click="slideNext"
             ></div>
         </swiper>
     </div>
@@ -111,6 +113,10 @@ export default {
         return {
             swiperOption: {
                 autoHeight: true,
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev'
+                }
             }
         }
     },
@@ -120,8 +126,18 @@ export default {
         },
         hide: function () {
             this.$refs.modal.hide()
-        }
-    },
+        },
+        slidePrev: function () {
+            if (this.$refs.mySwiper && typeof this.$refs.mySwiper.slidePrev === 'function') {
+                this.$refs.mySwiper.slidePrev()
+            }
+        },
+        slideNext: function () {
+            if (this.$refs.mySwiper && typeof this.$refs.mySwiper.slideNext === 'function') {
+                this.$refs.mySwiper.slideNext()
+            }
+        },
+    }
 }
 </script>
 
@@ -140,6 +156,14 @@ export default {
 
     &__paragraph {
         padding-top: $spacer;
+    }
+
+    &__slider-next,
+    &__slider-prev {
+        background-color: $white;
+        padding: $spacer * 2;
+        @include border-radius(8px);
+        z-index: 2;
     }
 }
 </style>
