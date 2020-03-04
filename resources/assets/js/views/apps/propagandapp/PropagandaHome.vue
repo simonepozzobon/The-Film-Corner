@@ -43,6 +43,7 @@
                         :has-container="false"
                         :has-margin="false"
                         @click="$root.goTo('propaganda-search')"
+                        :disable="true"
                     />
                 </ui-row>
 
