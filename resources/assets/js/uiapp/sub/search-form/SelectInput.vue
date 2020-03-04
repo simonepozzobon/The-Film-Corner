@@ -4,7 +4,7 @@
     <select
         class="form-control"
         :name="name"
-        v-model="value"
+        v-model="selectedValue"
     >
         <option
             :value="null"
@@ -16,17 +16,19 @@
         <option
             v-for="opt in options"
             :key="opt.id"
-            :value="opt.value"
+            :value="opt.id"
         >
-            {{ opt.title }}
+            {{ opt | translate(optionValue, $root.locale) }}
         </option>
     </select>
 </div>
 </template>
 
 <script>
+import TranslationFilter from '../../../TranslationFilter'
 export default {
     name: 'TextInput',
+    mixins: [TranslationFilter],
     props: {
         name: {
             type: String,
@@ -40,15 +42,26 @@ export default {
             type: String,
             default: null,
         },
-        value: {
+        value: [String, Number],
+        optionValue: {
             type: String,
-            default: null,
+            default: 'title',
         },
         options: {
             type: Array,
             default: function () {
                 return []
             },
+        },
+    },
+    data: function () {
+        return {
+            selectedValue: null,
+        }
+    },
+    watch: {
+        selectedValue: function (value) {
+            this.$emit('update:value', value)
         },
     },
 }

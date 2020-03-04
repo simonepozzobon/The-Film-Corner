@@ -19,6 +19,7 @@
             <select-input
                 :title="$root.getCmd('historical_period')"
                 name="period"
+                :options="options.periods"
                 :value.sync="search.period"
                 :placeholder="$root.getCmd('select_an_historical_period')"
             />
@@ -41,6 +42,7 @@
             <select-input
                 :title="$root.getCmd('genre')"
                 name="genre"
+                :options="options.genres"
                 :value.sync="search.genre"
                 :placeholder="$root.getCmd('select_a_genre')"
             />
@@ -63,6 +65,7 @@
             <select-input
                 :title="$root.getCmd('format')"
                 name="format"
+                :options="options.formats"
                 :value.sync="search.format"
                 :placeholder="$root.getCmd('select_a_format')"
             />
@@ -107,7 +110,8 @@
             <select-input
                 :title="$root.getCmd('student_age')"
                 name="age_range"
-                :value.sync="search.age_range"
+                :options="options.ages"
+                :value.sync="search.age"
                 :placeholder="$root.getCmd('select_age_range')"
             />
         </ui-block>
@@ -143,6 +147,14 @@ export default {
         UiButton,
         UiRow,
     },
+    props: {
+        options: {
+            type: Object,
+            default: function () {
+                return {}
+            },
+        },
+    },
     data: function () {
         return {
             search: {
@@ -155,7 +167,7 @@ export default {
                 country: null,
                 cast: null,
                 topic: null,
-                age_range: null,
+                age: null,
             },
             placeholders: {
                 title: 'Write a title',
@@ -185,6 +197,7 @@ export default {
         },
         startSearch: function () {
             let query = this.cleanQuery(this.search)
+            console.log('query', query);
             this.$emit('search', query)
         }
     },

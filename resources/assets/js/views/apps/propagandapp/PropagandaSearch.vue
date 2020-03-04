@@ -15,9 +15,13 @@
                 :uppercase="false"
                 :has-container="true"
             />
-
+        </ui-row>
+        <ui-row align="center">
             <ui-container :contain="true">
-                <ui-app-search-form @search="performSearch" />
+                <ui-app-search-form
+                    @search="performSearch"
+                    :options="options"
+                />
             </ui-container>
         </ui-row>
     </ui-hero-banner>
@@ -73,6 +77,7 @@ export default {
     data: function () {
         return {
             title: null,
+            options: {},
             results: [],
         }
     },
@@ -98,7 +103,17 @@ export default {
     methods: {
         getData: function () {
             // perform api call
-            this.debug()
+            this.$http.get('/api/v2/propaganda/search-options').then(response => {
+                console.log(response);
+                const {
+                    data
+                } = response
+
+                if (data.success) {
+                    this.options = data.options
+                }
+            })
+            // this.debug()
         },
         debug: function () {
             // this.selectChannel(this.channels[2])

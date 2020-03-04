@@ -7,9 +7,15 @@ use App\App;
 use App\User;
 use App\Session;
 use App\Network;
+use App\Propaganda\Age;
 use App\Propaganda\Clip;
+use App\Propaganda\Genre;
+use App\Propaganda\Topic;
+use App\Propaganda\People;
 use App\Propaganda\Period;
+use App\Propaganda\Format;
 use App\Propaganda\Library;
+use App\Propaganda\Hashtag;
 use App\Propaganda\Exercise;
 use App\Propaganda\Challenge;
 use App\Propaganda\ParatextType;
@@ -30,6 +36,30 @@ class PropagandaController extends Controller
     {
         $clip = $this->get_exercise_single(23, 1, null, true);
         dd($clip);
+    }
+
+    public function get_search_options()
+    {
+        $periods = Period::all();
+        $genres = Genre::all();
+        $formats = Format::all();
+        $ages = Age::all();
+        $topics = Topic::all();
+        $peoples = People::all();
+        $hashtags = Hashtag::all();
+
+        return [
+            'success' => true,
+            'options' => [
+                'periods' => $periods,
+                'genres' => $genres,
+                'formats' => $formats,
+                'ages' => $ages,
+                'topics' => $topics,
+                'peoples' => $peoples,
+                'topics' => $topics,
+            ]
+        ];
     }
 
     public function get_clips()
