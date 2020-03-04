@@ -62,13 +62,29 @@ class PropagandaController extends Controller
         ];
     }
 
+    public function perform_advanced_search(Request $request)
+    {
+        $clips = Clip::with('period', 'format', 'age', 'directors', 'peoples', 'topics', 'captions')->get();
+
+        if (isset($request->title)) {
+            $clips = $clips->where(
+                'title', 'LIKE', '%'.$request->title.'%'
+            )->get();
+        }
+
+        if (isset($request->period)) {
+            // $clips =
+        }
+        return ['request' => $request->all(), 'results' => $clips];
+    }
+
     public function get_clips()
     {
         $periods = Period::with('clips.period', 'clips.format', 'clips.age', 'clips.directors', 'clips.peoples', 'clips.topics', 'clips.captions')->get();
 
         return [
-            'success' => true,
-            'periods' => $periods,
+        'success' => true,
+        'periods' => $periods,
         ];
     }
 
@@ -104,8 +120,8 @@ class PropagandaController extends Controller
         $clip = $this->format_paratexts($clip);
 
         return [
-            'success' => true,
-            'clip' => $clip,
+        'success' => true,
+        'clip' => $clip,
         ];
     }
 
@@ -164,8 +180,8 @@ class PropagandaController extends Controller
 
         $sessions = $user->sessions()->where(
             [
-                ['app_id', $app->id],
-                ['is_empty', '!=', 1]
+            ['app_id', $app->id],
+            ['is_empty', '!=', 1]
             ]
         )->get();
 
@@ -217,11 +233,11 @@ class PropagandaController extends Controller
         }
 
         return [
-            'success' => true,
-            'clip' => $clip,
-            'exercise' => $exercise,
-            'session' => $session,
-            'sessions' => $sessions,
+        'success' => true,
+        'clip' => $clip,
+        'exercise' => $exercise,
+        'session' => $session,
+        'sessions' => $sessions,
         ];
     }
 
@@ -246,8 +262,8 @@ class PropagandaController extends Controller
         $media = $this->generate_thumbnail($media);
 
         return [
-            'success' => true,
-            'media' => $media,
+        'success' => true,
+        'media' => $media,
         ];
     }
 
@@ -257,9 +273,9 @@ class PropagandaController extends Controller
         $library = ChallengeLibrary::where('challenge_id', $id)->with('medias')->first();
 
         return [
-            'success' => true,
-            'challenge' => $challenge,
-            'library' => $library,
+        'success' => true,
+        'challenge' => $challenge,
+        'library' => $library,
         ];
     }
 
@@ -354,6 +370,6 @@ class PropagandaController extends Controller
             )->save();
         }
 
-            return $media;
+        return $media;
     }
 }

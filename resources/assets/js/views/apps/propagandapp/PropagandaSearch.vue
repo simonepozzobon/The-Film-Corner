@@ -21,6 +21,7 @@
                 <ui-app-search-form
                     @search="performSearch"
                     :options="options"
+                    :isLoading="isLoading"
                 />
             </ui-container>
         </ui-row>
@@ -79,6 +80,7 @@ export default {
             title: null,
             options: {},
             results: [],
+            isLoading: false,
         }
     },
     watch: {
@@ -122,7 +124,23 @@ export default {
         leave: function () {},
         performSearch: function (query) {
             // perform search request
-            console.log(query);
+            this.isLoading = true
+
+            let data = new FormData()
+            for (let key in query) {
+                if (query.hasOwnProperty(key)) {
+                    data.append(key, query[key])
+                }
+            }
+
+            this.$http.post('/api/v2/propaganda/advanced-search', data)
+                .then(response => {
+                    console.log(response.data);
+                    this.isLoading = false;
+                })
+                .catch(err => {
+                    this.isLoading = false;
+                })
         },
 
     },

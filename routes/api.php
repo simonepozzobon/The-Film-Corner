@@ -81,6 +81,7 @@ Route::prefix('v2')->group(
                 Route::prefix('propaganda')->group(
                     function () {
                         Route::get('search-options', 'Api\PropagandaController@get_search_options');
+                        Route::post('advanced-search', 'Api\PropagandaController@perform_advanced_search');
 
                         Route::get('clips', 'Api\PropagandaController@get_clips');
                         Route::get('clip/{id}/exercise/{exercise_id}/{token?}', 'Api\PropagandaController@get_exercise_single');

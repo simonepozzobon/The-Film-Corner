@@ -122,6 +122,8 @@
             color="red"
             :has-container="false"
             @click="startSearch"
+            :has-spinner="isLoading"
+            :disable="isLoading"
         />
     </div>
 </div>
@@ -154,6 +156,10 @@ export default {
                 return {}
             },
         },
+        isLoading: {
+            type: Boolean,
+            default: false,
+        },
     },
     data: function () {
         return {
@@ -180,7 +186,7 @@ export default {
                 cast: 'Write peoples',
                 topic: 'Write a topic',
                 age_range: 'Select age',
-            }
+            },
         }
     },
     methods: {
@@ -197,7 +203,6 @@ export default {
         },
         startSearch: function () {
             let query = this.cleanQuery(this.search)
-            console.log('query', query);
             this.$emit('search', query)
         }
     },
