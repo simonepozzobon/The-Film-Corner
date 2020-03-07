@@ -1,17 +1,23 @@
 <template>
-    <transition
-        @enter="enter"
-        @leave="leave">
-        <router-view></router-view>
-    </transition>
+<transition
+    @enter="enter"
+    @leave="leave"
+>
+    <router-view></router-view>
+</transition>
 </template>
 
 <script>
-import { TweenMax } from 'gsap'
+import {
+    gsap,
+    TweenMax,
+}
+from 'gsap/all'
+
 export default {
     name: 'MainContainer',
     methods: {
-        enter: function(el, done) {
+        enter: function (el, done) {
             let master = TweenMax.fromTo(el, .6, {
                 autoAlpha: 0,
             }, {
@@ -22,7 +28,7 @@ export default {
                 }
             })
         },
-        leave: function(el, done) {
+        leave: function (el, done) {
             let master = TweenMax.fromTo(el, .6, {
                 autoAlpha: 1,
                 position: 'absolute',
@@ -37,7 +43,19 @@ export default {
                 }
             })
         }
-    }
+    },
+    mounted: function () {
+        this.$nextTick(() => {
+            console.log('Main Container Rendered');
+            TweenMax.to(window, .2, {
+                delay: .5,
+                scrollTo: {
+                    y: 0,
+                    autoKill: false,
+                },
+            })
+        })
+    },
 }
 </script>
 

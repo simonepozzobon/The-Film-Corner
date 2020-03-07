@@ -17,11 +17,11 @@
             >
 
                 <ui-breadcrumbs
-                    :app="app.title"
+                    :app="app | translate('title', $root.locale)"
                     :appPath="app.slug"
-                    :cat="app.category.name"
+                    :cat="app.category | translate('name', $root.locale)"
                     :catPath="app.category.slug"
-                    :pavilion="app.category.section.name"
+                    :pavilion="app.category.section | translate('name', $root.locale)"
                     :pavilionPath="app.category.section.slug"
                 />
 
@@ -43,26 +43,26 @@
                 <ui-title
                     tag="h2"
                     font-size="h2"
-                    :title="app.title"
+                    :title="app | translate('title', $root.locale)"
                     class="pt-5"
                 />
                 <ui-paragraph
                     class="pt-5 app-container__paragraph"
                     align="justify"
-                    v-html="description"
+                    v-html="translatedDescription"
                 />
                 <div class="pb-4">
                     <ui-button
                         color="dark"
                         display="inline-block"
-                        @click.native="startApp"
+                        @click="startApp"
                     >
-                        Start a new session
+                        {{ this.$root.getCmd('start_new_session') }}
                     </ui-button>
                     <ui-button
                         color="dark"
                         display="inline-block"
-                        @click.native="togglePanel"
+                        @click="togglePanel"
                     >
                         {{ buttonText }}
                     </ui-button>
@@ -81,10 +81,14 @@
 
 <script>
 const clipper = require('text-clipper')
+import TranslationFilter from '../../TranslationFilter'
 import {
     UiAppSession,
     UiAppSessionManager,
-} from '../../uiapp'
+}
+from '../../uiapp'
+
+
 import {
     UiBlock,
     UiBlockHead,
@@ -99,9 +103,11 @@ import {
     UiRow,
     UiSpecialText,
     UiTitle
-} from '../../ui'
+}
+from '../../ui'
 export default {
     name: 'AppSingle',
+    mixins: [TranslationFilter],
     components: {
         UiAppSession,
         UiAppSessionManager,
@@ -126,7 +132,7 @@ export default {
             sessions: [],
             open: false,
             description: null,
-            buttonText: 'Open existing session',
+            buttonText: null,
             isOpenClass: null,
         }
     },
@@ -149,20 +155,31 @@ export default {
             return this.app.title
         },
         path: function () {
-            return 'Studios / ' + this.section + ' / ' + this.category +
-                ' / ' + this.appPath
+            return 'Studios / ' + this.section + ' / ' + this.category + ' / ' + this.appPath
+        },
+        translatedDescription: function () {
+            return this.$options.filters.translate(this.app, 'description', this.$root.locale)
         }
     },
     methods: {
         getData: function () {
+
+
             let slug = this.$route.params.app
             this.$http.get('/api/v2/get-app/' + slug)
                 .then(response => {
                     if (response.data.success) {
                         this.app = response.data.app
                         this.sessions = response.data.sessions
+                        this.buttonText = this.$root.getCmd('open_existing_session')
+                        // this.debug()
                     }
                 })
+        },
+        debug: function () {
+            // this.$nextTick(() => {
+            //     this.togglePanel()
+            // })
         },
         startApp: function () {
             this.$root.goTo(this.app.slug)
@@ -172,14 +189,15 @@ export default {
                 this.open = false
                 this.isOpenClass = null
                 this.description = this.app.description
-                this.buttonText = 'Open existing session'
-            } else {
+                this.buttonText = this.$root.getCmd('open_existing_session')
+            }
+            else {
                 this.open = true
                 this.isOpenClass = 'app-container--is-open'
                 this.description = clipper(this.app.description, 150, {
                     html: true
                 })
-                this.buttonText = 'Close Panel'
+                this.buttonText = this.$root.getCmd('close_panel')
             }
         }
     },

@@ -62,17 +62,14 @@ import {
     UiAppSoundscapesPreview
 }
 from '../../uiapp'
-import {
-    SharedData,
-    SharedMethods,
-    SharedWatch
-}
-from './Shared'
+
+import Shared from './Shared'
 import SizeUtility from '../../Sizes'
 import WaveSurfer from 'wavesurfer.js'
 import RegionsPlugin from 'wavesurfer.js/src/plugin/regions.js'
 export default {
     name: 'Soundscapes',
+    mixins: [Shared],
     components: {
         AppTemplate,
         ChannelSelector,
@@ -85,7 +82,6 @@ export default {
     },
     data: function () {
         return {
-            ...SharedData,
             players: [],
             slot: 6,
             image: null,
@@ -94,7 +90,6 @@ export default {
         }
     },
     watch: {
-        ...SharedWatch,
         // isLoading: function (value) {
         //     console.log('isLodaing', value);
         // }
@@ -264,7 +259,6 @@ export default {
         }, 500),
     },
     created: function () {
-        this.getData = SharedMethods.getData.bind(this)
         this.$root.isApp = true
         this.getData()
         // this.getData('5cffd9d60c401')
@@ -272,6 +266,14 @@ export default {
     mounted: function () {},
     beforeDestroy: function () {
         this.$root.isApp = false
+        if (this.players.length > 0) {
+            for (let i = 0; i < this.players.length; i++) {
+                let player = this.players[i]
+                if (player.hasOwnProperty('player') && player.player) {
+                    player.player.destroy()
+                }
+            }
+        }
     }
 }
 </script>

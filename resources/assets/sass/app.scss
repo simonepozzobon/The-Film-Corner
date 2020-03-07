@@ -52,10 +52,19 @@
 @import "customs";
 @import "layout";
 @import "filters";
+@import "switch";
 @import "bootstrap-vue";
+
+
+html,
+:root {
+  --transparent-var: 0.4;
+  --transparent: 0.2;
+}
 
 body {
     max-width: 100vw;
     overflow-x: hidden;
     overflow-y: auto;
+
 }

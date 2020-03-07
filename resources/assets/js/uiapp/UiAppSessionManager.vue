@@ -8,10 +8,11 @@
         <ui-block-head
             class="app-container__list"
             :size="12"
-            title="Open Existing Session"
+            :title="getCmd('open_existing_session')"
             :color="colorClass"
             :radius="true"
             radius-size="md"
+            :class="uaSessionColorClass"
         >
             <transition-group
                 tag="div"
@@ -24,8 +25,10 @@
                     :idx="session.id"
                     :title="session.title"
                     :token="session.token"
+                    :is-shared="session.teacher_shared"
                     @open-session="openSession"
                     @delete-session="deleteSession"
+                    @share-session="shareSession"
                 />
             </transition-group>
         </ui-block-head>
@@ -35,6 +38,7 @@
 
 <script>
 import UiAppSession from './UiAppSession.vue'
+import TranslateCmd from '_js/TranslateCmd'
 import {
     UiBlock,
     UiBlockHead,
@@ -49,9 +53,16 @@ import {
     UiRow,
     UiSpecialText,
     UiTitle
-} from '../ui'
+}
+from '../ui'
+
+import {
+    TimelineMax,
+}
+from 'gsap/all'
 export default {
     name: 'UiAppSessionManager',
+    mixins: [TranslateCmd],
     components: {
         UiAppSession,
         UiBlock,
@@ -103,33 +114,56 @@ export default {
         open: function (status) {
             if (status) {
                 this.play()
-            } else {
+            }
+            else {
                 this.reverse()
             }
         },
     },
+    computed: {
+        uaSessionColorClass: function () {
+            if (this.colorClass == 'dark-gray') {
+                return 'ua-session-text-light'
+            }
+
+            return null
+        },
+    },
     methods: {
         setDefault: function () {
-            this.colorClass = this.app.category.color_class
+            this.colorClass = 'dark-gray'
+            if (this.app.category && this.app.category.color_class) {
+                this.colorClass = this.app.category.color_class
+            }
+            // console.log(this.colorClass);
         },
         deleteSession: function (idx) {
             let url = '/api/v2/session/' + idx + '/false'
             this.$http.delete(url)
                 .then(response => {
                     if (response.data.success) {
-                        this.sessions = this.sessions.filter(session =>
-                            session.token != idx)
+                        this.sessions = this.sessions.filter(session => session.token != idx)
                     }
                 })
         },
         openSession: function (idx) {
-            let session = this.sessions.filter(session => session.token ==
-                idx)[0]
+            let session = this.sessions.filter(session => session.token == idx)[0]
             session.content = JSON.parse(session.content)
             this.$root.session = session
             this.$root.isOpen = true
             this.$nextTick(() => {
                 this.$emit('open-session')
+            })
+        },
+        shareSession: function (token) {
+            // console.log(token);
+
+            let data = new FormData()
+            data.append('token', token)
+            this.$root.fullMessage = this.$root.getCmd('shared_with_your_teacher')
+
+            this.$http.post('/api/v2/session/share-to-teacher', data).then(response => {
+                this.$root.showMessage()
             })
         },
         init: function () {
@@ -139,15 +173,18 @@ export default {
             })
             this.master.fromTo(this.$refs.container.$el, .3, {
                 autoAlpha: 0,
+                overflow: 'hidden',
                 height: 0,
-                className: '-=app-sessions--visible'
+                // className: '-=app-sessions--visible'
             }, {
                 autoAlpha: 1,
                 height: '100%',
-                className: '+=app-sessions--visible'
+                overflow: 'visible',
+                immediateRender: false,
+                // className: '+=app-sessions--visible'
             })
-            this.master.progress(1)
-                .progress(0)
+            this.master.progress(1).progress(0)
+            this.setDefault()
         },
         play: function () {
             if (this.master) {
@@ -200,5 +237,9 @@ export default {
 
 .app-session-list-enter-active {
     transition-delay: 0.2s;
+}
+
+.ua-session-text-light .ua-session {
+    color: $white;
 }
 </style>

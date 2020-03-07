@@ -1,14 +1,14 @@
 <template>
-<div class="ui-app-audio-preview">
+<div class="ua-audio-preview">
     <ui-title
-        title="Preview"
+        :title="this.$root.getCmd('preview')"
         color="white"
         :has-padding="false"
         ref="title"
     />
 
     <div
-        class="ui-app-audio-preview__loader"
+        class="ua-audio-preview__loader"
         ref="loader"
     >
         <div
@@ -17,18 +17,18 @@
             role="status"
         >
             <span class="sr-only">
-                Loading...
+                {{ this.$root.getCmd('loading') }}...
             </span>
         </div>
     </div>
 
     <div
         ref="player"
-        class="ui-app-audio-preview__player"
+        class="ua-audio-preview__player"
     ></div>
 
     <ui-app-video-controls
-        class="ui-app-audio-preview__controls"
+        class="ua-audio-preview__controls"
         @play="play"
         @pause="pause"
         @stop="stop"
@@ -42,14 +42,18 @@
 import UiAppVideoControls from './UiAppVideoControls.vue'
 import {
     UiTitle
-} from '../ui'
+}
+from '../ui'
 import 'video.js/dist/video-js.css'
 import {
     videoPlayer
-} from 'vue-video-player'
+}
+from 'vue-video-player'
 import SizeUtility from '../Sizes'
 import WaveSurfer from 'wavesurfer.js'
 import RegionsPlugin from 'wavesurfer.js/src/plugin/regions.js'
+import TranslateCmd from '_js/TranslateCmd'
+
 export default {
     name: 'UiAppAudioPreview',
     components: {
@@ -77,7 +81,8 @@ export default {
         'src': function (src) {
             if (this.player) {
                 this.changeSrc(src)
-            } else {
+            }
+            else {
                 this.init()
             }
         }
@@ -93,7 +98,8 @@ export default {
                 this.player = WaveSurfer.create({
                     container: this.$refs.player,
                 })
-            } else {
+            }
+            else {
                 this.player = WaveSurfer.create({
                     container: this.$refs.player,
                     plugins: [RegionsPlugin.create({})]
@@ -118,7 +124,8 @@ export default {
                         })
                     }
                     resolve()
-                } else {
+                }
+                else {
                     reject()
                 }
             })
@@ -142,14 +149,19 @@ export default {
             this.player.skipForward(5)
         },
     },
-    mounted: function () {}
+    mounted: function () {},
+    beforeDestroy: function () {
+        if (this.player) {
+            this.player.destroy()
+        }
+    },
 }
 </script>
 
 <style lang="scss" scoped>
 @import '~styles/shared';
 
-.ui-app-audio-preview {
+.ua-audio-preview {
     width: 100%;
     height: 100%;
     background-color: $dark-gray;

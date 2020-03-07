@@ -1,8 +1,10 @@
 <template>
 <ui-container
+    ref="container"
     class="app-container"
     :contain="true"
     v-if="this.app"
+    @init="scrollTop"
 >
     <ui-app-folder :app="app" />
     <ui-container
@@ -12,13 +14,15 @@
         <ui-row :no-gutters="true">
             <ui-block
                 :size="left"
-                :full-height="true"
+                :full-height="false"
+                :has-container="false"
             >
                 <slot name="left"></slot>
             </ui-block>
             <ui-block
                 :size="right"
-                :full-height="true"
+                :full-height="false"
+                :has-container="false"
             >
                 <slot name="right"></slot>
             </ui-block>
@@ -40,8 +44,19 @@ import {
     UiAppFolder
 }
 from '../../uiapp'
+
+import {
+    gsap,
+    ScrollToPlugin
+}
+from 'gsap/all'
+gsap.registerPlugin(ScrollToPlugin);
+
+import TranslationFilter from '../../TranslationFilter'
+
 export default {
     name: 'AppTemplate',
+    mixins: [TranslationFilter],
     components: {
         UiAppFolder,
         UiBlock,
@@ -64,13 +79,35 @@ export default {
     },
     watch: {
         'app': function (app) {
-            // console.log(app);
+            if (app) {
+                this.scrollTop()
+            }
         }
+    },
+    methods: {
+        scrollTop: function () {
+            if (this.$refs.container) {
+                let tween = gsap.to(window, .2, {
+                    scrollTo: {
+                        y: 0,
+                        autoKill: false,
+                    },
+                    immediateRender: false,
+                    onComplete: () => {
+                        tween.kill()
+                    }
+                })
+            }
+        },
     },
     created: function () {
         this.$root.isApp = true
     },
-    mounted: function () {},
+    mounted: function () {
+        this.$nextTick(() => {
+
+        })
+    },
     beforeDestroy: function () {
         this.$root.isApp = false
         this.$root.session = {
@@ -80,6 +117,7 @@ export default {
             token: null
         }
         this.$root.isOpen = false
+        this.$root.isTeacherCheck = false
     }
 }
 </script>
@@ -89,6 +127,7 @@ export default {
 
 .app-container {
     margin-top: $spacer * 5;
+    padding-bottom: $spacer * 2.5;
 
     &__row {
         width: 100%;

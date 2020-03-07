@@ -1,40 +1,60 @@
 <template>
-    <div
-        ref="container"
-        class="ui-app-session"
-        :class="[
+<div
+    ref="container"
+    class="ua-session"
+    :class="[
             colorClass,
         ]"
-        @mouseover="showHover"
-        @mouseleave="hideHover">
-        <div class="ui-app-session__container">
-            <div class="ui-app-session__name">
-                {{ title }}
-            </div>
-            <div class="ui-app-session__delete">
-                <ui-button
-                    color="black"
-                    :has-container="false"
-                    :has-margin="false"
-                    title="Open"
-                    @click="openSession"/>
-                <ui-button
-                    color="black"
-                    :has-container="false"
-                    :has-margin="false"
-                    title="delete"
-                    @click="deleteSession"/>
-            </div>
+    @mouseover="showHover"
+    @mouseleave="hideHover"
+>
+    <div class="ua-session__container">
+        <div class="ua-session__name">
+            {{ title }}
+        </div>
+        <div class="ua-session__delete">
+            <ui-button
+                v-if="isStudent"
+                color="dark"
+                :has-container="false"
+                :has-margin="false"
+                :title="getCmd('share')"
+                @click="shareSession"
+            />
+            <ui-button
+                color="dark"
+                :has-container="false"
+                :has-margin="false"
+                :title="getCmd('open')"
+                @click="openSession"
+            />
+            <ui-button
+                color="dark"
+                :has-container="false"
+                :has-margin="false"
+                :title="getCmd('delete')"
+                @click="deleteSession"
+            />
         </div>
     </div>
+</div>
 </template>
 
 <script>
-import { UiButton } from '../ui'
+import {
+    UiButton
+}
+from '../ui'
 import Utility from '../Utilities'
+import {
+    TimelineMax,
+}
+from 'gsap/all'
+import TranslateCmd from '_js/TranslateCmd'
 
 export default {
     name: 'UiAppSession',
+    mixins: [TranslateCmd],
     components: {
         UiButton,
     },
@@ -59,26 +79,43 @@ export default {
             type: String,
             default: null,
         },
+        isShared: [Boolean, String, Number],
+        color: {
+            type: String,
+            default: null,
+        },
     },
-    data: function() {
+    data: function () {
         return {
             selected: false,
         }
     },
     computed: {
-        colorClass: function() {
+        colorClass: function () {
             let odd = Boolean((this.counter) % 2)
 
             if (odd) {
-                return 'ui-app-session--light'
+                return 'ua-session--light'
             }
         },
-        isOdd: function() {
+        isOdd: function () {
             return Boolean((this.counter) % 2)
         },
+        isStudent: function () {
+            if (this.$root.user && this.$root.user.role_id == 2) {
+                return true
+            }
+            return false
+        },
+        textColorClass: function () {
+            if (this.color == 'dark-gray') {
+                return 'ua-session--text-light'
+            }
+            return null
+        }
     },
     methods: {
-        init: function() {
+        init: function () {
             let el = this.$refs.container
             let gray = getComputedStyle(document.documentElement).getPropertyValue('--gray-dark')
             let rgbaObj = Utility.hexToRgbA(gray)
@@ -104,38 +141,38 @@ export default {
 
             this.master.progress(1).progress(0)
         },
-        showHover: function() {
+        showHover: function () {
             if (this.master) {
                 this.master.play()
             }
         },
-        hideHover: function() {
+        hideHover: function () {
             if (this.master) {
                 this.master.reverse()
             }
         },
-        deleteSession: function() {
+        deleteSession: function () {
             this.$emit('delete-session', this.token)
         },
-        openSession: function() {
+        openSession: function () {
             this.$emit('open-session', this.token)
         },
+        shareSession: function () {
+            this.$emit('share-session', this.token)
+        },
     },
-    mounted: function() {
+    mounted: function () {
         this.init()
     },
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '~styles/shared';
 
-.ui-app-session {
+.ua-session {
     width: 100%;
-    padding-top:  $spacer * 1.618 / 2;
-    padding-bottom: $spacer * 1.618 / 2;
-    padding-left:  $spacer * 1.618;
-    padding-right:  $spacer * 1.618;
+    padding: $spacer * 1.618 / 2 $spacer * 1.618;
 
     &__container {
         display: flex;
@@ -174,7 +211,7 @@ export default {
     }
 
     &--light {
-        background-color: rgba($white, .28)
+        background-color: rgba($white, .28);
     }
 }
 </style>

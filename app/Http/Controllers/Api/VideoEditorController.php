@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Storage;
 
 class VideoEditorController extends Controller
 {
-    public function update_editor(Request $request) {
+    public function update_editor(Request $request)
+    {
         // inizializzo la sessione
         $Video = new Video();
 
@@ -42,8 +43,13 @@ class VideoEditorController extends Controller
 
         // sort timelines by start time
         $timelines = $timelines->sortBy('start')->values();
-        $timelines = $timelines->transform(function($item, $key) {
+        $timelines = $timelines->transform(function ($item, $key) {
             $item->is_black = false;
+            $item->duration = $item->duration / 10;
+            $item->cutEnd = $item->cutEnd / 10;
+            $item->cutStart = $item->cutStart / 10;
+            $item->originalDuration = $item->originalDuration / 10;
+            $item->start = $item->start / 10;
             return $item;
         });
 
@@ -168,8 +174,8 @@ class VideoEditorController extends Controller
         ]);
     }
 
-    public function detect_black($timelines) {
-
+    public function detect_black($timelines)
+    {
         $blacks = collect();
         $dataLenght = $timelines->count();
 
@@ -199,14 +205,14 @@ class VideoEditorController extends Controller
                     $black->duration = $next_start - $current_end;
                     $blacks->push($black);
                 }
-
             }
         }
 
         return $blacks;
     }
 
-    public function scaffold_video($token) {
+    public function scaffold_video($token)
+    {
         $storePath = storage_path('app/public/video/sessions/'.$token);
         $srcPath = $storePath.'/src';
         $tmpPath = $storePath.'/tmp';
@@ -214,16 +220,16 @@ class VideoEditorController extends Controller
 
         // Se non esiste la cartella src la creo
         if (!file_exists($srcPath)) {
-          $mkdir = Storage::makeDirectory('public/video/sessions/'.$token.'/src', 0777, true);
+            $mkdir = Storage::makeDirectory('public/video/sessions/'.$token.'/src', 0777, true);
         }
 
         // Se non esiste la cartella tmp la Creo
         if (!file_exists($tmpPath)) {
-          $mkdir = Storage::makeDirectory('public/video/sessions/'.$token.'/tmp', 0777, true);
+            $mkdir = Storage::makeDirectory('public/video/sessions/'.$token.'/tmp', 0777, true);
         }
 
         if (!file_exists($expPath)) {
-          $mkdir = Storage::makeDirectory('public/video/sessions/'.$token.'/exp', 0777, true);
+            $mkdir = Storage::makeDirectory('public/video/sessions/'.$token.'/exp', 0777, true);
         }
 
         return [
@@ -234,7 +240,8 @@ class VideoEditorController extends Controller
         ];
     }
 
-    public function paste_original_to_project($timelines, $storePath, $token) {
+    public function paste_original_to_project($timelines, $storePath, $token)
+    {
         // Per ogni file nella timeline verifico se è già presente nel progetto e lo copio nella cartella src
         foreach ($timelines as $key => $timeline) {
             $mediaPath = urldecode($timeline->src);

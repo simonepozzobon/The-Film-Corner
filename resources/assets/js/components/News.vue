@@ -1,31 +1,51 @@
 <template>
-    <div class="tfc-news">
-        <ui-container class="tfc-news__container">
-            <ui-row>
-                <ui-block
-                    v-for="item in news"
-                    :key="item.id"
-                    :size="4"
-                    class="tfc-news__item">
-                    <ui-image :src="item.img" />
-                    <ui-title
-                        tag="h2"
-                        font-size="h5"
-                        :title="item.title"
-                        align="center"/>
-                    <ui-paragraph align="center" :has-padding="false">
-                        {{ item.shortContent }}
-                    </ui-paragraph>
-                    <ui-link @click.native="goTo($event, item.link, item.id)" align="center">{{ item.linkText }}</ui-link>
-                </ui-block>
-            </ui-row>
-        </ui-container>
-    </div>
+<div class="tfc-news">
+    <ui-container class="tfc-news__container">
+        <ui-row>
+            <ui-block
+                v-for="item in news"
+                :key="item.id"
+                :size="4"
+                class="tfc-news__item"
+            >
+                <ui-image :src="item.img" />
+                <ui-title
+                    tag="h2"
+                    font-size="h5"
+                    :title="item.title"
+                    align="center"
+                />
+                <ui-paragraph
+                    align="center"
+                    :has-padding="false"
+                >
+                    {{ item.content | shortDescription }}
+                </ui-paragraph>
+                <ui-link
+                    @click="$root.goToWithParams('news-single', {slug: item.slug})"
+                    align="center"
+                >{{ item.read_text }}</ui-link>
+            </ui-block>
+        </ui-row>
+    </ui-container>
+</div>
 </template>
 
 <script>
+const striptags = require('striptags')
+const clipper = require('text-clipper')
 import News from '../dummies/news'
-import { UiBlock, UiContainer, UiHeroImage, UiImage, UiLink, UiParagraph, UiRow, UiTitle } from '../ui'
+import {
+    UiBlock,
+    UiContainer,
+    UiHeroImage,
+    UiImage,
+    UiLink,
+    UiParagraph,
+    UiRow,
+    UiTitle
+}
+from '../ui'
 export default {
     name: 'News',
     components: {
@@ -38,13 +58,20 @@ export default {
         UiRow,
         UiTitle,
     },
-    data: function() {
+    data: function () {
         return {
-            news: News,
+            news: [],
         }
     },
     methods: {
-        goTo: function(event, name, id) {
+        getData: function () {
+            this.$http.get('/api/v2/news').then(response => {
+                if (response.data.success) {
+                    this.news = response.data.news
+                }
+            })
+        },
+        goTo: function (event, name, id) {
             event.preventDefault()
             this.$router.push({
                 name: 'news-single',
@@ -52,8 +79,20 @@ export default {
                     slug: name,
                 }
             })
-        }
-    }
+        },
+    },
+    filters: {
+        shortDescription: function (description) {
+            let string = striptags(description)
+            let short = clipper(string, 150, {
+                html: true
+            })
+            return short
+        },
+    },
+    mounted: function () {
+        this.getData()
+    },
 }
 </script>
 

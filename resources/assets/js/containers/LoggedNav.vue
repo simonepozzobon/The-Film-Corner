@@ -1,30 +1,74 @@
 <template>
-    <nav class="logged-nav navbar navbar-dark navbar-expand-lg fixed-top" ref="menu">
-        <ul class="navbar-nav ml-auto logged-nav__nav">
-            <li class="logged-nav__item nav-item">
-                <a href="#" @click.prevent="goTo('apps-home')" class="nav-link logged-nav__link">Apps</a>
-            </li>
-            <li class="logged-nav__item nav-item">
-                <a href="#" @click.prevent="goTo('network-home')" class="nav-link logged-nav__link">Network</a>
-            </li>
-            <li class="logged-nav__item nav-item">
-                <a href="#" @click.prevent="goTo('teacher-profile')" class="nav-link logged-nav__link">Students</a>
-            </li>
-            <li class="logged-nav__item nav-item">
-                <a href="#" @click.prevent="goTo('apps-help')" class="nav-link logged-nav__link disabled" disabled>Help</a>
-            </li>
-        </ul>
-    </nav>
+<nav
+    class="logged-nav navbar navbar-dark navbar-expand-lg fixed-top"
+    ref="menu"
+>
+    <ul class="navbar-nav ml-auto logged-nav__nav">
+        <li class="logged-nav__item nav-item">
+            <a
+                href="#"
+                @click.stop.prevent="$root.goTo('apps-home')"
+                class="nav-link logged-nav__link"
+            >
+                {{ this.$root.getCmd('studios') }}
+            </a>
+        </li>
+        <li class="logged-nav__item nav-item">
+            <a
+                href="#"
+                @click.stop.prevent="$root.goTo('network-home')"
+                class="nav-link logged-nav__link"
+            >
+                {{ this.$root.getCmd('network') }}
+            </a>
+        </li>
+        <li
+            v-if="isTeacher"
+            class="logged-nav__item nav-item"
+        >
+            <a
+                href="#"
+                @click.stop.prevent="$root.goTo('teacher-profile')"
+                class="nav-link logged-nav__link"
+            >
+                {{ this.$root.getCmd('students') }}
+            </a>
+        </li>
+        <li class="logged-nav__item nav-item">
+            <a
+                href="#"
+                @click.stop.prevent="$root.goTo('apps-help')"
+                class="nav-link logged-nav__link disabled"
+                disabled
+            >
+                {{ this.$root.getCmd('help') }}
+            </a>
+        </li>
+    </ul>
+</nav>
 </template>
 
 <script>
+import {
+    TweenMax
+}
+from 'gsap/all'
+
 export default {
     name: 'LoggedNav',
-    methods: {
-        goTo: function(name) {
-            this.$router.push({name: name})
+    data: function () {
+        return {}
+    },
+    computed: {
+        isTeacher: function () {
+            if (this.$root.user && this.$root.user.role_id == 1) {
+                return true
+            }
+            return false
         },
-        show: function() {
+    },
+    methods: {
+        show: function () {
             let master = TweenMax.fromTo(this.$refs.menu, .5, {
                 y: -100,
                 autoAlpha: 0,
@@ -36,7 +80,7 @@ export default {
                 }
             })
         },
-        hide: function() {
+        hide: function () {
             let master = TweenMax.fromTo(this.$refs.menu, .5, {
                 y: 0,
                 autoAlpha: 1,
@@ -49,10 +93,10 @@ export default {
             })
         }
     },
-    mounted: function() {
+    mounted: function () {
         this.show()
     },
-    beforeDestroy: function() {
+    beforeDestroy: function () {
         this.hide()
     }
 }

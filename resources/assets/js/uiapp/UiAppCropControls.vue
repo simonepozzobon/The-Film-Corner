@@ -1,27 +1,33 @@
 <template>
-    <ui-app-block
-        :has-title="false"
-        color="dark"
-        align="center">
-        <ui-button
-            title="Crop a frame"
-            color="white"
-            :has-container="false"
-            :has-margin="false"
-            @click.native="cropFrame"/>
-        <ui-button
-            v-if="clearAll"
-            title="Delete All"
-            color="white"
-            :has-container="false"
-            :has-margin="false"
-            @click.native="deleteAll"/>
-    </ui-app-block>
+<ui-app-block
+    :has-title="false"
+    color="dark"
+    align="center"
+>
+    <ui-button
+        :title="$root.getCmd('crop_a_frame')"
+        color="white"
+        :has-container="false"
+        :has-margin="false"
+        @click="cropFrame"
+    />
+    <ui-button
+        v-if="clearAll"
+        :title="$root.getCmd('delete_all')"
+        color="white"
+        :has-container="false"
+        :has-margin="false"
+        @click="deleteAll"
+    />
+</ui-app-block>
 </template>
 
 <script>
 import UiAppBlock from './UiAppBlock.vue'
-import { UiButton } from '../ui'
+import {
+    UiButton
+}
+from '../ui'
 
 export default {
     name: 'UiAppCropControls',
@@ -36,10 +42,10 @@ export default {
         }
     },
     methods: {
-        cropFrame: function() {
+        cropFrame: function () {
             this.$emit('crop-frame')
         },
-        deleteAll: function() {
+        deleteAll: function () {
             this.$emit('delete-all')
         }
     }

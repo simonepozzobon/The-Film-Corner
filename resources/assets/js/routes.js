@@ -44,8 +44,24 @@ import Storytelling from './views/apps/Storytelling.vue'
 
 // Propagandapp
 import PropagandaContainer from './views/apps/propagandapp/PropagandaContainer.vue'
+import PropagandaExercise from './views/apps/propagandapp/PropagandaExercise.vue'
 import PropagandaIntro from './views/apps/propagandapp/PropagandaIntro.vue'
 import PropagandaHome from './views/apps/propagandapp/PropagandaHome.vue'
+import PropagandaSearch from './views/apps/propagandapp/PropagandaSearch.vue'
+import PropagandaSingle from './views/apps/propagandapp/PropagandaSingle.vue'
+
+import PropagandaCheckSound from './views/apps/propagandapp/exercises/PropagandaCheckSound.vue'
+import PropagandaCompareClips from './views/apps/propagandapp/exercises/PropagandaCompareClips.vue'
+import PropagandaFrameCrop from './views/apps/propagandapp/exercises/PropagandaFrameCrop.vue'
+
+import ChallengesAffiches from './views/apps/propagandapp/challenges/ChallengesAffiches.vue'
+import ChallengesFilm from './views/apps/propagandapp/challenges/ChallengesFilm.vue'
+import ChallengesFilmApp from './views/apps/propagandapp/challenges/ChallengesFilmApp.vue'
+import ChallengesHome from './views/apps/propagandapp/challenges/ChallengesHome.vue'
+import ChallengesInterviews from './views/apps/propagandapp/challenges/ChallengesInterviews.vue'
+import ChallengesInterviewsDb from './views/apps/propagandapp/challenges/ChallengesInterviewsDb.vue'
+import ChallengesRolePlaying from './views/apps/propagandapp/challenges/ChallengesRolePlaying.vue'
+
 
 // Network
 import NetworkHome from './views/network/NetworkHome.vue'
@@ -253,6 +269,90 @@ const routes = [
                                 path: 'intro',
                                 name: 'propaganda-home',
                                 component: PropagandaHome,
+                                meta: { requiresAuth: true },
+                            },
+                            {
+                                path: 'search',
+                                name: 'propaganda-search',
+                                component: PropagandaSearch,
+                                meta: { requiresAuth: true },
+                            },
+                            {
+                                path: 'single/:id',
+                                name: 'propaganda-single',
+                                component: PropagandaSingle,
+                                meta: { requiresAuth: true },
+                            },
+                            {
+                                path: 'single/:id/exercise-:exerciseId',
+                                component: PropagandaContainer,
+                                children: [
+                                    {
+                                        path: '',
+                                        name: 'propaganda-exercise',
+                                        component: PropagandaExercise,
+                                        meta: { requiresAuth: true },
+                                    },
+                                    {
+                                        path: 'compare-clips',
+                                        name: 'propaganda-compare-clips',
+                                        component: PropagandaCompareClips,
+                                        meta: { requiresAuth: true },
+                                    },
+                                    {
+                                        path: 'frame-crop',
+                                        name: 'propaganda-frame-crop',
+                                        component: PropagandaFrameCrop,
+                                        meta: { requiresAuth: true },
+                                    },
+                                    {
+                                        path: 'check-sound',
+                                        name: 'propaganda-check-sound',
+                                        component: PropagandaCheckSound,
+                                        meta: { requiresAuth: true },
+                                    },
+                                ]
+                            },
+                            {
+                                path: 'challenges',
+                                name: 'propaganda-challenges',
+                                component: ChallengesHome,
+                                meta: { requiresAuth: true },
+                            },
+                            {
+                                path: 'challenges/propaganda-film',
+                                name: 'propaganda-film',
+                                component: ChallengesFilm,
+                                meta: { requiresAuth: true },
+                            },
+                            {
+                                path: 'challenges/propaganda-film/app',
+                                name: 'propaganda-film-app',
+                                component: ChallengesFilmApp,
+                                meta: { requiresAuth: true },
+                            },
+                            {
+                                path: 'challenges/role-playing',
+                                name: 'propaganda-role-playing',
+                                component: ChallengesRolePlaying,
+                                meta: { requiresAuth: true },
+                            },
+                            {
+                                path: 'challenges/your-interview',
+                                name: 'propaganda-interview',
+                                component: ChallengesInterviews,
+                                meta: { requiresAuth: true },
+                            },
+                            {
+                                path: 'challenges/your-interview-db',
+                                name: 'propaganda-interviews-db',
+                                component: ChallengesInterviewsDb,
+                                meta: { requiresAuth: true },
+                            },
+                            {
+                                path: 'challenges/your-affiches',
+                                name: 'propaganda-your-affiches',
+                                component: ChallengesAffiches,
                                 meta: { requiresAuth: true },
                             },
                         ],

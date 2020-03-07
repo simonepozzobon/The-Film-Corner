@@ -4,6 +4,7 @@
         <single-frame
             v-for="(frame, i) in frames"
             :key="frame.id"
+            :color="color"
             :idx="i"
             :text="frame.text"
             :uuid="frame.id"
@@ -27,6 +28,10 @@ export default {
         frames: {
             type: Array,
             default: function () {}
+        },
+        color: {
+            type: String,
+            default: 'green',
         }
     },
     methods: {

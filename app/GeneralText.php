@@ -11,6 +11,11 @@ class GeneralText extends Model
     public $translatedAttributes = ['description'];
     protected $table = 'general_texts';
 
+    public static function get_db_table()
+    {
+        return with(new static)->getTable();
+    }
+
     public static function field ($field)
     {
         $text = GeneralText::where('field', '=', $field)->first();

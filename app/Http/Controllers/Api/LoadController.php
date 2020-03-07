@@ -6,10 +6,14 @@ use Auth;
 use App\App;
 use App\Utility;
 use App\Session;
+use App\Network;
 use App\AppSection;
 use App\AppCategory;
 use App\MediaCouples;
 use App\MediaSubCategory;
+
+use App\Notifications\SharedSession;
+
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,7 +23,12 @@ class LoadController extends Controller
 {
     public function test()
     {
-        $result = $this->load_assets('active-parallel-action', false);
+        $request = new Request();
+        $request->replace([
+            'token' => '5d3e0f4057d6c'
+        ]);
+
+        $result = $this->share_to_network($request);
         dd($result);
     }
 
@@ -75,9 +84,9 @@ class LoadController extends Controller
                 $media_couples = MediaCouples::with('left', 'right')->get();
                 $media_couples = $media_couples->transform(
                     function ($item, $key) {
-                            $item->leftSrc = Storage::disk('local')->url($item->left->landscape);
-                            $item->rightSrc = Storage::disk('local')->url($item->right->landscape);
-                            return $item;
+                        $item->leftSrc = Storage::disk('local')->url($item->left->landscape);
+                        $item->rightSrc = Storage::disk('local')->url($item->right->landscape);
+                        return $item;
                     }
                 );
                 $random = $media_couples->random();
@@ -103,8 +112,8 @@ class LoadController extends Controller
                 $videos = $app->videos()->get();
                 $videos = $videos->transform(
                     function ($video, $key) {
-                            $video->videoSrc = Storage::disk('local')->url($video->src);
-                            return $video;
+                        $video->videoSrc = Storage::disk('local')->url($video->src);
+                        return $video;
                     }
                 );
                 $assets = [
@@ -118,8 +127,8 @@ class LoadController extends Controller
                 $audios = $app->audios()->get();
                 $audios = $audios->transform(
                     function ($audio, $key) {
-                            $audio->audioSrc = Storage::disk('local')->url($audio->src);
-                            return $audio;
+                        $audio->audioSrc = Storage::disk('local')->url($audio->src);
+                        return $audio;
                     }
                 );
                 $assets = [
@@ -160,8 +169,8 @@ class LoadController extends Controller
                 $videos = $app->videos()->get();
                 $videos = $videos->transform(
                     function ($video, $key) {
-                            $video->videoSrc = Storage::disk('local')->url($video->src);
-                            return $video;
+                        $video->videoSrc = Storage::disk('local')->url($video->src);
+                        return $video;
                     }
                 );
 
@@ -324,7 +333,6 @@ class LoadController extends Controller
 
     public function contest_upload(Request $request)
     {
-
         $utility = new Utility;
         $file = $request->file('media');
         $title = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
@@ -355,28 +363,127 @@ class LoadController extends Controller
         $title = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $filename = uniqid();
         $ext = $file->getClientOriginalExtension();
-
         $app = App::where('id', $request->app_id)->with('category')->first();
-
         $app_slug = $app->slug;
         $category_slug = $app->category->slug;
         $user = Auth::user();
-
-        // return [
-        //     'filename' => $filename,
-        //     'ext' => $ext,
-        //     'app_path' => 'apps/'.$category_slug.'/'.$app_slug.'/'.$user->id.'/',
-        // ];
-
         $utility = new Utility();
-        $video_store = $utility->storeVideo($file, $filename, $ext, 'apps/'.$category_slug.'/'.$app_slug.'/'.$user->id.'/');
 
-        return [
-            'success' => true,
-            'title' => $title,
-            'img' => $video_store['img'],
-            'duration' => $video_store['duration'],
-            'src' => Storage::disk('local')->url($video_store['src']),
-        ];
+        $format = $this->check_format($ext);
+
+        if ($format == 'video') {
+            $video_store = $utility->storeVideo($file, $filename, $ext, 'apps/'.$category_slug.'/'.$app_slug.'/'.$user->id.'/');
+            return [
+                'success' => true,
+                'type' => 'video',
+                'title' => $title,
+                'img' => $video_store['img'],
+                'duration' => $video_store['duration'],
+                'src' => Storage::disk('local')->url($video_store['src']),
+            ];
+        } elseif ($format == 'audio') {
+            $audio_store = $utility->storeAudio($file, $filename, $ext, 'apps/'.$category_slug.'/'.$app_slug.'/'.$user->id.'/');
+            return [
+                'success' => true,
+                'type' => 'audio',
+                'title' => $title,
+                'duration' => $audio_store['duration'],
+                'src' => Storage::disk('local')->url($audio_store['src']),
+            ];
+        }
+    }
+
+    public function check_format($ext)
+    {
+        $video = ['mp4', 'avi','mov','mpeg','3gp','m4v','mkv','flv','FLV','MP4','MKV','MOV','AVI','MPEG','MPEG'];
+        $audio = ['wav','mp3','WAV','MP3','aiff'];
+
+        if (in_array($ext, $video)) {
+            return 'video';
+        } elseif (in_array($ext, $audio)) {
+            return 'audio';
+        } else {
+            return false;
+        }
+    }
+
+    public function share_to_teacher(Request $request)
+    {
+        $session = Session::where('token', $request->token)->first();
+
+        if ($session) {
+            if ($session->teacher_shared == 0) {
+                $session->teacher_shared = 1;
+                $session->save();
+
+                $student = $session->user;
+
+                // trova l'insegnante
+                $teacher = $student->teacher->first();
+                $teacher->notify(new SharedSession($session, $student));
+
+                return [
+                    'success' => true,
+                    'session' => $session
+                ];
+            }
+
+            return [
+                'success' => false,
+                'error' => 'Session already shared'
+            ];
+        } else {
+            return [
+                'success' => false,
+                'error' => 'Session not found'
+            ];
+        }
+    }
+
+    public function share_to_network(Request $request)
+    {
+        $session = Session::where('token', $request->token)->first();
+        $notification = Auth::user()->notifications()->where('id', $request->notification_id)->first();
+
+        if ($notification) {
+            $notification->delete();
+        }
+
+        if ($session) {
+            if ($session->is_shared == 0) {
+                $session->teacher_approved = 1;
+                $session->is_shared = 1;
+                $session->save();
+
+                $user = Auth::user();
+
+                $content = $session->format_for_share();
+                $data = [
+                    'app_id' => $session->app->id,
+                    'user_id' => $session->user->id,
+                    'title' => $session->title,
+                    'token' => $request->token,
+                    'content' => collect($content),
+                ];
+
+                $network = Network::create($data);
+
+                return [
+                    'success' => true,
+                    'session' => $session,
+                    'network' => $network,
+                ];
+            }
+
+            return [
+                'success' => false,
+                'error' => 'Session already shared'
+            ];
+        } else {
+            return [
+                'success' => false,
+                'error' => 'Session not found'
+            ];
+        }
     }
 }

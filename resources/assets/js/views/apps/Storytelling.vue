@@ -53,9 +53,9 @@
                 color="white"
                 :has-margin="false"
                 align="center"
-                @click.native="randomize"
+                @click="randomize"
             >
-                Reload
+                {{ this.$root.getCmd('reload') }}
             </ui-button>
         </ui-app-block>
         <ui-app-note
@@ -77,12 +77,7 @@ import {
     UiAppNote
 }
 from '../../uiapp'
-import {
-    SharedData,
-    SharedMethods,
-    SharedWatch
-}
-from './Shared'
+
 import {
     UiBlock,
     UiButton,
@@ -91,8 +86,10 @@ import {
     UiRow
 }
 from '../../ui'
+import Shared from './Shared'
 export default {
     name: 'Storytelling',
+    mixins: [Shared],
     components: {
         AppTemplate,
         UiAppBlock,
@@ -107,7 +104,6 @@ export default {
     },
     data: function () {
         return {
-            ...SharedData,
             srcs: {
                 slot_1: null,
                 slot_2: null,
@@ -118,9 +114,6 @@ export default {
             },
             isLoading: false,
         }
-    },
-    watch: {
-        ...SharedWatch,
     },
     methods: {
         ready: function () {
@@ -206,7 +199,6 @@ export default {
         }, 500),
     },
     created: function () {
-        this.getData = SharedMethods.getData.bind(this)
         this.$root.isApp = true
         this.getData()
     },

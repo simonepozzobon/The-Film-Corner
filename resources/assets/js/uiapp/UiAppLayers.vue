@@ -1,9 +1,9 @@
 <template>
     <ui-row :no-gutters="true">
         <ui-block :size="12">
-            <div class="ui-app-layers">
+            <div class="ua-layers">
                 <ui-title :title="title" color="white" :has-padding="false"/>
-                <div class="ui-app-layers__list">
+                <div class="ua-layers__list">
                     <layer-single
                         v-for="(layer, i) in layers"
                         :key="i"
@@ -56,7 +56,7 @@ export default {
 <style lang="scss" scoped>
 @import '~styles/shared';
 
-.ui-app-layers {
+.ua-layers {
     background-color: $dark-gray;
     width: 100%;
     padding: $spacer;

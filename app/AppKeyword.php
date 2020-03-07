@@ -10,6 +10,10 @@ class AppKeyword extends Model
     public $translatedAttributes = ['name', 'description'];
     protected $table = 'app_keywords';
 
+    public static function get_db_table()
+    {
+        return with(new static)->getTable();
+    }
 
     public function category()
     {

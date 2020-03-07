@@ -1,62 +1,88 @@
 <template>
-    <ui-block
-        class="net-item"
-        :class="colorClass"
-        :size="4"
-        :full-height="true"
-        @mouseover.native="showHover"
-        @mouseleave.native="hideHover">
+<ui-block
+    class="net-item"
+    :class="colorClass"
+    :size="4"
+    :full-height="true"
+    @mouseover.native="showHover"
+    @mouseleave.native="hideHover"
+>
+    <div
+        class="net-item__preview"
+        @click="$root.goToWithParams('network-single', {id: idx})"
+    >
+
         <div
-            class="net-item__preview"
-            @click="$root.goToWithParams('network-single', {id: idx})">
-
-            <div
-                class="net-item__overlay"
-                ref="overlay">
-            </div>
-
-            <play
-                v-if="hasPlayButton"
-                ref="play"
-                class="net-item__play-icon"
-                color="white"
-                width="48px"
-                :has-shadows="true"/>
-
-            <img
-                ref="image"
-                :src="preview"
-                :alt="title"
-                class="net-item__image" />
+            class="net-item__overlay"
+            ref="overlay"
+        >
         </div>
-        <div class="net-item__details">
-            <ui-title
-                :title="title"
-                :color="titleColor"
-                align="center"
-                :has-margin="false"
-                :hoverable="true"
-                @click.native="$root.goToWithParams('network-single', {id: idx})"/>
-            <div class="net-item__category">
-                {{ category }}
-            </div>
-            <div class="net-item__app">
-                {{ appName }}
-            </div>
-            <net-interactions
-                class="net-item__interactions"
-                :color="titleColor"
-                :comments="comments"
-                :likes="likes"
-                :views="views"/>
+
+        <play
+            v-if="hasPlayButton"
+            ref="play"
+            class="net-item__play-icon"
+            color="white"
+            width="48px"
+            :has-shadows="true"
+        />
+
+        <img
+            ref="image"
+            :src="preview"
+            :alt="title"
+            class="net-item__image"
+        />
+    </div>
+    <div class="net-item__details">
+        <ui-title
+            :title="title"
+            :color="titleColor"
+            align="center"
+            :has-margin="false"
+            :hoverable="true"
+            @click.native="$root.goToWithParams('network-single', {id: idx})"
+        />
+        <div class="net-item__category">
+            {{ category }}
         </div>
-    </ui-block>
+        <div class="net-item__app">
+            {{ appName }}
+        </div>
+        <net-interactions
+            class="net-item__interactions"
+            :item-id="idx"
+            :color="titleColor"
+            :comments="comments"
+            :likes.sync="likesCache"
+            :views="views"
+        />
+    </div>
+</ui-block>
 </template>
 
 <script>
-import { UiBlock, UiTitle } from '../ui'
-import { Play } from '../icons'
+import {
+    UiBlock,
+    UiTitle
+}
+from '../ui'
+import {
+    Play
+}
+from '../icons'
 import NetInteractions from './NetInteractions.vue'
+
+import {
+    TweenMax,
+    TimelineMax,
+    Power4
+}
+from 'gsap/all'
+
+const plugins = [
+    Power4
+]
 
 export default {
     name: 'NetItem',
@@ -117,40 +143,45 @@ export default {
             default: 0,
         }
     },
-    data: function() {
+    data: function () {
         return {
             master: null,
             preview: null,
             hasPlayButton: true,
+            likesCache: 0,
         }
     },
     watch: {
-        previewSrc: function(src) {
+        previewSrc: function (src) {
             this.setImage()
+        },
+        likes: function (likes) {
+            this.setLikes()
         },
     },
     computed: {
-        titleColor: function() {
+        titleColor: function () {
             if (this.color == 'yellow') {
                 return 'dark'
             }
             return 'white'
         },
-        colorClass: function() {
+        colorClass: function () {
             return 'net-item--' + this.color
         }
     },
     methods: {
-        init: function() {
+        init: function () {
             if (this.previewType == 'audio' || this.previewType == 'video') {
                 this.hasPlayButton = true
-            } else {
+            }
+            else {
                 this.hasPlayButton = false
             }
             this.$nextTick(this.initAnim)
 
         },
-        initAnim: function() {
+        initAnim: function () {
             let el = this.$refs.overlay
 
             this.master = new TimelineMax({
@@ -179,30 +210,34 @@ export default {
 
             this.master.progress(1).progress(0)
         },
-        setImage: function() {
+        setImage: function () {
             this.$refs.image.onerror = () => {
                 this.preview = '/img/test-app/1.png'
             }
 
             if (this.previewSrc == 'undefined' || !this.previewSrc) {
                 this.preview = '/img/test-app/1.png'
-            } else {
+            }
+            else {
                 this.preview = this.previewSrc
             }
         },
-        showHover: function() {
+        showHover: function () {
             if (this.master)
                 this.master.play()
         },
-        hideHover: function() {
+        hideHover: function () {
             if (this.master)
                 this.master.reverse()
         },
+        setLikes: function () {
+            this.likesCache = this.likes
+        }
     },
-    created: function() {
-
+    created: function () {
+        this.setLikes()
     },
-    mounted: function() {
+    mounted: function () {
         this.init()
         this.setImage()
     },
@@ -252,8 +287,8 @@ export default {
         @include border-radius(8px);
     }
 
-    &__category,
-    &__app {
+    &__app,
+    &__category {
         color: $white;
         text-align: center;
     }
@@ -277,8 +312,8 @@ export default {
             background-color: rgba($yellow, .3);
         }
 
-        &__category,
-        &__app {
+        &__app,
+        &__category {
             color: $black;
         }
     }

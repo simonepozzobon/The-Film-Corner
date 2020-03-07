@@ -1,20 +1,23 @@
 <template>
-<ui-row :no-gutters="true">
-    <ui-block :size="12">
+<ui-row
+    :no-gutters="true"
+    :full-width="fullWidth"
+>
+    <ui-block :size="sizeValue">
         <div
-            class="ui-app-note"
+            class="ua-note"
             :class="colorClass"
         >
             <ui-title
-                :title="title"
+                :title="this.$root.getCmd('notes')"
                 :has-padding="false"
             />
-            <div class="ui-app-note__field">
+            <div class="ua-note__field">
                 <textarea
                     name="name"
                     rows="8"
                     cols="80"
-                    class="form-control ui-app-note__text"
+                    class="form-control ua-note__text"
                     v-model="notes"
                 >
                     </textarea>
@@ -51,6 +54,11 @@ export default {
             type: String,
             default: null,
         },
+        fullWidth: {
+            type: Boolean,
+            default: false,
+        },
+        size: [Number, String],
     },
     data: function () {
         return {
@@ -71,11 +79,18 @@ export default {
     },
     computed: {
         colorClass: function () {
-            return 'ui-app-note--' + this.color
+            return 'ua-note--' + this.color
+        },
+        sizeValue: function () {
+            if (this.size) {
+                return this.size
+            }
+
+            return 12
         }
     },
     mounted: function () {
-        console.log(this.initial);
+        // console.log(this.initial);
         if (this.initial) {
             this.notes = this.initial
         }
@@ -86,7 +101,7 @@ export default {
 <style lang="scss" scoped>
 @import '~styles/shared';
 
-.ui-app-note {
+.ua-note {
     width: 100%;
     height: 100%;
     @include border-radius($custom-border-radius);

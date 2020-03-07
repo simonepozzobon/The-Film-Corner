@@ -1,24 +1,28 @@
 <template>
-    <div>
-        <!-- <apps-nav /> -->
-        <transition
-            @enter="enter"
-            @leave="leave">
-            <router-view></router-view>
-        </transition>
-    </div>
+<div>
+    <!-- <apps-nav /> -->
+    <transition
+        @enter="enter"
+        @leave="leave"
+    >
+        <router-view></router-view>
+    </transition>
+</div>
 </template>
 
 <script>
 // import LoggedNav from '../../containers/LoggedNav.vue'
-import { TweenMax } from 'gsap'
+import {
+    TweenMax
+}
+from 'gsap/all'
 export default {
     name: 'AppsContainer',
     components: {
         // LoggedNav,
     },
     methods: {
-        enter: function(el, done) {
+        enter: function (el, done) {
             let master = TweenMax.fromTo(el, 1, {
                 autoAlpha: 0,
             }, {
@@ -29,7 +33,7 @@ export default {
                 }
             })
         },
-        leave: function(el, done) {
+        leave: function (el, done) {
             let master = TweenMax.fromTo(el, 1, {
                 autoAlpha: 1,
                 position: 'absolute',
@@ -44,6 +48,11 @@ export default {
                 }
             })
         }
+    },
+    mounted: function () {
+        this.$nextTick(() => {
+            console.log('Apps Container Rendered');
+        })
     },
     // mounted: function() {
     //     this.$root.conferenceMenu = true
