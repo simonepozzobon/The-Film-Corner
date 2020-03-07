@@ -136,20 +136,20 @@ export default {
                 }
             }
 
-            // this.$http.post('/api/v2/propaganda/advanced-search', data)
-            //     .then(response => {
-            //         const {
-            //             data
-            //         } = response
-            //
-            //         if (data.success) {
-            //             this.results = Object.assign({}, data.results)
-            //         }
-            //         this.isLoading = false;
-            //     })
-            //     .catch(err => {
-            //         this.isLoading = false;
-            //     })
+            this.$http.post('/api/v2/propaganda/advanced-search', data)
+                .then(response => {
+                    const {
+                        data
+                    } = response
+
+                    if (data.success) {
+                        this.results = Object.assign({}, data.results)
+                    }
+                    this.isLoading = false;
+                })
+                .catch(err => {
+                    this.isLoading = false;
+                })
         },
 
     },
