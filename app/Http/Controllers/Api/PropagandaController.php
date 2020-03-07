@@ -65,8 +65,8 @@ class PropagandaController extends Controller
     public function perform_advanced_search(Request $request)
     {
         $rootLocale = \App::getLocale();
-
         \App::setLocale($request->locale);
+
         $clips = Clip::with('period', 'format', 'genre', 'age', 'directors', 'peoples', 'topics', 'captions')->get();
 
         if (isset($request->title)) {
@@ -89,6 +89,7 @@ class PropagandaController extends Controller
             }
         }
 
+        \App::setLocale($rootLocale);
         return [
             'success' => true,
             'request' => $request->all(),
