@@ -29,6 +29,7 @@
     <ui-app-channel-results
         :contents="results"
         :title="title"
+        class="mt-4"
     />
 </ui-container>
 </template>
@@ -141,7 +142,7 @@ export default {
                     } = response
 
                     if (data.success) {
-                        this.results = data.results
+                        this.results = Object.assign({}, data.results)
                     }
                     this.isLoading = false;
                 })

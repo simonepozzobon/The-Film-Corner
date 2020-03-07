@@ -1,10 +1,9 @@
 <template>
-<ui-container class="mt-4">
+<ui-container>
     <ui-container :contain="true">
         <ui-title
-            v-if="title"
             :is-main="true"
-            :title="title"
+            :title="$root.getCmd('search')"
         />
         <ui-row>
             <ui-block
