@@ -76,8 +76,8 @@
         >
             <text-input
                 :title="$root.getCmd('nationality')"
-                name="country"
-                :value.sync="search.country"
+                name="nationality"
+                :value.sync="search.nationality"
                 :placeholder="$root.getCmd('write_a_nationality')"
             />
         </ui-block>
@@ -87,8 +87,8 @@
         >
             <text-input
                 :title="$root.getCmd('people')"
-                name="cast"
-                :value.sync="search.cast"
+                name="people"
+                :value.sync="search.people"
                 :placeholder="$root.getCmd('write_peoples')"
             />
         </ui-block>
@@ -109,7 +109,7 @@
         >
             <select-input
                 :title="$root.getCmd('student_age')"
-                name="age_range"
+                name="age"
                 :options="options.ages"
                 :value.sync="search.age"
                 :placeholder="$root.getCmd('select_age_range')"

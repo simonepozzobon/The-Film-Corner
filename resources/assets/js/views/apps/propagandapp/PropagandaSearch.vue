@@ -132,23 +132,24 @@ export default {
             for (let key in query) {
                 if (query.hasOwnProperty(key)) {
                     data.append(key, query[key])
+                    console.log(key, query[key]);
                 }
             }
 
-            this.$http.post('/api/v2/propaganda/advanced-search', data)
-                .then(response => {
-                    const {
-                        data
-                    } = response
-
-                    if (data.success) {
-                        this.results = Object.assign({}, data.results)
-                    }
-                    this.isLoading = false;
-                })
-                .catch(err => {
-                    this.isLoading = false;
-                })
+            // this.$http.post('/api/v2/propaganda/advanced-search', data)
+            //     .then(response => {
+            //         const {
+            //             data
+            //         } = response
+            //
+            //         if (data.success) {
+            //             this.results = Object.assign({}, data.results)
+            //         }
+            //         this.isLoading = false;
+            //     })
+            //     .catch(err => {
+            //         this.isLoading = false;
+            //     })
         },
 
     },
