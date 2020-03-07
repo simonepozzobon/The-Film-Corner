@@ -127,6 +127,7 @@ export default {
             this.isLoading = true
 
             let data = new FormData()
+            data.append('locale', this.$root.locale)
             for (let key in query) {
                 if (query.hasOwnProperty(key)) {
                     data.append(key, query[key])
@@ -135,7 +136,13 @@ export default {
 
             this.$http.post('/api/v2/propaganda/advanced-search', data)
                 .then(response => {
-                    console.log(response.data);
+                    const {
+                        data
+                    } = response
+
+                    if (data.success) {
+                        this.results = data.results
+                    }
                     this.isLoading = false;
                 })
                 .catch(err => {

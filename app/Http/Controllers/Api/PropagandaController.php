@@ -64,18 +64,44 @@ class PropagandaController extends Controller
 
     public function perform_advanced_search(Request $request)
     {
-        $clips = Clip::with('period', 'format', 'age', 'directors', 'peoples', 'topics', 'captions')->get();
+        $rootLocale = \App::getLocale();
+
+        \App::setLocale($request->locale);
+        $clips = Clip::with('period', 'format', 'genre', 'age', 'directors', 'peoples', 'topics', 'captions')->get();
 
         if (isset($request->title)) {
-            $clips = $clips->where(
-                'title', 'LIKE', '%'.$request->title.'%'
-            )->get();
+            // query da cercare
+            $q = strtolower($request->title);
+            $clips = $clips->filter(
+                function ($clip, $key) use ($q) {
+                    return strpos(strtolower($clip->title), $q) !== false;
+                }
+            );
         }
 
-        if (isset($request->period)) {
-            // $clips =
+        $relations = ['period', 'format', 'age', 'genre'];
+        foreach ($relations as $key => $relation) {
+            // if (isset($request->period)) {
+            //     $clips = $this->filter_by_single_relation($clips, 'period', $request->period);
+            // }
+            if (isset($request->{$relation})) {
+                $clips = $this->filter_by_single_relation($clips, $relation, $request->{$relation});
+            }
         }
-        return ['request' => $request->all(), 'results' => $clips];
+
+        return [
+            'request' => $request->all(),
+            'results' => $clips
+        ];
+    }
+
+    public function filter_by_single_relation($clips, $relation, $q)
+    {
+        return $clips->filter(
+            function ($clip, $key) use ($q, $relation) {
+                return $clip->{$relation.'_id'} == $q;
+            }
+        );
     }
 
     public function get_clips()
