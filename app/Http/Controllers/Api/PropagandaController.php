@@ -83,12 +83,45 @@ class PropagandaController extends Controller
             }
         }
 
+        $relations = [
+            'director' => 'name',
+            'people' => 'title',
+            'topic' => 'title'
+        ];
+
+        foreach ($relations as $key => $relation) {
+            if (isset($request->{$key})) {
+                $clips = $this->filter_by_multiple_relation($clips, $key, $request->{$key}, $relation);
+            }
+        }
+
         \App::setLocale($rootLocale);
         return [
             'success' => true,
             'request' => $request->all(),
             'results' => $clips
         ];
+    }
+
+    public function check_array_with_value($objs, $prop, $value)
+    {
+        foreach ($objs as $key => $obj) {
+            $check = strtolower($obj->{$prop});
+            if (strpos($check, $value) !== false) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function filter_by_multiple_relation($clips, $relation, $q, $prop)
+    {
+        return $clips->filter(
+            function ($clip, $key) use ($relation, $q, $prop) {
+                return $this->check_array_with_value($clip->{$relation.'s'}, $prop, strtolower($q)) == true;
+            }
+        );
     }
 
     public function filter_by_string($clips, $relation, $q)
