@@ -90,6 +90,7 @@ class PropagandaController extends Controller
         }
 
         return [
+            'success' => true,
             'request' => $request->all(),
             'results' => $clips
         ];
