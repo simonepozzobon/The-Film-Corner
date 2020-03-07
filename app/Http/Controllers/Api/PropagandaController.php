@@ -69,21 +69,15 @@ class PropagandaController extends Controller
 
         $clips = Clip::with('period', 'format', 'genre', 'age', 'directors', 'peoples', 'topics', 'captions')->get();
 
-        if (isset($request->title)) {
-            // query da cercare
-            $q = strtolower($request->title);
-            $clips = $clips->filter(
-                function ($clip, $key) use ($q) {
-                    return strpos(strtolower($clip->title), $q) !== false;
-                }
-            );
+        $relations = ['title', 'year', 'nationality'];
+        foreach ($relations as $key => $relation) {
+            if (isset($request->{$relation})) {
+                $clips = $this->filter_by_string($clips, $relation, $request->{$relation});
+            }
         }
 
         $relations = ['period', 'format', 'age', 'genre'];
         foreach ($relations as $key => $relation) {
-            // if (isset($request->period)) {
-            //     $clips = $this->filter_by_single_relation($clips, 'period', $request->period);
-            // }
             if (isset($request->{$relation})) {
                 $clips = $this->filter_by_single_relation($clips, $relation, $request->{$relation});
             }
@@ -95,6 +89,15 @@ class PropagandaController extends Controller
             'request' => $request->all(),
             'results' => $clips
         ];
+    }
+
+    public function filter_by_string($clips, $relation, $q)
+    {
+        return $clips->filter(
+            function ($clip, $key) use ($q, $relation) {
+                return strpos(strtolower($clip->{$relation}), strtolower($q)) !== false;
+            }
+        );
     }
 
     public function filter_by_single_relation($clips, $relation, $q)
