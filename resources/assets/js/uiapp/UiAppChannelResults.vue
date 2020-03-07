@@ -1,5 +1,5 @@
 <template>
-<ui-container>
+<ui-container class="mt-4">
     <ui-container :contain="true">
         <ui-title
             v-if="title"
@@ -43,12 +43,7 @@ export default {
         UiTitle,
     },
     props: {
-        contents: {
-            type: Array,
-            default: function () {
-                return []
-            },
-        },
+        contents: [Array, Object],
         title: {
             type: String,
             default: null,
@@ -64,7 +59,3 @@ export default {
     },
 }
 </script>
-
-<style lang="scss" scoped>
-@import '~styles/shared';
-</style>
