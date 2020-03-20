@@ -21,12 +21,14 @@
         slot="pagination"
     ></div>
     <div
-        class="swiper-button-prev"
+        class="swiper-button-prev affiches-library__prev"
         slot="button-prev"
+        @click="slidePrev"
     ></div>
     <div
-        class="swiper-button-next"
+        class="swiper-button-next affiches-library__next"
         slot="button-next"
+        @click="slideNext"
     ></div>
 </swiper>
 </template>
@@ -66,6 +68,10 @@ export default {
             swiperOption: {
                 slidesPerView: 5,
                 spaceBetween: 30,
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev'
+                }
             }
         }
     },
@@ -73,6 +79,16 @@ export default {
         openModal: function (affiche) {
             // console.log('clicked slider');
             this.$emit('open-modal', affiche)
+        },
+        slideNext: function () {
+            if (this.$refs.mySwiper && typeof this.$refs.mySwiper.slideNext === 'function') {
+                this.$refs.mySwiper.slideNext()
+            }
+        },
+        slidePrev: function () {
+            if (this.$refs.mySwiper && typeof this.$refs.mySwiper.slidePrev === 'function') {
+                this.$refs.mySwiper.slidePrev()
+            }
         },
     },
 }
@@ -84,6 +100,14 @@ export default {
 .affiches-library {
     &__slide {
         max-width: 100%;
+    }
+
+    &__next,
+    &__prev {
+        background-color: $white;
+        padding: $spacer * 2;
+        @include border-radius(8px);
+        z-index: 2;
     }
 }
 </style>

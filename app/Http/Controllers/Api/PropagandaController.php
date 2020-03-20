@@ -7,9 +7,15 @@ use App\App;
 use App\User;
 use App\Session;
 use App\Network;
+use App\Propaganda\Age;
 use App\Propaganda\Clip;
+use App\Propaganda\Genre;
+use App\Propaganda\Topic;
+use App\Propaganda\People;
 use App\Propaganda\Period;
+use App\Propaganda\Format;
 use App\Propaganda\Library;
+use App\Propaganda\Hashtag;
 use App\Propaganda\Exercise;
 use App\Propaganda\Challenge;
 use App\Propaganda\ParatextType;
@@ -32,13 +38,117 @@ class PropagandaController extends Controller
         dd($clip);
     }
 
+    public function get_search_options()
+    {
+        $periods = Period::all();
+        $genres = Genre::all();
+        $formats = Format::all();
+        $ages = Age::all();
+        $topics = Topic::all();
+        $peoples = People::all();
+        $hashtags = Hashtag::all();
+
+        return [
+            'success' => true,
+            'options' => [
+                'periods' => $periods,
+                'genres' => $genres,
+                'formats' => $formats,
+                'ages' => $ages,
+                'topics' => $topics,
+                'peoples' => $peoples,
+                'topics' => $topics,
+            ]
+        ];
+    }
+
+    public function perform_advanced_search(Request $request)
+    {
+        $rootLocale = \App::getLocale();
+        \App::setLocale($request->locale);
+
+        $clips = Clip::with('period', 'format', 'genre', 'age', 'directors', 'peoples', 'topics', 'captions')->get();
+
+        $relations = ['title', 'year', 'nationality'];
+        foreach ($relations as $key => $relation) {
+            if (isset($request->{$relation})) {
+                $clips = $this->filter_by_string($clips, $relation, $request->{$relation});
+            }
+        }
+
+        $relations = ['period', 'format', 'age', 'genre'];
+        foreach ($relations as $key => $relation) {
+            if (isset($request->{$relation})) {
+                $clips = $this->filter_by_single_relation($clips, $relation, $request->{$relation});
+            }
+        }
+
+        $relations = [
+            'director' => 'name',
+            'people' => 'title',
+            'topic' => 'title'
+        ];
+
+        foreach ($relations as $key => $relation) {
+            if (isset($request->{$key})) {
+                $clips = $this->filter_by_multiple_relation($clips, $key, $request->{$key}, $relation);
+            }
+        }
+
+        \App::setLocale($rootLocale);
+        return [
+            'success' => true,
+            'request' => $request->all(),
+            'results' => $clips
+        ];
+    }
+
+    public function check_array_with_value($objs, $prop, $value)
+    {
+        foreach ($objs as $key => $obj) {
+            $check = strtolower($obj->{$prop});
+            if (strpos($check, $value) !== false) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function filter_by_multiple_relation($clips, $relation, $q, $prop)
+    {
+        return $clips->filter(
+            function ($clip, $key) use ($relation, $q, $prop) {
+                return $this->check_array_with_value($clip->{$relation.'s'}, $prop, strtolower($q)) == true;
+            }
+        );
+    }
+
+    public function filter_by_string($clips, $relation, $q)
+    {
+        return $clips->filter(
+            function ($clip, $key) use ($q, $relation) {
+                return strpos(strtolower($clip->{$relation}), strtolower($q)) !== false;
+            }
+        );
+    }
+
+    public function filter_by_single_relation($clips, $relation, $q)
+    {
+        return $clips->filter(
+            function ($clip, $key) use ($q, $relation) {
+                return $clip->{$relation.'_id'} == $q;
+            }
+        );
+    }
+
     public function get_clips()
     {
         $periods = Period::with('clips.period', 'clips.format', 'clips.age', 'clips.directors', 'clips.peoples', 'clips.topics', 'clips.captions')->get();
 
         return [
-            'success' => true,
-            'periods' => $periods,
+        'success' => true,
+        'periods' => $periods,
         ];
     }
 
@@ -74,8 +184,8 @@ class PropagandaController extends Controller
         $clip = $this->format_paratexts($clip);
 
         return [
-            'success' => true,
-            'clip' => $clip,
+        'success' => true,
+        'clip' => $clip,
         ];
     }
 
@@ -134,8 +244,8 @@ class PropagandaController extends Controller
 
         $sessions = $user->sessions()->where(
             [
-                ['app_id', $app->id],
-                ['is_empty', '!=', 1]
+            ['app_id', $app->id],
+            ['is_empty', '!=', 1]
             ]
         )->get();
 
@@ -187,11 +297,11 @@ class PropagandaController extends Controller
         }
 
         return [
-            'success' => true,
-            'clip' => $clip,
-            'exercise' => $exercise,
-            'session' => $session,
-            'sessions' => $sessions,
+        'success' => true,
+        'clip' => $clip,
+        'exercise' => $exercise,
+        'session' => $session,
+        'sessions' => $sessions,
         ];
     }
 
@@ -216,8 +326,8 @@ class PropagandaController extends Controller
         $media = $this->generate_thumbnail($media);
 
         return [
-            'success' => true,
-            'media' => $media,
+        'success' => true,
+        'media' => $media,
         ];
     }
 
@@ -227,9 +337,9 @@ class PropagandaController extends Controller
         $library = ChallengeLibrary::where('challenge_id', $id)->with('medias')->first();
 
         return [
-            'success' => true,
-            'challenge' => $challenge,
-            'library' => $library,
+        'success' => true,
+        'challenge' => $challenge,
+        'library' => $library,
         ];
     }
 
@@ -324,6 +434,6 @@ class PropagandaController extends Controller
             )->save();
         }
 
-            return $media;
+        return $media;
     }
 }

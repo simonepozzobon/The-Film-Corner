@@ -1,33 +1,36 @@
 <template>
-    <div class="prop-back">
-        <div class="prop-back__container">
-            <div class="prop-back__content">
-                <ui-title
-                    title="Creative Challenges"
-                    align="center"
-                    tag="h1"
-                    font-size="h1"
-                />
-                <ui-container :contain="true">
-                    <ui-row>
-                        <ui-block :size="6" :has-container="false">
-                            <div class="prop-chlng-block">
-                                <ui-title
-                                    title="MAKE YOUR OWN PROPAGANDA FILM"
-                                    align="center"
-                                    color="white"
-                                />
+<div class="prop-back">
+    <div class="prop-back__container">
+        <div class="prop-back__content">
+            <ui-title
+                title="Creative Challenges"
+                align="center"
+                tag="h1"
+                font-size="h1"
+            />
+            <ui-container :contain="true">
+                <ui-row>
+                    <ui-block
+                        :size="6"
+                        :has-container="false"
+                    >
+                        <div class="prop-chlng-block">
+                            <ui-title
+                                :title="$root.getCmd('propaganda_ch_film')"
+                                align="center"
+                                color="white"
+                            />
 
-                                <ui-button
-                                    :title="$root.getCmd('open')"
-                                    color="yellow"
-                                    align="center"
-                                    :block="true"
-                                    @click="$root.goTo('propaganda-film')"
-                                />
-                            </div>
-                        </ui-block>
-                        <!-- <ui-block
+                            <ui-button
+                                :title="$root.getCmd('open')"
+                                color="yellow"
+                                align="center"
+                                :block="true"
+                                @click="$root.goTo('propaganda-film')"
+                            />
+                        </div>
+                    </ui-block>
+                    <!-- <ui-block
                         :size="6"
                         :has-container="false"
                     >
@@ -46,55 +49,68 @@
                             />
                         </div>
                     </ui-block> -->
-                        <ui-block :size="6" :has-container="false">
-                            <div class="prop-chlng-block">
-                                <ui-title
-                                    title="MAKE YOUR OWN Interview"
-                                    align="center"
-                                    color="white"
-                                />
-                                <ui-button
-                                    :title="$root.getCmd('open')"
-                                    color="yellow"
-                                    align="center"
-                                    :block="true"
-                                    @click="$root.goTo('propaganda-interview')"
-                                />
-                            </div>
-                        </ui-block>
-                        <ui-block :size="6" :has-container="false">
-                            <div class="prop-chlng-block">
-                                <ui-title
-                                    title="MAKE YOUR OWN Affiches"
-                                    align="center"
-                                    color="white"
-                                />
-                                <ui-button
-                                    :title="$root.getCmd('open')"
-                                    color="yellow"
-                                    align="center"
-                                    :block="true"
-                                    @click="
+                    <ui-block
+                        :size="6"
+                        :has-container="false"
+                    >
+                        <div class="prop-chlng-block">
+                            <ui-title
+                                :title="$root.getCmd('propaganda_ch_interview')"
+                                align="center"
+                                color="white"
+                            />
+                            <ui-button
+                                :title="$root.getCmd('open')"
+                                color="yellow"
+                                align="center"
+                                :block="true"
+                                @click="$root.goTo('propaganda-interview')"
+                            />
+                        </div>
+                    </ui-block>
+                    <ui-block
+                        :size="6"
+                        :has-container="false"
+                    >
+                        <div class="prop-chlng-block">
+                            <ui-title
+                                :title="$root.getCmd('propaganda_ch_affiche')"
+                                align="center"
+                                color="white"
+                            />
+                            <ui-button
+                                :title="$root.getCmd('open')"
+                                color="yellow"
+                                align="center"
+                                :block="true"
+                                @click="
                                         $root.goTo('propaganda-your-affiches')
                                     "
-                                />
-                            </div>
-                        </ui-block>
-                    </ui-row>
-                    <ui-button
-                        :title="$root.getCmd('back')"
-                        align="center"
-                        color="yellow"
-                        @click="$root.goTo('propaganda-home')"
-                    />
-                </ui-container>
-            </div>
+                            />
+                        </div>
+                    </ui-block>
+                </ui-row>
+                <ui-button
+                    :title="$root.getCmd('back')"
+                    align="center"
+                    color="yellow"
+                    @click="$root.goTo('propaganda-home')"
+                />
+            </ui-container>
         </div>
     </div>
+</div>
 </template>
 
 <script>
-import { UiBlock, UiButton, UiContainer, UiRow, UiTitle } from "../../../../ui";
+import {
+    UiBlock,
+    UiButton,
+    UiContainer,
+    UiRow,
+    UiTitle
+}
+from "../../../../ui";
 export default {
     name: "ChallengesHome",
     components: {
@@ -105,9 +121,9 @@ export default {
         UiTitle
     },
     methods: {
-        getData: function() {}
+        getData: function () {}
     },
-    created: function() {
+    created: function () {
         this.getData();
     }
 };

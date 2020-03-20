@@ -15,15 +15,21 @@
                 :uppercase="false"
                 :has-container="true"
             />
-
+        </ui-row>
+        <ui-row align="center">
             <ui-container :contain="true">
-                <ui-app-search-form @search="performSearch" />
+                <ui-app-search-form
+                    @search="performSearch"
+                    :options="options"
+                    :isLoading="isLoading"
+                />
             </ui-container>
         </ui-row>
     </ui-hero-banner>
     <ui-app-channel-results
         :contents="results"
         :title="title"
+        class="mt-4"
     />
 </ui-container>
 </template>
@@ -73,7 +79,9 @@ export default {
     data: function () {
         return {
             title: null,
+            options: {},
             results: [],
+            isLoading: false,
         }
     },
     watch: {
@@ -98,7 +106,17 @@ export default {
     methods: {
         getData: function () {
             // perform api call
-            this.debug()
+            this.$http.get('/api/v2/propaganda/search-options').then(response => {
+                console.log(response);
+                const {
+                    data
+                } = response
+
+                if (data.success) {
+                    this.options = data.options
+                }
+            })
+            // this.debug()
         },
         debug: function () {
             // this.selectChannel(this.channels[2])
@@ -107,7 +125,31 @@ export default {
         leave: function () {},
         performSearch: function (query) {
             // perform search request
-            console.log(query);
+            this.isLoading = true
+
+            let data = new FormData()
+            data.append('locale', this.$root.locale)
+            for (let key in query) {
+                if (query.hasOwnProperty(key)) {
+                    data.append(key, query[key])
+                    console.log(key, query[key]);
+                }
+            }
+
+            this.$http.post('/api/v2/propaganda/advanced-search', data)
+                .then(response => {
+                    const {
+                        data
+                    } = response
+
+                    if (data.success) {
+                        this.results = Object.assign({}, data.results)
+                    }
+                    this.isLoading = false;
+                })
+                .catch(err => {
+                    this.isLoading = false;
+                })
         },
 
     },

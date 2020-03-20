@@ -135,7 +135,7 @@ export default {
             if (this.app.category && this.app.category.color_class) {
                 this.colorClass = this.app.category.color_class
             }
-            console.log(this.colorClass);
+            // console.log(this.colorClass);
         },
         deleteSession: function (idx) {
             let url = '/api/v2/session/' + idx + '/false'
@@ -156,7 +156,7 @@ export default {
             })
         },
         shareSession: function (token) {
-            console.log(token);
+            // console.log(token);
 
             let data = new FormData()
             data.append('token', token)

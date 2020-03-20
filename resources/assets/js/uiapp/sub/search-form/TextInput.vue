@@ -5,7 +5,7 @@
         type="text"
         :name="name"
         class="form-control"
-        v-model="value"
+        v-model="textValue"
         :placeholder="placeholder"
     />
 </div>
@@ -30,6 +30,16 @@ export default {
         placeholder: {
             type: String,
             default: null,
+        },
+    },
+    data: function () {
+        return {
+            textValue: null
+        }
+    },
+    watch: {
+        textValue: function (value) {
+            this.$emit('update:value', value)
         },
     },
 }
