@@ -246,19 +246,31 @@ class LibraryController extends Controller
 
             $file = $request->file('cap_file');
             $original_name = $file->getClientOriginalName();
-            $filename = uniqid() . '.srt';
             $path = 'public/propaganda/libraries/captions';
+
+            $extension = $file->getClientOriginalExtension();
+
+            if ($extension == 'srt') {
+                $filename = uniqid() . '.srt';
+
+            } else if ($extension == 'vtt') {
+                $filename = uniqid() . '.vtt';
+            }
+
             $src = $file->storeAs($path, $filename);
             $src = Storage::disk('local')->url($src);
-
             $globalPath = Storage::disk('local')->getDriver()->getAdapter();
             $srt = str_replace('/storage', 'public', $src);
             $filePath = $globalPath->applyPathPrefix($srt);
-            $destPath = str_replace('.srt', '.vtt', $filePath);
-            $subtitles = Subtitles::convert($filePath, $destPath);
 
-            $caption->src = str_replace('.srt', '.vtt', $src);
-            // $caption->src = $src;
+            if ($extension == 'srt') {
+                $destPath = str_replace('.srt', '.vtt', $filePath);
+                $subtitles = Subtitles::convert($filePath, $destPath);
+                $caption->src = str_replace('.srt', '.vtt', $src);
+            } else if ($extesion == 'vtt') {
+                $caption->src = $src;
+            }
+
             $caption->save();
 
             $clip = $media->library->clip;
