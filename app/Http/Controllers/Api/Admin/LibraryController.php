@@ -267,7 +267,7 @@ class LibraryController extends Controller
                 $destPath = str_replace('.srt', '.vtt', $filePath);
                 $subtitles = Subtitles::convert($filePath, $destPath);
                 $caption->src = str_replace('.srt', '.vtt', $src);
-            } else if ($extesion == 'vtt') {
+            } else if ($extension == 'vtt') {
                 $caption->src = $src;
             }
 
