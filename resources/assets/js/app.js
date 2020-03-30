@@ -1,48 +1,55 @@
-require('./bootstrap')
+require("./bootstrap");
 
-import axios from 'axios'
-import BootstrapVue from 'bootstrap-vue'
-import Cookie from './Cookies'
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import routes from './routes'
+import axios from "axios";
+import BootstrapVue from "bootstrap-vue";
+import Cookie from "./Cookies";
+import Vue from "vue";
+import VueRouter from "vue-router";
+import routes from "./routes";
+import VueAnalytics from "vue-analytics";
 
-import * as Sentry from '@sentry/browser'
-import * as Integrations from '@sentry/integrations'
+import * as Sentry from "@sentry/browser";
+import * as Integrations from "@sentry/integrations";
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
-Vue.use(BootstrapVue)
-Vue.use(BootstrapVue)
-Vue.use(VueRouter)
+Vue.use(BootstrapVue);
+Vue.use(BootstrapVue);
+Vue.use(VueRouter);
+Vue.use(VueAnalytics);
 
-Vue.prototype.$cookie = Cookie
+Vue.prototype.$cookie = Cookie;
 // window.$translations = Vue.prototype.$translations = new Translations()
 
 axios.defaults.headers.common = {
-    'X-Requested-With': 'XMLHttpRequest',
-    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-}
+    "X-Requested-With": "XMLHttpRequest",
+    "X-CSRF-TOKEN": document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute("content")
+};
 
-Vue.prototype.$http = axios
+Vue.prototype.$http = axios;
 
 // Sentry.init({
 //     dsn: 'https://43543bff49ce47debc45b09194a4dda8@sentry.io/1426776',
 //     integrations: [new Integrations.Vue({Vue, attachProps: true})],
 // })
 
-
 const router = new VueRouter({
-    mode: 'history',
+    mode: "history",
     dir: __dirname,
-    routes: routes,
-})
+    routes: routes
+});
+
+Vue.use(VueAnalytics, {
+    id: "UA-92981271-1",
+    router
+});
 
 function IsJsonString(str) {
     try {
         JSON.parse(str);
-    }
-    catch (e) {
+    } catch (e) {
         return false;
     }
     return true;
@@ -50,73 +57,70 @@ function IsJsonString(str) {
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
-        const app = router.app
-        let user = app.user
-        let token = app.token
+        const app = router.app;
+        let user = app.user;
+        let token = app.token;
 
-        if ((user && token)) {
+        if (user && token) {
             // Procedi
             // console.log('procedi');
-            next()
-        }
-        else if (typeof user == 'undefined' || typeof token == 'undefined') {
-            let app = router.app
-            let user = app.$cookie.get('tfc-user')
-            user = JSON.parse(user) ? JSON.parse(user) : null
+            next();
+        } else if (typeof user == "undefined" || typeof token == "undefined") {
+            let app = router.app;
+            let user = app.$cookie.get("tfc-user");
+            user = JSON.parse(user) ? JSON.parse(user) : null;
 
-            let auth = app.$http.defaults.headers.common.hasOwnProperty('Authorization')
+            let auth = app.$http.defaults.headers.common.hasOwnProperty(
+                "Authorization"
+            );
 
             if (user && !auth) {
-                let data = new FormData()
-                data.append('id', user.id)
-                data.append('email', user.email)
-                data.append('role_id', user.role_id)
-                app.$http.post('/api/v2/get-token', data).then(response => {
+                let data = new FormData();
+                data.append("id", user.id);
+                data.append("email", user.email);
+                data.append("role_id", user.role_id);
+                app.$http.post("/api/v2/get-token", data).then(response => {
                     if (response.data.success) {
-                        app.user = response.data.user
-                        app.token = response.data.token
-                        app.$cookie.set('tfc-logged', true)
-                        app.$cookie.set('tfc-user', JSON.stringify(app.user))
-                        app.$cookie.set('tfc-token', JSON.stringify(app.token))
-                        app.$http.defaults.headers.common.Authorization = `${app.token.token_type} ${app.token.access_token}`
+                        app.user = response.data.user;
+                        app.token = response.data.token;
+                        app.$cookie.set("tfc-logged", true);
+                        app.$cookie.set("tfc-user", JSON.stringify(app.user));
+                        app.$cookie.set("tfc-token", JSON.stringify(app.token));
+                        app.$http.defaults.headers.common.Authorization = `${app.token.token_type} ${app.token.access_token}`;
 
                         // console.log('procedi dopo riautenticazione');
-                        next()
-                    }
-                    else {
-                        app.$cookie.destroy('tfc-logged')
-                        app.$cookie.destroy('tfc-user')
-                        app.$cookie.destroy('tfc-token')
-                        delete app.$http.defaults.headers.common.Authorization
+                        next();
+                    } else {
+                        app.$cookie.destroy("tfc-logged");
+                        app.$cookie.destroy("tfc-user");
+                        app.$cookie.destroy("tfc-token");
+                        delete app.$http.defaults.headers.common.Authorization;
 
                         // console.log('autenticazione cookies non riuscita');
                         router.push({
-                            name: 'login'
-                        })
+                            name: "login"
+                        });
                     }
-                })
-            }
-            else {
+                });
+            } else {
                 // console.log('user e headers non ci sono nei cookies ->headers', user, auth);
                 router.push({
-                    name: 'login'
-                })
-                return false
+                    name: "login"
+                });
+                return false;
             }
-        }
-        else {
+        } else {
             // console.log('user e token non esistono');
             router.push({
-                name: 'login'
-            })
-            return false
+                name: "login"
+            });
+            return false;
         }
-    }
-    else {
+    } else {
         // console.log('nessuna autorizzazione');
-        next()
+        next();
     }
-})
+});
 
 // if (process.env == 'production') {
 //     Sentry.init({
@@ -130,17 +134,17 @@ router.beforeEach((to, from, next) => {
 //     })
 // }
 
-import MainTemplate from './containers/MainTemplate.vue'
-import SessionParams from './SessionParams'
-import TranslateCmd from './TranslateCmd'
+import MainTemplate from "./containers/MainTemplate.vue";
+import SessionParams from "./SessionParams";
+import TranslateCmd from "./TranslateCmd";
 
 const home = new Vue({
     router,
     mixins: [TranslateCmd],
     components: {
-        MainTemplate,
+        MainTemplate
     },
-    data: function () {
+    data: function() {
         return {
             window: {
                 w: 0,
@@ -166,167 +170,167 @@ const home = new Vue({
             translationsLoaded: false,
             translationsCache: [],
             translations: [],
-            locale: 'it',
-            generalTexts: [],
-        }
+            locale: "it",
+            generalTexts: []
+        };
     },
     watch: {
-        session: function (session) {
-            this.checkSession(session.app_id)
+        session: function(session) {
+            this.checkSession(session.app_id);
         },
-        objectsToLoad: function (value) {
-            console.log('oggetti da caricare', value);
-            this.objectsLoaded = 0
-        },
+        objectsToLoad: function(value) {
+            console.log("oggetti da caricare", value);
+            this.objectsLoaded = 0;
+        }
         // locale: function (locale) {
         //     console.log(locale);
         // },
     },
     methods: {
-        getSize: function () {
+        getSize: function() {
             let view = {
                 w: window.innerWidth,
                 h: window.innerHeight
-            }
+            };
 
             if (view.w <= 576) {
-                this.isMobile = true
-            }
-            else {
-                this.isMobile = false
+                this.isMobile = true;
+            } else {
+                this.isMobile = false;
             }
 
-            this.window = view
+            this.window = view;
 
-            return this.window
+            return this.window;
         },
-        checkSession: function (app_id) {
-            let params = SessionParams
+        checkSession: function(app_id) {
+            let params = SessionParams;
             for (let key in params) {
                 if (params.hasOwnProperty(key) && key == app_id) {
-                    this.fixSession(params[key])
+                    this.fixSession(params[key]);
                 }
             }
         },
-        fixSession: function (params) {
-            let content = this.session.content
+        fixSession: function(params) {
+            let content = this.session.content;
             // console.log(content);
             if (content.length || content.length == 0) {
                 // https://stackoverflow.com/questions/4215737/convert-array-to-object
-                content = this.session.content.reduce((obj, cur, i) => ({
-                    ...obj,
-                    [i]: cur
-                }), {});
+                content = this.session.content.reduce(
+                    (obj, cur, i) => ({
+                        ...obj,
+                        [i]: cur
+                    }),
+                    {}
+                );
             }
             for (let i = 0; i < params.length; i++) {
                 if (!content.hasOwnProperty(params[i])) {
-                    content[params[i]] = null
+                    content[params[i]] = null;
                 }
             }
 
-            this.session.content = content
+            this.session.content = content;
         },
-        goTo: function (name, bypass = false) {
+        goTo: function(name, bypass = false) {
             if (this.$route.name != name && !bypass) {
                 this.$router.push({
                     name: name
-                })
-            }
-            else {
-                this.$router.go(this.$route.path)
+                });
+            } else {
+                this.$router.go(this.$route.path);
             }
         },
-        goToAndScroll: function (name, target) {
+        goToAndScroll: function(name, target) {
             if (this.$route.name != target) {
                 this.$router.push({
                     name: target
-                })
-                return false
+                });
+                return false;
             }
         },
-        goToWithParams: function (name, params) {
+        goToWithParams: function(name, params) {
             if (this.$route.name != name) {
                 this.$router.push({
                     name: name,
                     params: params
-                })
+                });
             }
         },
-        init: function () {
-            let user = this.$cookie.get('tfc-user')
-            user = JSON.parse(user) ? JSON.parse(user) : null
+        init: function() {
+            let user = this.$cookie.get("tfc-user");
+            user = JSON.parse(user) ? JSON.parse(user) : null;
 
             if (user) {
-                let data = new FormData()
-                data.append('id', user.id)
-                data.append('email', user.email)
-                data.append('role_id', user.role_id)
+                let data = new FormData();
+                data.append("id", user.id);
+                data.append("email", user.email);
+                data.append("role_id", user.role_id);
 
-                this.$http.post('/api/v2/get-token', data).then(response => {
+                this.$http.post("/api/v2/get-token", data).then(response => {
                     if (response.data.success) {
-                        this.user = response.data.user
-                        this.token = response.data.token
-                        this.login()
+                        this.user = response.data.user;
+                        this.token = response.data.token;
+                        this.login();
+                    } else {
+                        this.logout();
                     }
-                    else {
-                        this.logout()
-                    }
-                })
+                });
             }
         },
-        login: function () {
-            this.$cookie.set('tfc-logged', true)
-            this.$cookie.set('tfc-user', JSON.stringify(this.user))
-            this.$cookie.set('tfc-token', JSON.stringify(this.token))
-            this.$http.defaults.headers.common.Authorization = `${this.token.token_type} ${this.token.access_token}`
+        login: function() {
+            this.$cookie.set("tfc-logged", true);
+            this.$cookie.set("tfc-user", JSON.stringify(this.user));
+            this.$cookie.set("tfc-token", JSON.stringify(this.token));
+            this.$http.defaults.headers.common.Authorization = `${this.token.token_type} ${this.token.access_token}`;
         },
-        logout: function () {
-            this.user = null
-            this.token = null
+        logout: function() {
+            this.user = null;
+            this.token = null;
             // this.$cookie.destroy('tfc-logged')
             // this.$cookie.destroy('tfc-user')
             // this.$cookie.destroy('tfc-token')
 
-            delete this.$http.defaults.headers.common.Authorization
-            this.goTo('login')
+            delete this.$http.defaults.headers.common.Authorization;
+            this.goTo("login");
         },
-        showMessage: function () {
+        showMessage: function() {
             return new Promise(resolve => {
-                this.fullMessageMaster.eventCallback('onComplete', () => {
-                    resolve()
-                })
-                this.fullMessageMaster.progress(0).play()
-            })
+                this.fullMessageMaster.eventCallback("onComplete", () => {
+                    resolve();
+                });
+                this.fullMessageMaster.progress(0).play();
+            });
         },
-        setLocale: function () {
-            this.translations = this.translationsCache[this.locale]
+        setLocale: function() {
+            this.translations = this.translationsCache[this.locale];
             // console.log(this.translations);
         },
-        getTranslation: function () {
+        getTranslation: function() {
             // console.log('loading translations');
-            this.$http.get('/api/v2/translate').then(response => {
+            this.$http.get("/api/v2/translate").then(response => {
                 if (response.data.success) {
-                    this.translationsLoaded = true
-                    this.translationsCache = response.data.translations
-                    this.generalTexts = response.data.general_texts
+                    this.translationsLoaded = true;
+                    this.translationsCache = response.data.translations;
+                    this.generalTexts = response.data.general_texts;
                     // this.translations = new Translations(response.data.translations)
                     // this.translations = this.translationsCache
                     // console.log(response.data);
-                    this.setLocale()
+                    this.setLocale();
                 }
-            })
-        },
+            });
+        }
     },
-    created: function () {
-        this.getTranslation()
-        this.init()
+    created: function() {
+        this.getTranslation();
+        this.init();
     },
-    mounted: function () {
-        this.getSize()
-        window.addEventListener('resize', () => {
-            this.getSize()
-        })
-    },
+    mounted: function() {
+        this.getSize();
+        window.addEventListener("resize", () => {
+            this.getSize();
+        });
+    }
     // render: h => h(home)
     // })
-}).$mount('#home')
+}).$mount("#home");

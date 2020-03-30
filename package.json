@@ -82,6 +82,7 @@
         "v-select2-component": "^0.4.1",
         "video.js": "^6.10.1",
         "vjs-video": "^0.1.11",
+        "vue-analytics": "^5.22.1",
         "vue-draggable-resizable": "^1.7.1",
         "vue-notifications": "^1.0.0",
         "vue-select2": "^0.2.6",
