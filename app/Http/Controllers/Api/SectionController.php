@@ -95,7 +95,7 @@ class SectionController extends Controller
         $sessions = $user->sessions()->where([
             ['app_id', $app->id],
             ['is_empty', '!=', 1],
-            ])->get();
+        ])->get();
 
         if ($app) {
             return [
@@ -171,21 +171,26 @@ class SectionController extends Controller
         $obj = $this->decode_obj($share->content);
 
         switch ($share->app_id) {
-            // Film Specific - Framing - App 1 - Frame Composer
+                // Film Specific - Framing - App 1 - Frame Composer
             case '1':
                 $item['media_type'] = 'image';
                 $item['featured_media'] = $obj->img;
                 $item['notes'] = $obj->notes;
                 break;
 
-            // Film Specific - Framing - App 2 - Frame Crop
+                // Film Specific - Framing - App 2 - Frame Crop
             case '2':
                 $item['media_type'] = 'image';
-                $item['featured_media'] = $obj->frames[0]->img;
-                $item['notes'] = $obj->frames[0]->description;
+                if ($obj->frames && $obj->frames[0] && isset($obj->frames[0]->img)) {
+                    $item['featured_media'] = $obj->frames[0]->img;
+                    $item['notes'] = $obj->frames[0]->description;
+                } else {
+                    $item['featured_media'] = 'no-img';
+                    $item['notes'] = null;
+                }
                 break;
 
-            // Film Specific - Framing - App 3 - types-of-images
+                // Film Specific - Framing - App 3 - types-of-images
             case '3':
                 // dd(gettype($obj));
                 $item['media_type'] = 'image';
@@ -196,95 +201,95 @@ class SectionController extends Controller
 
             case '4':
                 $item['media_type'] = 'video';
-                $item['featured_media'] = '/'.$obj->video;
+                $item['featured_media'] = '/' . $obj->video;
                 $item['notes'] = $obj->notes;
                 break;
 
-            // Film Specific - Editing - App 5 - Offscreen
+                // Film Specific - Editing - App 5 - Offscreen
             case '5':
                 $item['media_type'] = 'video';
                 $item['featured_media'] = $obj->video;
                 $item['notes'] = $obj->notes;
                 break;
 
-            // Film Specific - Editing - App 6 - Attractions
+                // Film Specific - Editing - App 6 - Attractions
             case '6':
                 $item['media_type'] = 'image';
                 $item['featured_media'] = $obj->videoL;
                 $item['notes'] = $obj->notes;
                 break;
 
-            // Film Specific - Sound - App 7 - What's going on
+                // Film Specific - Sound - App 7 - What's going on
             case '7':
                 $item['media_type'] = 'audio';
                 $item['featured_media'] = $obj->audio;
                 $item['notes'] = $obj->notes;
                 break;
 
-            // Film Specific - Sound - App 8 - Sound Atmosphere
+                // Film Specific - Sound - App 8 - Sound Atmosphere
             case '8':
                 $item['media_type'] = 'video';
                 $item['featured_media'] = $obj->video;
                 $item['notes'] = $obj->notes;
                 break;
 
-            // Film Specific - Sound - App 9 - Soundscapes
+                // Film Specific - Sound - App 9 - Soundscapes
             case '9':
                 $item['media_type'] = 'video';
                 $item['featured_media'] = Storage::disk('local')->url($obj->exp);
                 $item['notes'] = $obj->notes;
                 break;
 
-            // Creative Studio - Warm up - App 10 - Active Offscreen
+                // Creative Studio - Warm up - App 10 - Active Offscreen
             case '10':
                 $item['media_type'] = 'video';
                 $item['featured_media'] = Storage::disk('local')->url($obj->videos[0]->video);
                 $item['notes'] = '';
                 break;
 
-            // Creative Studio - Warm up - App 11 - Active Parallel Action
+                // Creative Studio - Warm up - App 11 - Active Parallel Action
             case '11':
                 $item['media_type'] = 'video';
-                $item['featured_media'] = '/'.$obj->video;
+                $item['featured_media'] = '/' . $obj->video;
                 $item['notes'] = '';
                 break;
 
-            // Creative Studio - Warm up - App 12 - Sound Studio
+                // Creative Studio - Warm up - App 12 - Sound Studio
             case '12':
                 $item['media_type'] = 'video';
                 $item['featured_media'] = Storage::disk('local')->url($obj->videos[0]->video);
                 $item['notes'] = '';
                 break;
 
-            // Creative Studio - Story Telling - App 13 - Character Builder
+                // Creative Studio - Story Telling - App 13 - Character Builder
             case '13':
                 $item['media_type'] = 'image';
                 $item['featured_media'] = $obj->img;
                 $item['notes'] = $obj->notes;
                 break;
 
-            // Creative Studio - Story Telling - App 14 - Storytelling
+                // Creative Studio - Story Telling - App 14 - Storytelling
             case '14':
                 $item['media_type'] = 'text';
                 $item['featured_media'] = '';
                 $item['notes'] = $obj->notes;
                 break;
 
-            // Creative Studio - Story Telling - App 15 - Storyboard
+                // Creative Studio - Story Telling - App 15 - Storyboard
             case '15':
                 $item['media_type'] = 'image';
                 $item['featured_media'] = $obj[0]->img;
                 $item['notes'] = $obj[0]->description;
                 break;
 
-            // Creative Studio - Contest - App 16 - Minuto Lumiere
+                // Creative Studio - Contest - App 16 - Minuto Lumiere
             case '16':
                 $item['media_type'] = 'video';
                 $item['featured_media'] = Storage::disk('local')->url($obj->video->video);
                 $item['notes'] = '';
                 break;
 
-            // Creative Studio - Contest - App 16 - Make Your Own film
+                // Creative Studio - Contest - App 16 - Make Your Own film
             case '17':
                 $item['media_type'] = 'video';
                 $item['thumb'] = $obj->video->img;
