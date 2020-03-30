@@ -198,8 +198,6 @@ class ClipsController extends Controller
 
             $extension = $file->getClientOriginalExtension();
 
-
-
             if ($extension == 'srt') {
                 $filename = uniqid() . '.srt';
 
