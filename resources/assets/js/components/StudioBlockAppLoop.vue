@@ -1,53 +1,55 @@
-<template>
-<div>
-    <li
-        class="menu-item"
-        v-for="app in sortedApps"
-        @click="goToApp(app.slug)"
-    >
-        {{ app | translate('title', $root.locale) }}
-    </li>
-</div>
+<template lang="html">
+    <div>
+        <li
+            class="menu-item"
+            v-for="app in sortedApps"
+            @click="goToApp(app.slug)"
+        >
+            {{ app | translate("title", $root.locale) }}
+        </li>
+    </div>
 </template>
 
 <script>
-import TranslationFilter from '../TranslationFilter'
+import TranslationFilter from "../TranslationFilter";
 
 export default {
-    name: 'StudioBlockAppLoop',
+    name: "StudioBlockAppLoop",
     mixins: [TranslationFilter],
     props: {
         apps: {
             type: Array,
-            default: function () {
-                return []
-            },
-        },
+            default: function() {
+                return [];
+            }
+        }
     },
     computed: {
-        sortedApps: function () {
+        sortedApps: function() {
             if (this.apps.length > 0) {
-                return this.apps.sort((a, b) => {
-                    return a.order - b.order
-                })
+                return this.apps
+                    .filter(app => app.active == 1)
+                    .sort((a, b) => {
+                        return a.order - b.order;
+                    });
             }
 
-            return []
-        },
+            return [];
+        }
     },
     methods: {
-        goToApp: function (slug) {
-            this.$root.goToWithParams('app-home', {
+        goToApp: function(slug) {
+            this.$root.goToWithParams("app-home", {
                 app: slug
-            })
-        },
+            });
+        }
     },
-    mounted: function () {},
-}
+    mounted: function() {}
+};
 </script>
 
 <style lang="scss" scoped>
-@import '~styles/shared';
+@import "~styles/shared";
 
 .menu-item {
     cursor: pointer;
