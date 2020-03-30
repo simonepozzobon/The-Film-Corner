@@ -7,6 +7,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import routes from "./routes";
 import VueAnalytics from "vue-analytics";
+import VueGtm from "vue-gtm";
 
 import * as Sentry from "@sentry/browser";
 import * as Integrations from "@sentry/integrations";
@@ -39,6 +40,13 @@ const router = new VueRouter({
     mode: "history",
     dir: __dirname,
     routes: routes
+});
+
+Vue.use(VueGtm, {
+    id: "UA-92981271-1",
+    enabled: true,
+    loadscript: true,
+    vueRouter: router
 });
 
 Vue.use(VueAnalytics, {
@@ -326,6 +334,8 @@ const home = new Vue({
         this.init();
     },
     mounted: function() {
+        console.log("tag manager", this.$gtm.enabled());
+
         this.getSize();
         window.addEventListener("resize", () => {
             this.getSize();

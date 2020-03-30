@@ -84,6 +84,7 @@
         "vjs-video": "^0.1.11",
         "vue-analytics": "^5.22.1",
         "vue-draggable-resizable": "^1.7.1",
+        "vue-gtm": "^2.2.0",
         "vue-notifications": "^1.0.0",
         "vue-select2": "^0.2.6",
         "vue-slider-component": "^3.0.31",
