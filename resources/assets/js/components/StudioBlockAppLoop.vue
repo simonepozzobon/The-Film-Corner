@@ -1,13 +1,14 @@
 <template lang="html">
-    <div>
+    <ul class="block-menu">
         <li
             class="menu-item"
+            :class="itemClass"
             v-for="app in sortedApps"
             @click="goToApp(app.slug)"
         >
             {{ app | translate("title", $root.locale) }}
         </li>
-    </div>
+    </ul>
 </template>
 
 <script>
@@ -22,6 +23,10 @@ export default {
             default: function() {
                 return [];
             }
+        },
+        itemClass: {
+            type: String,
+            default: null
         }
     },
     computed: {
@@ -48,8 +53,15 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "~styles/shared";
+.block-menu {
+    text-align: center;
+    list-style-type: none;
+    padding-inline-start: 0;
+    color: $black;
+    font-size: $font-size-base;
+}
 
 .menu-item {
     cursor: pointer;
