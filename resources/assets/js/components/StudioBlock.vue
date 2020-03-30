@@ -111,9 +111,11 @@ export default {
     methods: {
         goToPavilion: function(event, slug) {
             event.preventDefault();
-            this.$root.goToWithParams("pavilion-home", {
-                pavilion: slug
-            });
+            if (slug != "cultural-approach") {
+                this.$root.goToWithParams("pavilion-home", {
+                    pavilion: slug
+                });
+            }
         },
         goToCat: function(slug) {
             this.$root.goToWithParams("cat-home", {
