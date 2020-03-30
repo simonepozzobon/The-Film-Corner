@@ -43,7 +43,7 @@ const router = new VueRouter({
 });
 
 Vue.use(VueGtm, {
-    id: "UA-92981271-1",
+    id: "GTM-W34QBGH",
     enabled: true,
     loadscript: true,
     vueRouter: router
