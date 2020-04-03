@@ -144,6 +144,10 @@ export default {
             default: function() {
                 return [];
             }
+        },
+        hasControls: {
+            type: Boolean,
+            default: true
         }
     },
     data: function() {
@@ -331,6 +335,12 @@ export default {
         if (this.isMp4) {
             this.playerOptions = Object.assign(this.playerOptions, {
                 partialRender: true
+            });
+        }
+
+        if (this.hasControls == false) {
+            this.playersOptions = Object.assign(this.playerOptions, {
+                controls: false
             });
         }
 
