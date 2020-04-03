@@ -1,280 +1,290 @@
 <template>
-<div class="ua-video-preview">
-    <div class="ua-video-preview__title">
-        <ui-title
-            :title="$root.getCmd('preview')"
-            color="white"
-            :has-padding="false"
-            ref="title"
-        />
-    </div>
-
-    <div class="ua-video-preview__container">
-        <div
-            class="ua-video-preview__loader"
-            ref="loader"
-        >
-            <div
-                class="spinner-border"
-                :class="loaderColorClass"
-                role="status"
-            >
-                <span class="sr-only">{{ this.$root.getCmd('loading') }}...</span>
-            </div>
-        </div>
-
-        <div
-            class="ua-video-preview__player"
-            ref="playerContainer"
-        >
-            <video-player
-                class="video-player-box"
-                ref="player"
-                :options="playerOptions"
-                :playsinline="true"
-                @timeupdate="onPlayerTimeUpdate($event)"
-                @ready="ready"
+    <div class="ua-video-preview">
+        <div class="ua-video-preview__title">
+            <ui-title
+                :title="$root.getCmd('preview')"
+                color="white"
+                :has-padding="false"
+                ref="title"
             />
         </div>
 
-        <ui-app-video-controls
-            class="ua-video-preview__controls"
-            @play="play"
-            @pause="pause"
-            @stop="stop"
-            @backward="backward"
-            @forward="forward"
-            @update-size="setControlsHeight"
-        />
+        <div class="ua-video-preview__container">
+            <div class="ua-video-preview__loader" ref="loader">
+                <div
+                    class="spinner-border"
+                    :class="loaderColorClass"
+                    role="status"
+                >
+                    <span class="sr-only">
+                        {{ this.$root.getCmd("loading") }}...
+                    </span>
+                </div>
+            </div>
+
+            <div class="ua-video-preview__player" ref="playerContainer">
+                <video-player
+                    class="video-player-box"
+                    ref="player"
+                    :options="playerOptions"
+                    :playsinline="true"
+                    @timeupdate="onPlayerTimeUpdate($event)"
+                    @ready="ready"
+                />
+            </div>
+
+            <ui-app-video-controls
+                class="ua-video-preview__controls"
+                @play="play"
+                @pause="pause"
+                @stop="stop"
+                @backward="backward"
+                @forward="forward"
+                @update-size="setControlsHeight"
+            />
+        </div>
     </div>
-</div>
 </template>
 
 <script>
-import UiAppVideoControls from './UiAppVideoControls.vue'
-import {
-    UiTitle
-}
-from '../ui'
-import 'video.js/dist/video-js.css'
-import {
-    videoPlayer
-}
-from 'vue-video-player'
-import SizeUtility from '../Sizes'
+import UiAppVideoControls from "./UiAppVideoControls.vue";
+import { UiTitle } from "../ui";
+import "video.js/dist/video-js.css";
+import { videoPlayer } from "vue-video-player";
+import SizeUtility from "../Sizes";
 
-import {
-    gsap,
-    TimelineMax,
-    TweenMax,
-}
-from 'gsap/all'
+import { gsap, TimelineMax, TweenMax } from "gsap/all";
 
 export default {
-    name: 'UiAppVideoPreview',
+    name: "UiAppVideoPreview",
     components: {
         UiAppVideoControls,
         UiTitle,
-        videoPlayer,
+        videoPlayer
     },
     props: {
         src: {
             type: String,
-            default: '/video/empty-session.mp4',
+            default: "/video/empty-session.mp4"
         },
         color: {
             type: String,
-            default: 'green'
+            default: "green"
+        },
+        hasRendering: {
+            type: Boolean,
+            default: false
         }
     },
-    data: function () {
+    data: function() {
         return {
             master: null,
             loaderVisible: false,
             playerOptions: {
-                aspectRatio: '16:9',
-                sources: [{
-                    type: 'video/mp4',
-                    src: '/video/empty-session.mp4'
-                }],
-                poster: '/video/empty-session.png',
+                aspectRatio: "16:9",
+                sources: [
+                    {
+                        type: "video/mp4",
+                        src: "/video/empty-session.mp4"
+                    }
+                ],
+                poster: "/video/empty-session.png"
             },
             playerHeight: 0,
-            controlsHeight: 0,
-        }
+            controlsHeight: 0
+        };
     },
     watch: {
-        'src': function (src) {
+        src: function(src) {
             if (src) {
-                this.playerOptions.sources[0]['src'] = src
-                this.playerOptions.poster = ''
+                this.playerOptions.sources[0]["src"] = src;
+                this.playerOptions.poster = "";
             }
         }
     },
     computed: {
-        player: function () {
-            return this.$refs.player.player
+        player: function() {
+            return this.$refs.player.player;
         },
-        loaderColorClass: function () {
-            return 'text-' + this.color
+        loaderColorClass: function() {
+            return "text-" + this.color;
         }
     },
     methods: {
-        changeSrc: function (src = null) {
+        changeSrc: function(src = null) {
             return new Promise((resolve, reject) => {
                 if (src) {
-                    this.playerOptions.sources[0]['src'] = src
-                    this.playerOptions.poster = ''
-                    this.$nextTick(resolve)
+                    this.playerOptions.sources[0]["src"] = src;
+                    this.playerOptions.poster = "";
+                    this.$nextTick(resolve);
+                } else {
+                    reject();
                 }
-                else {
-                    reject()
-                }
-            })
+            });
         },
-        onPlayerTimeUpdate: function (player) {
-            let time = player.currentTime()
+        onPlayerTimeUpdate: function(player) {
+            let time = player.currentTime();
             console.log(time);
-            this.$emit('on-update-player', time)
+            this.$emit("on-update-player", time);
         },
-        play: function () {
-            this.player.play()
+        play: function() {
+            if (this.hasRendering == true) {
+                this.$emit("start-render");
+            } else {
+                this.player.play();
+            }
         },
-        pause: function () {
-            this.player.pause()
+        readyToPlay: function() {
+            console.log("ready-to play", this.player);
+            setTimeout(() => {
+                console.log(this.player);
+                this.player.play();
+            }, 500);
         },
-        stop: function () {
-            this.player.pause()
-            this.player.currentTime(0)
+        pause: function() {
+            this.player.pause();
         },
-        backward: function () {
-            this.player.pause()
-            let position = this.player.currentTime()
+        stop: function() {
+            this.player.pause();
+            this.player.currentTime(0);
+        },
+        backward: function() {
+            this.player.pause();
+            let position = this.player.currentTime();
             if (position >= 5) {
-                this.player.currentTime(position - 5)
-            }
-            else {
-                this.player.currentTime(0)
+                this.player.currentTime(position - 5);
+            } else {
+                this.player.currentTime(0);
             }
         },
-        forward: function () {
-            this.player.pause()
-            let position = this.player.currentTime()
+        forward: function() {
+            this.player.pause();
+            let position = this.player.currentTime();
         },
-        showLoader: function () {
+        showLoader: function() {
             if (!this.loaderVisible) {
-                let el = this.$refs.playerContainer
-                let loader = this.$refs.loader
+                let el = this.$refs.playerContainer;
+                let loader = this.$refs.loader;
                 if (el && loader) {
-                    this.loaderVisible = true
-
-
+                    this.loaderVisible = true;
 
                     let master = gsap.timeline({
                         paused: true,
-                        smoothChildTiming: true,
-                    })
+                        smoothChildTiming: true
+                    });
 
                     master.set([el, loader], {
                         clearProps: "all"
-                    })
-                    master.addLabel('start', '+=0')
+                    });
+                    master.addLabel("start", "+=0");
 
-                    master.fromTo(loader, {
-                        autoAlpha: 0,
-                    }, {
-                        duration: .3,
-                        autoAlpha: 1,
-                        // immediateRender: false,
-                    }, 'start')
+                    master.fromTo(
+                        loader,
+                        {
+                            autoAlpha: 0
+                        },
+                        {
+                            duration: 0.3,
+                            autoAlpha: 1
+                            // immediateRender: false,
+                        },
+                        "start"
+                    );
 
-                    master.fromTo(el, {
-                        autoAlpha: 1,
-                    }, {
-                        duration: .6,
-                        autoAlpha: 0,
-                        // immediateRender: false,
-                    }, 'start+=0.2')
+                    master.fromTo(
+                        el,
+                        {
+                            autoAlpha: 1
+                        },
+                        {
+                            duration: 0.6,
+                            autoAlpha: 0
+                            // immediateRender: false,
+                        },
+                        "start+=0.2"
+                    );
 
-
-
-                    master.eventCallback('onComplete', () => {
+                    master.eventCallback("onComplete", () => {
                         this.$nextTick(() => {
-                            master.kill()
-                        })
-                    })
-                    master.play()
+                            master.kill();
+                        });
+                    });
+                    master.play();
                 }
             }
         },
-        hideLoader: function () {
+        hideLoader: function() {
             return new Promise(resolve => {
                 if (this.loaderVisible) {
-                    let el = this.$refs.playerContainer
-                    let loader = this.$refs.loader
+                    let el = this.$refs.playerContainer;
+                    let loader = this.$refs.loader;
                     if (el && loader) {
-
                         let master = gsap.timeline({
                             paused: true,
-                            smoothChildTiming: true,
-                        })
+                            smoothChildTiming: true
+                        });
 
-                        master.addLabel('start', '+=0')
+                        master.addLabel("start", "+=0");
 
-                        master.fromTo(loader, {
-                            autoAlpha: 1,
-                        }, {
-                            duration: .3,
-                            autoAlpha: 0,
-                            // immediateRender: false,
-                        }, 'start')
+                        master.fromTo(
+                            loader,
+                            {
+                                autoAlpha: 1
+                            },
+                            {
+                                duration: 0.3,
+                                autoAlpha: 0
+                                // immediateRender: false,
+                            },
+                            "start"
+                        );
 
-                        master.fromTo(el, {
-                            autoAlpha: 0,
-                        }, {
-                            duration: .3,
-                            autoAlpha: 1,
-                            // immediateRender: false,
-                        }, 'start+=0.2')
+                        master.fromTo(
+                            el,
+                            {
+                                autoAlpha: 0
+                            },
+                            {
+                                duration: 0.3,
+                                autoAlpha: 1
+                                // immediateRender: false,
+                            },
+                            "start+=0.2"
+                        );
 
+                        master.eventCallback("onComplete", () => {
+                            this.loaderVisible = false;
+                            master.kill();
+                            resolve();
+                        });
 
-                        master.eventCallback('onComplete', () => {
-                            this.loaderVisible = false
-                            master.kill()
-                            resolve()
-                        })
-
-                        master.play()
+                        master.play();
                     }
+                } else {
+                    resolve();
                 }
-                else {
-                    resolve()
-                }
-            })
+            });
         },
-        ready: function () {
+        ready: function() {
             if (this.loaderVisible) {
                 // console.log('triggered');
                 this.hideLoader().then(() => {
-                    this.$emit('ready')
-                })
-            }
-            else {
-                this.$emit('ready')
+                    this.$emit("ready");
+                });
+            } else {
+                this.$emit("ready");
             }
         },
-        setControlsHeight: function (height) {
+        setControlsHeight: function(height) {
             // this.controlsHeight = height
             // this.$refs.playerContainer.style.bottom = `${0}px`
-        },
+        }
     },
-    mounted: function () {
-
-    }
-}
+    mounted: function() {}
+};
 </script>
 <style lang="scss">
-@import '~styles/shared';
+@import "~styles/shared";
 .ua-video-preview {
     &__controls {
         left: 0;
@@ -284,7 +294,7 @@ export default {
 </style>
 
 <style lang="scss" scoped>
-@import '~styles/shared';
+@import "~styles/shared";
 
 .ua-video-preview {
     width: 100%;
@@ -315,7 +325,7 @@ export default {
     }
 
     &__loader {
-        background-color: rgba($dark-gray, .9);
+        background-color: rgba($dark-gray, 0.9);
         position: absolute;
         display: flex;
         justify-content: center;
