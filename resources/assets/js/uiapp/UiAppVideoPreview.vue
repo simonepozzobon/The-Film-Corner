@@ -74,6 +74,10 @@ export default {
         hasRendering: {
             type: Boolean,
             default: false
+        },
+        hasControls: {
+            type: Boolean,
+            default: true
         }
     },
     data: function() {
@@ -124,7 +128,7 @@ export default {
         },
         onPlayerTimeUpdate: function(player) {
             let time = player.currentTime();
-            console.log(time);
+            // console.log(time);
             this.$emit("on-update-player", time);
         },
         play: function() {
@@ -135,9 +139,9 @@ export default {
             }
         },
         readyToPlay: function() {
-            console.log("ready-to play", this.player);
+            // console.log("ready-to play", this.player);
             setTimeout(() => {
-                console.log(this.player);
+                // console.log(this.player);
                 this.player.play();
             }, 500);
         },
@@ -278,6 +282,13 @@ export default {
         setControlsHeight: function(height) {
             // this.controlsHeight = height
             // this.$refs.playerContainer.style.bottom = `${0}px`
+        }
+    },
+    created: function() {
+        if (this.hasControls == false) {
+            this.playersOptions = Object.assign(this.playerOptions, {
+                controls: false
+            });
         }
     },
     mounted: function() {}

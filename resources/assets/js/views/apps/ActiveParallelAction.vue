@@ -6,6 +6,7 @@
                 :src="currentExport"
                 :color="color"
                 :has-rendering="true"
+                :has-controls="false"
                 @start-render="updateEditor"
                 @on-update-player="onUpdatePlayer"
                 @ready="ready"
@@ -26,9 +27,10 @@
         <template>
             <ui-app-timeline
                 :timelines="timelines"
-                :playhead-position="playheadPosition"
+                :playhead-position.sync="playheadPosition"
                 :playhead-height="playheadHeight"
                 :color="color"
+                @on-drag-master="onDragMaster"
                 @delete-track="onDeleteTrack"
                 @duplicate-track="onDuplicate"
                 @on-drag="onDrag"
@@ -183,6 +185,10 @@ export default {
         onDrag: function(obj) {
             this.timelines[obj.idx]["start"] = obj.start;
             this.timelines = this.timelines.slice();
+        },
+        onDragMaster: function(time) {
+            console.log(time);
+            this.$refs.preview.player.currentTime(time);
         },
         onResize: function(obj) {
             this.timelines[obj.idx]["start"] = obj.start;

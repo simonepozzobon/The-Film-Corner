@@ -5,6 +5,7 @@
                 ref="preview"
                 :src="currentExport"
                 :has-rendering="true"
+                :has-controls="false"
                 @start-render="updateEditor"
                 @on-update-player="onUpdatePlayer"
                 @ready="ready"
