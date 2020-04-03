@@ -261,7 +261,11 @@ class SectionController extends Controller
                 // Creative Studio - Warm up - App 12 - Sound Studio
             case '12':
                 $item['media_type'] = 'video';
-                $item['featured_media'] = Storage::disk('local')->url($obj->videos[0]->video);
+                if ($obj->videos && $obj->videos[0] && isset($obj->videos[0]->video)) {
+                    $item['featured_media'] = Storage::disk('local')->url($obj->videos[0]->video);
+                } else {
+                    $item['featured_media'] = 'no-video';
+                }
                 $item['notes'] = '';
                 break;
 
