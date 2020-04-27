@@ -1,53 +1,67 @@
-<template>
-<div>
-    <li
-        class="menu-item"
-        v-for="app in sortedApps"
-        @click="goToApp(app.slug)"
-    >
-        {{ app | translate('title', $root.locale) }}
-    </li>
-</div>
+<template lang="html">
+    <ul class="block-menu">
+        <li
+            class="menu-item"
+            :class="itemClass"
+            v-for="app in sortedApps"
+            @click="goToApp(app.slug)"
+        >
+            {{ app | translate("title", $root.locale) }}
+        </li>
+    </ul>
 </template>
 
 <script>
-import TranslationFilter from '../TranslationFilter'
+import TranslationFilter from "../TranslationFilter";
 
 export default {
-    name: 'StudioBlockAppLoop',
+    name: "StudioBlockAppLoop",
     mixins: [TranslationFilter],
     props: {
         apps: {
             type: Array,
-            default: function () {
-                return []
-            },
+            default: function() {
+                return [];
+            }
         },
+        itemClass: {
+            type: String,
+            default: null
+        }
     },
     computed: {
-        sortedApps: function () {
+        sortedApps: function() {
             if (this.apps.length > 0) {
-                return this.apps.sort((a, b) => {
-                    return a.order - b.order
-                })
+                return this.apps
+                    .filter(app => app.active == 1)
+                    .sort((a, b) => {
+                        return a.order - b.order;
+                    });
             }
 
-            return []
-        },
+            return [];
+        }
     },
     methods: {
-        goToApp: function (slug) {
-            this.$root.goToWithParams('app-home', {
+        goToApp: function(slug) {
+            this.$root.goToWithParams("app-home", {
                 app: slug
-            })
-        },
+            });
+        }
     },
-    mounted: function () {},
-}
+    mounted: function() {}
+};
 </script>
 
-<style lang="scss" scoped>
-@import '~styles/shared';
+<style lang="scss">
+@import "~styles/shared";
+.block-menu {
+    text-align: center;
+    list-style-type: none;
+    padding-inline-start: 0;
+    color: $black;
+    font-size: $font-size-base;
+}
 
 .menu-item {
     cursor: pointer;
