@@ -265,7 +265,7 @@ export default {
                 start: currentTime,
                 end: endTime,
                 loop: false,
-                color: "#f18b8b"
+                color: "rgba(241, 139, 139, 0.5)"
             };
 
             this.bookmarks.push(newRegion);
