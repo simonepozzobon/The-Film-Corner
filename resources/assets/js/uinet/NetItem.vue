@@ -1,110 +1,93 @@
 <template>
-<ui-block
-    class="net-item"
-    :class="colorClass"
-    :size="4"
-    :full-height="true"
-    @mouseover.native="showHover"
-    @mouseleave.native="hideHover"
->
-    <div
-        class="net-item__preview"
-        @click="$root.goToWithParams('network-single', {id: idx})"
+    <ui-block
+        class="net-item"
+        :class="colorClass"
+        :size="4"
+        :full-height="true"
+        @mouseover.native="showHover"
+        @mouseleave.native="hideHover"
     >
-
         <div
-            class="net-item__overlay"
-            ref="overlay"
+            class="net-item__preview"
+            @click="$root.goToWithParams('network-single', { id: idx })"
         >
-        </div>
+            <div class="net-item__overlay" ref="overlay"></div>
 
-        <play
-            v-if="hasPlayButton"
-            ref="play"
-            class="net-item__play-icon"
-            color="white"
-            width="48px"
-            :has-shadows="true"
-        />
+            <play
+                v-if="hasPlayButton"
+                ref="play"
+                class="net-item__play-icon"
+                color="white"
+                width="48px"
+                :has-shadows="true"
+            />
 
-        <img
-            ref="image"
-            :src="preview"
-            :alt="title"
-            class="net-item__image"
-        />
-    </div>
-    <div class="net-item__details">
-        <ui-title
-            :title="title"
-            :color="titleColor"
-            align="center"
-            :has-margin="false"
-            :hoverable="true"
-            @click.native="$root.goToWithParams('network-single', {id: idx})"
-        />
-        <div class="net-item__category">
-            {{ category }}
+            <img
+                ref="image"
+                :src="preview"
+                :alt="title"
+                class="net-item__image"
+            />
         </div>
-        <div class="net-item__app">
-            {{ appName }}
+        <div class="net-item__details">
+            <ui-title
+                :title="title"
+                color="dark"
+                align="center"
+                :has-margin="false"
+                :hoverable="true"
+                @click.native="
+                    $root.goToWithParams('network-single', { id: idx })
+                "
+            />
+            <div class="net-item__category">
+                {{ category }}
+            </div>
+            <div class="net-item__app">
+                {{ appName }}
+            </div>
+            <net-interactions
+                class="net-item__interactions"
+                :item-id="idx"
+                color="dark"
+                :comments="comments"
+                :likes.sync="likesCache"
+                :views="views"
+            />
         </div>
-        <net-interactions
-            class="net-item__interactions"
-            :item-id="idx"
-            :color="titleColor"
-            :comments="comments"
-            :likes.sync="likesCache"
-            :views="views"
-        />
-    </div>
-</ui-block>
+    </ui-block>
 </template>
 
 <script>
-import {
-    UiBlock,
-    UiTitle
-}
-from '../ui'
-import {
-    Play
-}
-from '../icons'
-import NetInteractions from './NetInteractions.vue'
+import { UiBlock, UiTitle } from "../ui";
+import { Play } from "../icons";
+import NetInteractions from "./NetInteractions.vue";
 
-import {
-    TweenMax,
-    TimelineMax,
-    Power4
-}
-from 'gsap/all'
+import { TweenMax, TimelineMax, Power4 } from "gsap/all";
 
-const plugins = [
-    Power4
-]
+const plugins = [Power4];
 
 export default {
-    name: 'NetItem',
+    name: "NetItem",
     components: {
         NetInteractions,
         Play,
         UiBlock,
-        UiTitle,
+        UiTitle
     },
     props: {
         idx: {
             type: Number,
             default: null,
-            required: true,
+            required: true
         },
         color: {
             type: String,
-            default: 'green'
+            default: "green"
         },
         previewType: {
             type: String,
-            default: 'image'
+            default: "image"
         },
         previewSrc: {
             type: String,
@@ -112,19 +95,19 @@ export default {
         },
         title: {
             type: String,
-            default: 'Titolo'
+            default: "Titolo"
         },
         category: {
             type: String,
-            default: 'Categoria',
+            default: "Categoria"
         },
         categorySlug: {
             type: String,
-            default: null,
+            default: null
         },
         appName: {
             type: String,
-            default: 'AppName'
+            default: "AppName"
         },
         appSlug: {
             type: String,
@@ -132,120 +115,147 @@ export default {
         },
         views: {
             type: Number,
-            default: 0,
+            default: 0
         },
         likes: {
             type: Number,
-            default: 0,
+            default: 0
         },
         comments: {
             type: Number,
-            default: 0,
+            default: 0
         }
     },
-    data: function () {
+    data: function() {
         return {
             master: null,
             preview: null,
             hasPlayButton: true,
             likesCache: 0,
-        }
+            colorClass: "net-item--green"
+        };
     },
     watch: {
-        previewSrc: function (src) {
-            this.setImage()
+        previewSrc: function(src) {
+            this.setImage();
         },
-        likes: function (likes) {
-            this.setLikes()
-        },
-    },
-    computed: {
-        titleColor: function () {
-            if (this.color == 'yellow') {
-                return 'dark'
-            }
-            return 'white'
-        },
-        colorClass: function () {
-            return 'net-item--' + this.color
+        likes: function(likes) {
+            this.setLikes();
         }
     },
+    computed: {
+        // titleColor: function() {
+        //     // if (this.color == "yellow") {
+        //     //     return "dark";
+        //     // }
+        //     // return "white";
+        // },
+        // colorClass: function() {
+        //     return "net-item--" + this.color;
+        // }
+    },
     methods: {
-        init: function () {
-            if (this.previewType == 'audio' || this.previewType == 'video') {
-                this.hasPlayButton = true
+        init: function() {
+            if (this.previewType == "audio" || this.previewType == "video") {
+                this.hasPlayButton = true;
+            } else {
+                this.hasPlayButton = false;
             }
-            else {
-                this.hasPlayButton = false
-            }
-            this.$nextTick(this.initAnim)
-
+            this.$nextTick(this.initAnim);
         },
-        initAnim: function () {
-            let el = this.$refs.overlay
+        initAnim: function() {
+            let el = this.$refs.overlay;
 
             this.master = new TimelineMax({
                 paused: true,
-                yoyo: true,
-            })
+                yoyo: true
+            });
 
-            this.master.fromTo(el, .3, {
-                autoAlpha: 0,
-                ease: Power4.easeInOut,
-            }, {
-                autoAlpha: 1,
-                ease: Power4.easeInOut,
-            }, 0)
+            this.master.fromTo(
+                el,
+                0.3,
+                {
+                    autoAlpha: 0,
+                    ease: Power4.easeInOut
+                },
+                {
+                    autoAlpha: 1,
+                    ease: Power4.easeInOut
+                },
+                0
+            );
 
             if (this.hasPlayButton) {
-                let play = this.$refs.play.$el
-                this.master.fromTo(play, .3, {
-                    autoAlpha: 0,
-                    ease: Power4.easeInOut,
-                }, {
-                    autoAlpha: 1,
-                    ease: Power4.easeInOut,
-                }, 0)
+                let play = this.$refs.play.$el;
+                this.master.fromTo(
+                    play,
+                    0.3,
+                    {
+                        autoAlpha: 0,
+                        ease: Power4.easeInOut
+                    },
+                    {
+                        autoAlpha: 1,
+                        ease: Power4.easeInOut
+                    },
+                    0
+                );
             }
 
-            this.master.progress(1).progress(0)
+            this.master.progress(1).progress(0);
         },
-        setImage: function () {
-            this.$refs.image.onerror = () => {
-                this.preview = '/img/test-app/1.png'
+        setImage: function() {
+            switch (this.previewType) {
+                case "video":
+                    this.preview = require("../../images/network_cover_video.jpg");
+                    this.colorClass = `net-item--red`;
+                    break;
+
+                case "audio":
+                    this.preview = require("../../images/network_cover_audio.jpg");
+                    this.colorClass = `net-item--yellow`;
+                    break;
+
+                case "text":
+                    this.preview = require("../../images/network_cover_testo.jpg");
+                    this.colorClass = `net-item--green`;
+                    break;
+
+                default:
+                    this.preview = require("../../images/network_cover_img.jpg");
+                    this.colorClass = `net-item--orange`;
+                    break;
             }
 
-            if (this.previewSrc == 'undefined' || !this.previewSrc) {
-                this.preview = '/img/test-app/1.png'
-            }
-            else {
-                this.preview = this.previewSrc
-            }
+            // if (this.previewSrc == 'undefined' || !this.previewSrc) {
+            //     this.preview = '/img/test-app/1.png'
+            // }
+            // else {
+            //     this.preview = this.previewSrc
+            // }
         },
-        showHover: function () {
-            if (this.master)
-                this.master.play()
+        showHover: function() {
+            if (this.master) this.master.play();
         },
-        hideHover: function () {
-            if (this.master)
-                this.master.reverse()
+        hideHover: function() {
+            if (this.master) this.master.reverse();
         },
-        setLikes: function () {
-            this.likesCache = this.likes
+        setLikes: function() {
+            this.likesCache = this.likes;
         }
     },
-    created: function () {
-        this.setLikes()
+    created: function() {
+        this.setLikes();
     },
-    mounted: function () {
-        this.init()
-        this.setImage()
-    },
-}
+    mounted: function() {
+        this.init();
+        this.setImage();
+    }
+};
 </script>
 
 <style lang="scss" scoped>
-@import '~styles/shared';
+@import "~styles/shared";
 
 .net-item {
     margin-bottom: $spacer * 2;
@@ -289,7 +299,7 @@ export default {
 
     &__app,
     &__category {
-        color: $white;
+        // color: $black;
         text-align: center;
     }
 
@@ -299,7 +309,17 @@ export default {
         }
 
         &__overlay {
-            background-color: rgba($green, .3);
+            background-color: rgba($green, 0.3);
+        }
+    }
+
+    &--orange & {
+        &__details {
+            background-color: $orange;
+        }
+
+        &__overlay {
+            background-color: rgba($orange, 0.3);
         }
     }
 
@@ -309,12 +329,7 @@ export default {
         }
 
         &__overlay {
-            background-color: rgba($yellow, .3);
-        }
-
-        &__app,
-        &__category {
-            color: $black;
+            background-color: rgba($yellow, 0.3);
         }
     }
 
@@ -324,7 +339,7 @@ export default {
         }
 
         &__overlay {
-            background-color: rgba($red, .3);
+            background-color: rgba($red, 0.3);
         }
     }
 }
