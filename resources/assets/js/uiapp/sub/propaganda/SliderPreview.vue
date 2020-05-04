@@ -1,83 +1,79 @@
 <template>
-<div class="cp-preview">
-    <div class="cp-preview__title">
-        {{ movie | translate('title', $root.locale) }}
+    <div class="cp-preview">
+        <div class="cp-preview__title">
+            {{ movie | translate("title", $root.locale) }}
+        </div>
+        <div class="cp-preview__thumb">
+            <ui-image :src="movie.thumb" :has-margin="false" />
+            <!-- <img :src="movie.thumb" class="img-fluid" /> -->
+        </div>
+        <div class="cp-preview__modal">
+            <ui-button
+                :title="$root.getCmd('read_more')"
+                color="yellow"
+                align="center"
+                size="sm"
+                :has-margin="false"
+                :has-container="false"
+                @click="openModal"
+            />
+            <ui-button
+                :title="$root.getCmd('open')"
+                color="yellow"
+                align="center"
+                size="sm"
+                :has-margin="false"
+                :has-container="false"
+                @click="changeVideo"
+            />
+        </div>
     </div>
-    <div class="cp-preview__thumb">
-        <ui-image
-            :src="movie.thumb"
-            :has-margin="false"
-        />
-    </div>
-    <div class="cp-preview__modal">
-        <ui-button
-            :title="$root.getCmd('read_more')"
-            color="yellow"
-            align="center"
-            size="sm"
-            :has-margin="false"
-            :has-container="false"
-            @click="openModal"
-        />
-        <ui-button
-            :title="$root.getCmd('open')"
-            color="yellow"
-            align="center"
-            size="sm"
-            :has-margin="false"
-            :has-container="false"
-            @click="changeVideo"
-        />
-    </div>
-</div>
 </template>
 
 <script>
-import {
-    UiImage,
-    UiButton,
-}
-from '../../../ui'
+import { UiImage, UiButton } from "../../../ui";
 
-import TranslationFilter from '../../../TranslationFilter'
+import TranslationFilter from "../../../TranslationFilter";
 
 export default {
-    name: 'SliderPreview',
+    name: "SliderPreview",
     mixins: [TranslationFilter],
     components: {
         UiImage,
-        UiButton,
+        UiButton
     },
     props: {
         movie: {
             type: Object,
-            default: function () {
-                return {}
-            },
-        },
-    },
-    methods: {
-        openModal: function () {
-            this.$emit('open-modal', this.movie)
-        },
-        changeVideo: function () {
-            console.log('changeVideo');
-            this.$emit('change-video', this.movie)
+            default: function() {
+                return {};
+            }
         }
     },
-}
+    methods: {
+        openModal: function() {
+            this.$emit("open-modal", this.movie);
+        },
+        changeVideo: function() {
+            console.log("changeVideo");
+            this.$emit("change-video", this.movie);
+        }
+    }
+};
 </script>
 
 <style lang="scss">
-@import '~styles/shared';
+@import "~styles/shared";
 
 .cp-preview {
-    background-color: rgba(0,0,0, 0.1);
+    background-color: rgba($black, 0.1);
+    border: 1px solid rgba($black, 0.5);
     padding: $spacer;
+    height: 100%;
     @include border-radius(5px);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 
     &__title {
