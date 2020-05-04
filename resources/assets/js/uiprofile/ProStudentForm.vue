@@ -5,46 +5,50 @@
             align="left"
             color="black"
             type="text"
-            @changed="changed"/>
+            @changed="changed"
+        />
         <ui-form-group
             name="Surname"
             align="left"
             color="black"
             type="text"
-            @changed="changed"/>
+            @changed="changed"
+        />
         <ui-form-group
             name="Email"
             align="left"
             color="black"
             type="email"
-            @changed="changed"/>
+            @changed="changed"
+        />
         <ui-form-group
             name="Password"
             align="left"
             color="black"
             type="password"
-            @changed="changed"/>
+            @changed="changed"
+        />
     </div>
 </template>
 
 <script>
-import { UiFormGroup } from '../ui'
+import { UiFormGroup } from "../ui";
 
 export default {
-    name: 'ProStudentForm',
+    name: "ProStudentForm",
     components: {
-        UiFormGroup,
+        UiFormGroup
     },
     methods: {
         changed: function(value, name) {
-            this.$emit('changed', value, name)
-        },
-    },
-}
+            this.$emit("changed", value, name);
+        }
+    }
+};
 </script>
 
 <style lang="scss" scoped>
-@import '~styles/shared';
+@import "~styles/shared";
 
 .pro-student-form {
     margin-top: $spacer * 1.618;
