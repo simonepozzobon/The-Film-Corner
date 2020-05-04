@@ -26,7 +26,7 @@
                 </li>
                 <li
                     class="block-menu__menu-item"
-                    @click="goToPropaganda(studio.slug)"
+                    @click="goToPropagandaChallenges(studio.slug)"
                 >
                     Go to the challenges
                 </li>
@@ -129,6 +129,9 @@ export default {
         },
         goToPropaganda: function(slug) {
             this.$root.goTo("propaganda-intro");
+        },
+        goToPropagandaChallenges: function(slug) {
+            this.$root.goTo("propaganda-challenges");
         }
     }
 };
