@@ -258,14 +258,14 @@ export default {
             this.$refs.player.pause();
             let audioPlayer = this.$refs.audio.player;
             let currentTime = audioPlayer.getCurrentTime();
-            let endTime = currentTime + 0.1;
+            let endTime = currentTime + 0.5;
 
             let newRegion = {
                 uuid: this.uniqid(),
                 start: currentTime,
                 end: endTime,
                 loop: false,
-                color: "hsla(100, 100%, 30%, 1)"
+                color: "#f18b8b"
             };
 
             this.bookmarks.push(newRegion);
