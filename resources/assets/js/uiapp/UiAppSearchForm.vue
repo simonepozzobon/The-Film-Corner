@@ -2,11 +2,18 @@
     <div class="ua-search-form">
         <ui-row>
             <ui-block :size="6" :has-container="false">
-                <text-input
+                <!-- <text-input
                     :title="$root.getCmd('title')"
                     name="title"
                     :value.sync="search.title"
                     :placeholder="$root.getCmd('write_a_title')"
+                /> -->
+                <select-2-input
+                    :title="$root.getCmd('title')"
+                    :options="options.titles"
+                    :placeholder="$root.getCmd('write_a_title')"
+                    :debug="true"
+                    @update="setTitle"
                 />
             </ui-block>
             <!-- <ui-block
@@ -121,12 +128,16 @@
 import { UiBlock, UiButton, UiRow } from "../ui";
 
 import SelectInput from "./sub/search-form/SelectInput.vue";
+import Select2Input from "./sub/search-form/Select2Input.vue";
 import TextInput from "./sub/search-form/TextInput.vue";
+import TranslationFilter from "../TranslationFilter";
 
 export default {
     name: "UiAppSearchForm",
+    mixins: [TranslationFilter],
     components: {
         SelectInput,
+        Select2Input,
         TextInput,
         UiBlock,
         UiButton,
@@ -189,7 +200,23 @@ export default {
         },
         startSearch: function() {
             let query = this.cleanQuery(this.search);
+            console.log(query);
             this.$emit("search", query);
+        },
+        setTitle: function(evt) {
+            if (this.options && this.options.titles) {
+                let selected = this.options.titles.find(
+                    title => title.id == evt.id
+                );
+                if (selected) {
+                    // console.log("trovato");
+                    this.search.title = this.$options.filters.translate(
+                        selected,
+                        "title",
+                        this.$root.locale
+                    );
+                }
+            }
         }
     }
 };

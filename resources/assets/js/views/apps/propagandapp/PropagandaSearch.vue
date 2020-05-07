@@ -1,4 +1,4 @@
-<template>
+<template lang="html">
     <ui-container>
         <ui-hero-banner
             image="/img/grafica/propaganda/bg-app-80.jpg"
@@ -134,7 +134,7 @@ export default {
                 .post("/api/v2/propaganda/advanced-search", data)
                 .then(response => {
                     const { data } = response;
-
+                    console.log(data);
                     if (data.success) {
                         this.results = Object.assign({}, data.results);
                     }

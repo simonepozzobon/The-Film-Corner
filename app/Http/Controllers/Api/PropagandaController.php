@@ -47,6 +47,7 @@ class PropagandaController extends Controller
         $topics = Topic::all();
         $peoples = People::all();
         $hashtags = Hashtag::all();
+        $titles = Clip::all();
 
         return [
             'success' => true,
@@ -58,6 +59,7 @@ class PropagandaController extends Controller
                 'topics' => $topics,
                 'peoples' => $peoples,
                 'topics' => $topics,
+                'titles' => $titles,
             ]
         ];
     }
@@ -119,7 +121,7 @@ class PropagandaController extends Controller
     {
         return $clips->filter(
             function ($clip, $key) use ($relation, $q, $prop) {
-                return $this->check_array_with_value($clip->{$relation.'s'}, $prop, strtolower($q)) == true;
+                return $this->check_array_with_value($clip->{$relation . 's'}, $prop, strtolower($q)) == true;
             }
         );
     }
@@ -137,7 +139,7 @@ class PropagandaController extends Controller
     {
         return $clips->filter(
             function ($clip, $key) use ($q, $relation) {
-                return $clip->{$relation.'_id'} == $q;
+                return $clip->{$relation . '_id'} == $q;
             }
         );
     }
@@ -147,8 +149,8 @@ class PropagandaController extends Controller
         $periods = Period::with('clips.period', 'clips.format', 'clips.age', 'clips.directors', 'clips.peoples', 'clips.topics', 'clips.captions')->get();
 
         return [
-        'success' => true,
-        'periods' => $periods,
+            'success' => true,
+            'periods' => $periods,
         ];
     }
 
@@ -184,8 +186,8 @@ class PropagandaController extends Controller
         $clip = $this->format_paratexts($clip);
 
         return [
-        'success' => true,
-        'clip' => $clip,
+            'success' => true,
+            'clip' => $clip,
         ];
     }
 
@@ -231,21 +233,21 @@ class PropagandaController extends Controller
         $app = App::find(19);
 
         switch ($exercise_id) {
-        case 1:
-            $app = App::find(19);
-            break;
-        case 2:
-            $app = App::find(20);
-            break;
-        case 3:
-            $app = App::find(21);
-            break;
+            case 1:
+                $app = App::find(19);
+                break;
+            case 2:
+                $app = App::find(20);
+                break;
+            case 3:
+                $app = App::find(21);
+                break;
         }
 
         $sessions = $user->sessions()->where(
             [
-            ['app_id', $app->id],
-            ['is_empty', '!=', 1]
+                ['app_id', $app->id],
+                ['is_empty', '!=', 1]
             ]
         )->get();
 
@@ -297,11 +299,11 @@ class PropagandaController extends Controller
         }
 
         return [
-        'success' => true,
-        'clip' => $clip,
-        'exercise' => $exercise,
-        'session' => $session,
-        'sessions' => $sessions,
+            'success' => true,
+            'clip' => $clip,
+            'exercise' => $exercise,
+            'session' => $session,
+            'sessions' => $sessions,
         ];
     }
 
@@ -326,8 +328,8 @@ class PropagandaController extends Controller
         $media = $this->generate_thumbnail($media);
 
         return [
-        'success' => true,
-        'media' => $media,
+            'success' => true,
+            'media' => $media,
         ];
     }
 
@@ -337,9 +339,9 @@ class PropagandaController extends Controller
         $library = ChallengeLibrary::where('challenge_id', $id)->with('medias')->first();
 
         return [
-        'success' => true,
-        'challenge' => $challenge,
-        'library' => $library,
+            'success' => true,
+            'challenge' => $challenge,
+            'library' => $library,
         ];
     }
 
@@ -374,9 +376,9 @@ class PropagandaController extends Controller
 
                 $timeToSnap = $this->get_clip_thumb_time($filePath);
 
-                $pathToSave = storage_path('app/public/propaganda/users/').$filename.'.jpg';
+                $pathToSave = storage_path('app/public/propaganda/users/') . $filename . '.jpg';
                 $saveThumb = $this->save_thumb_at_time($filePath, $timeToSnap, $pathToSave);
-                $pathToDB = Storage::disk('local')->url('propaganda/users/'.$filename.'.jpg');
+                $pathToDB = Storage::disk('local')->url('propaganda/users/' . $filename . '.jpg');
 
                 $media->thumb = $pathToDB;
                 $media->save();
@@ -401,11 +403,11 @@ class PropagandaController extends Controller
 
     public function get_clip_thumb_time($path)
     {
-        $cli = FFMPEG_LIB.' -i '.$path.' 2>&1 | grep \'Duration\' | cut -d \' \' -f 4 | sed s/,//';
+        $cli = FFMPEG_LIB . ' -i ' . $path . ' 2>&1 | grep \'Duration\' | cut -d \' \' -f 4 | sed s/,//';
         $duration =  exec($cli);
 
         $duration = explode(":", $duration);
-        $duration = $duration[0]*3600 + $duration[1]*60+ round($duration[2]);
+        $duration = $duration[0] * 3600 + $duration[1] * 60 + round($duration[2]);
         $timeToSnap = $duration / 2;
 
         return $timeToSnap;
@@ -414,7 +416,7 @@ class PropagandaController extends Controller
     public function save_thumb_at_time($filePath, $timeToSnap, $pathToSave)
     {
         // prendo il frame e lo salvo
-        $cli = FFMPEG_LIB.' -y -i '.$filePath.' -f mjpeg -vframes 1 -ss '.$timeToSnap.' '.$pathToSave;
+        $cli = FFMPEG_LIB . ' -y -i ' . $filePath . ' -f mjpeg -vframes 1 -ss ' . $timeToSnap . ' ' . $pathToSave;
         exec($cli);
 
         return $cli;
@@ -428,7 +430,9 @@ class PropagandaController extends Controller
             $filePath = $globalPath->applyPathPrefix($path);
 
             Image::make($filePath)->fit(
-                400, 600, function ($constraint) {
+                400,
+                600,
+                function ($constraint) {
                     $constraint->upsize();
                 }
             )->save();
