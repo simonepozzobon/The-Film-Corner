@@ -72,9 +72,16 @@
                 />
             </ui-block> -->
             <ui-block :size="6" :has-container="false">
-                <text-input
+                <!-- <text-input
                     :title="$root.getCmd('topic')"
                     name="topic"
+                    :value.sync="search.topic"
+                    :placeholder="$root.getCmd('write_a_topic')"
+                /> -->
+                <select-input
+                    :title="$root.getCmd('topic')"
+                    name="age"
+                    :options="options.topics"
                     :value.sync="search.topic"
                     :placeholder="$root.getCmd('write_a_topic')"
                 />
@@ -97,6 +104,14 @@
                 @click="startSearch"
                 :has-spinner="isLoading"
                 :disable="isLoading"
+            />
+            <ui-button
+                :title="$root.getCmd('back')"
+                color="yellow"
+                :has-container="false"
+                display="inline-block"
+                class="ml-1"
+                @click="$root.goTo('propaganda-home')"
             />
         </div>
     </div>

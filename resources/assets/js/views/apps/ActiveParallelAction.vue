@@ -244,7 +244,7 @@ export default {
             this.notes = notes;
             this.saveContent();
         },
-        saveContent: debounce(function() {
+        saveContent: function() {
             let content = this.$root.session.content;
             let newContent = {
                 video: this.currentExport,
@@ -267,7 +267,7 @@ export default {
                 ...this.$root.session,
                 content: content
             };
-        }, 500),
+        },
         uploaded: function(asset) {
             // console.log(this.assets, asset);
         }
