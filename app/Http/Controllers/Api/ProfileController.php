@@ -87,10 +87,10 @@ class ProfileController extends Controller
                 if ($session) {
                     if ($session->is_shared == 0) {
                         $notification->data = [
-                        'sender' => $sender,
-                        'user' => $user,
-                        'session' => $session
-                      ];
+                            'sender' => $sender,
+                            'user' => $user,
+                            'session' => $session
+                        ];
 
                         array_push($activities, $notification);
                     } else {
@@ -98,10 +98,10 @@ class ProfileController extends Controller
 
                         if ($activity) {
                             $notification->data = [
-                              'sender' => $sender,
-                              'user' => $user,
-                              'session' => $session
-                          ];
+                                'sender' => $sender,
+                                'user' => $user,
+                                'session' => $session
+                            ];
 
                             $activity->notification = $notification;
                             array_push($activities, $activity);
@@ -189,5 +189,15 @@ class ProfileController extends Controller
                 'error' => 'email-exists',
             ];
         }
+    }
+
+    public function destroy_student($id)
+    {
+        $user = User::with('role', 'sessions', 'networks', 'students', 'teacher')->where('id', $id)->first();
+        $teacher = $user->teacher()->first();
+        $teacher = User::find($teacher->id);
+        $teacher->remove_student($user);
+        $user->delete();
+        return response()->json(null, 200);
     }
 }

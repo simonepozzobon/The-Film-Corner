@@ -103,6 +103,7 @@ Route::prefix('v2')->group(
                             function () {
                                 Route::post('save', 'Api\ProfileController@save_student');
                                 Route::post('edit', 'Api\ProfileController@update_student');
+                                Route::delete('{id}', 'Api\ProfileController@destroy_student');
                             }
                         );
                     }

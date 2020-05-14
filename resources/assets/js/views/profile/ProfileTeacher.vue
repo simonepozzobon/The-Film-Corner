@@ -95,7 +95,7 @@
                         color="red"
                         align="center"
                         :has-container="false"
-                        @click="deleteStudent"
+                        @click="deleteStudent(student.id)"
                     />
                 </div>
             </ui-block-head>
@@ -191,6 +191,19 @@ export default {
         },
         deleteStudent: function(idx = null) {
             // Delete student
+            this.$http
+                .delete(`/api/v2/profile/student/${idx}`)
+                .then(response => {
+                    console.log(response);
+                    let id = this.students.findIndex(
+                        student => student.id == idx
+                    );
+                    this.students.splice(id, 1);
+
+                    this.$nextTick(() => {
+                        this.cancelEditing();
+                    });
+                });
         },
         cancelEditing: function() {
             this.panelType = 1;
@@ -291,10 +304,10 @@ export default {
             }
         }
     },
-    created: function() {
+    created: function() {},
+    mounted: function() {
         this.getData();
-    },
-    mounted: function() {}
+    }
 };
 </script>
 
