@@ -74,6 +74,7 @@ export default {
     data: function() {
         return {
             timelines: [],
+            timelinesCache: [],
             tick: 10,
             isFree: true,
             cache: null,
@@ -202,50 +203,69 @@ export default {
                 time * this.tick + this.playheadStart
             );
         },
-        updateEditor: debounce(function() {
-            if (this.isFree) {
-                this.isFree = false;
-                if (this.$refs.preview) {
-                    this.$refs.preview.showLoader();
-                }
-                // console.log('updating');
-                let data = new FormData();
-                data.append("token", this.session.token);
-                data.append("timelines", JSON.stringify(this.timelines));
-                this.$http.post("/api/v2/render-video", data).then(response => {
-                    // se c'è qualcosa nella cache
-                    this.isFree = true;
-                    if (this.cache) {
-                        this.cache = null;
-                        this.saveContent();
-                        this.$nextTick(() => this.updateEditor());
-                    } else {
-                        this.$refs.preview.hideLoader().then(() => {
-                            // carico l'export solo quando è finita la coda
-                            this.currentExport = response.data.export;
-                            this.saveContent();
+        updateEditor: function() {
+            const newTimelines = JSON.stringify(this.timelines);
+            const oldTimelines = JSON.stringify(this.timelinesCache);
 
-                            if (this.$refs.preview) {
-                                this.$refs.preview.readyToPlay();
+            // Verifico se è necessario un nuovo render
+            // console.log(newTimelines == oldTimelines);
+            if (newTimelines != oldTimelines) {
+                // richiede un nuovo render
+                if (this.isFree) {
+                    this.isFree = false;
+                    if (this.$refs.preview) {
+                        this.$refs.preview.showLoader();
+                    }
+                    // console.log('updating');
+                    let data = new FormData();
+                    data.append("token", this.session.token);
+                    data.append("timelines", JSON.stringify(this.timelines));
+                    this.$http
+                        .post("/api/v2/render-video", data)
+                        .then(response => {
+                            // se c'è qualcosa nella cache
+                            this.isFree = true;
+                            if (this.cache) {
+                                this.cache = null;
+                                this.saveContent();
+                                this.$nextTick(() => this.updateEditor());
+                            } else {
+                                this.$refs.preview.hideLoader().then(() => {
+                                    // carico l'export solo quando è finita la coda
+                                    this.currentExport = response.data.export;
+                                    this.saveContent();
+
+                                    if (this.$refs.preview) {
+                                        this.$refs.preview.readyToPlay();
+                                    }
+                                });
+                                // this.$nextTick(() => {
+
+                                // });
+                                // console.log('complete');
                             }
                         });
-                        // this.$nextTick(() => {
-
-                        // });
-                        // console.log('complete');
-                    }
-                });
+                } else {
+                    // console.log('cache');
+                    this.cache = this.timelines;
+                }
             } else {
-                // console.log('cache');
-                this.cache = this.timelines;
+                // la timeline non è cambiata
+                if (this.$refs.preview) {
+                    this.$refs.preview.readyToPlay();
+                }
             }
-        }, 150),
+        },
         setNotes: function(notes) {
             this.notes = notes;
             this.saveContent();
         },
         saveContent: function() {
             let content = this.$root.session.content;
+
+            // salva le timelines in una cache per confrontarle
+            this.timelinesCache = Object.assign([], this.timelines);
+
             let newContent = {
                 video: this.currentExport,
                 timelines: this.timelines,
