@@ -23,10 +23,12 @@
         </template>
         <template>
             <ui-app-timeline
+                ref="editor"
                 :timelines="timelines"
                 :playhead-position="playheadPosition"
                 :playhead-height="playheadHeight"
                 :color="color"
+                @on-drag-master="onDragMaster"
                 @delete-track="onDeleteTrack"
                 @duplicate-track="onDuplicate"
                 @on-drag="onDrag"
@@ -71,6 +73,7 @@ export default {
     data: function() {
         return {
             timelines: [],
+            timelinesCache: [],
             oldTimelines: [],
             tick: 10,
             isFree: true,
@@ -78,13 +81,15 @@ export default {
             currentExport: null,
             playheadHeight: 300,
             playheadStart: 171,
-            playheadPosition: 171,
+            playheadPosition: 0,
             isLoading: false
         };
     },
     watch: {
         timelines: function(timelines) {
-            this.$nextTick(this.updateEditor);
+            if (this.$refs.preview) {
+                this.$refs.preview.stop();
+            }
         }
     },
     methods: {
@@ -105,9 +110,7 @@ export default {
             let session = this.$root.session;
             if (session && session.app_id === 4) {
                 let timelines = session.content.timelines;
-                if (session.content.notes) {
-                    this.notes = session.content.notes;
-                }
+                this.notes = session.content.notes;
                 if (session.content.video) {
                     this.currentExport = session.content.video;
                 }
@@ -116,11 +119,6 @@ export default {
                     this.isLoading = true;
                     this.$root.isOpen = true;
                     this.$root.objectsToLoad = timelines.length > 0 ? 2 : 1;
-                    // for (let i = 0; i < timelines.length; i++) {
-                    //     this.$nextTick(() => {
-                    //         this.timelines.push(timelines[i])
-                    //     })
-                    // }
                     this.$nextTick(() => {
                         this.timelines = timelines;
                     });
@@ -129,9 +127,9 @@ export default {
         },
         addTimeline: function(id, libraryID) {
             let timeline;
-            let library = this.assets.library.filter(
+            let library = this.assets.library.find(
                 library => library.id == libraryID
-            )[0];
+            );
             if (library) {
                 let video = library.videos.filter(video => video.id == id)[0];
                 if (video) {
@@ -163,9 +161,9 @@ export default {
             );
         },
         onDuplicate: function(uniqueid) {
-            let obj = this.timelines.filter(
+            let obj = this.timelines.find(
                 timeline => timeline.uniqueid == uniqueid
-            )[0];
+            );
             if (obj) {
                 obj = {
                     ...obj,
@@ -177,13 +175,19 @@ export default {
                 };
                 this.timelines.push(obj);
             }
-            this.timelines = this.timelines.filter(
-                timeline => timeline.uniqueid != uniqueid
-            );
+            // this.timelines = this.timelines.filter(
+            //     timeline => timeline.uniqueid != uniqueid
+            // );
         },
         onDrag: function(obj) {
             this.timelines[obj.idx]["start"] = obj.start;
             this.timelines = this.timelines.slice();
+        },
+        onDragMaster: function(time) {
+            // console.log("time from drag", time);
+            const position = Math.round(time / this.tick);
+            // console.log("new time", position);
+            this.$refs.preview.player.currentTime(position);
         },
         onResize: function(obj) {
             this.timelines[obj.idx]["start"] = obj.start;
@@ -193,15 +197,17 @@ export default {
             this.timelines = this.timelines.slice();
         },
         onUpdatePlayer: function(time) {
-            this.playheadPosition = Math.round(
-                time * this.tick + this.playheadStart
-            );
+            const position = Math.round(time * this.tick + this.playheadStart);
+            // console.log("playhead Position", position);
+            this.playheadPosition = position;
         },
         updateEditor: function() {
-            const oldTimelines = JSON.stringify(this.oldTimelines);
             const newTimelines = JSON.stringify(this.timelines);
-            console.log(oldTimelines, newTimelines);
-            if (oldTimelines != newTimelines) {
+            const oldTimelines = JSON.stringify(this.timelinesCache);
+
+            // Verifico se è necessario un nuovo render
+            // console.log(newTimelines == oldTimelines);
+            if (newTimelines != oldTimelines) {
                 if (this.isFree) {
                     this.isFree = false;
                     if (this.$refs.preview) {
@@ -226,6 +232,7 @@ export default {
                                     // carico l'export solo quando è finita la coda
                                     this.currentExport = response.data.export;
                                     this.saveContent();
+
                                     if (this.$refs.preview) {
                                         this.$refs.preview.readyToPlay();
                                     }
@@ -248,13 +255,20 @@ export default {
             this.notes = notes;
             this.saveContent();
         },
-        saveContent: debounce(function() {
+        saveContent: function() {
             let content = this.$root.session.content;
+
+            // salva le timelines in una cache per confrontarle
+            this.timelinesCache = Object.assign([], this.timelines);
+
             let newContent = {
                 video: this.currentExport,
                 timelines: this.timelines,
                 notes: this.notes
             };
+
+            // console.log(newContent, content);
+
             for (let key in content) {
                 if (
                     content.hasOwnProperty(key) &&
@@ -263,11 +277,12 @@ export default {
                     content[key] = newContent[key];
                 }
             }
+
             this.$root.session = {
                 ...this.$root.session,
                 content: content
             };
-        }, 500)
+        }
     },
     created: function() {
         this.$root.isApp = true;

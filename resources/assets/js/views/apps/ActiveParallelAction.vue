@@ -132,9 +132,9 @@ export default {
         },
         addTimeline: function(id, libraryID) {
             let timeline;
-            let library = this.assets.library.filter(
+            let library = this.assets.library.find(
                 library => library.id == libraryID
-            )[0];
+            );
             if (library) {
                 let video = library.videos.filter(video => video.id == id)[0];
                 if (video) {
@@ -169,9 +169,9 @@ export default {
             );
         },
         onDuplicate: function(uniqueid) {
-            let obj = this.timelines.filter(
+            let obj = this.timelines.find(
                 timeline => timeline.uniqueid == uniqueid
-            )[0];
+            );
             if (obj) {
                 obj = {
                     ...obj,
@@ -183,6 +183,9 @@ export default {
                 };
                 this.timelines.push(obj);
             }
+            // this.timelines = this.timelines.filter(
+            //     timeline => timeline.uniqueid != uniqueid
+            // );
         },
         onDrag: function(obj) {
             this.timelines[obj.idx]["start"] = obj.start;
