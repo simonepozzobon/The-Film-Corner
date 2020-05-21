@@ -107,6 +107,16 @@
                 align="justify"
                 v-html="catDescription"
             />
+            <div class="d-flex w-full justify-content-center">
+                <ui-button
+                    color="black"
+                    display="inline-block"
+                    :has-container="false"
+                    @click="$root.goTo('apps-home')"
+                >
+                    {{ $root.getCmd("back") }}
+                </ui-button>
+            </div>
         </ui-container>
     </ui-container>
 </template>

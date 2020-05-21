@@ -112,21 +112,24 @@ export default {
     },
     watch: {
         playheadPosition: function(x) {
-            this.movePlayhead();
+            this.movePlayhead(x);
         }
     },
     computed: {},
     methods: {
-        movePlayhead: function() {
+        movePlayhead: function(x = null) {
+            this.master.x = x;
+            const updatedPlayheadPosition = Math.round(
+                this.playheadPosition - 171
+            );
             gsap.set(this.$refs.playhead, {
                 left: this.playheadPosition
             });
 
-            this.masterPlay = Math.round(this.playheadPosition - 171);
-            this.$refs.masterPlayhead.left = Math.round(
-                this.playheadPosition - 171
-            );
-            console.log(this.masterPlay);
+            this.masterPlay = updatedPlayheadPosition;
+            this.$refs.masterPlayhead.left = updatedPlayheadPosition;
+            // console.log(this.masterPlay);
+            // console.log("modePlayhead", x, this.masterPlay, this.master.x);
 
             // TweenLite.set(this.$refs.playheadTop, {
             //     left: this.playheadPosition - 5
@@ -139,7 +142,9 @@ export default {
             // console.log(x);
             this.master.x = x;
             this.$emit("on-drag-master", x);
-            this.$emit("update:playheadPosition", x + 171);
+            // this.$emit("update:playheadPosition", x);
+            // this.movePlayhead(x);
+            // console.log(x + 171);
         },
         onResizeMaster: function(x, y, width) {
             this.master.x = x;

@@ -26,8 +26,9 @@
         </template>
         <template>
             <ui-app-timeline
+                ref="editor"
                 :timelines="timelines"
-                :playhead-position.sync="playheadPosition"
+                :playhead-position="playheadPosition"
                 :playhead-height="playheadHeight"
                 :color="color"
                 @on-drag-master="onDragMaster"
@@ -81,7 +82,7 @@ export default {
             currentExport: null,
             playheadHeight: 300,
             playheadStart: 171,
-            playheadPosition: 171,
+            playheadPosition: 0,
             isLoading: false
         };
     },
@@ -188,8 +189,10 @@ export default {
             this.timelines = this.timelines.slice();
         },
         onDragMaster: function(time) {
-            console.log(time);
-            this.$refs.preview.player.currentTime(time);
+            // console.log("time from drag", time);
+            const position = Math.round(time / this.tick);
+            // console.log("new time", position);
+            this.$refs.preview.player.currentTime(position);
         },
         onResize: function(obj) {
             this.timelines[obj.idx]["start"] = obj.start;
@@ -199,9 +202,9 @@ export default {
             this.timelines = this.timelines.slice();
         },
         onUpdatePlayer: function(time) {
-            this.playheadPosition = Math.round(
-                time * this.tick + this.playheadStart
-            );
+            const position = Math.round(time * this.tick + this.playheadStart);
+            // console.log("playhead Position", position);
+            this.playheadPosition = position;
         },
         updateEditor: function() {
             const newTimelines = JSON.stringify(this.timelines);
