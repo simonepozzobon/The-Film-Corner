@@ -1,44 +1,37 @@
 <template>
-<ui-container
-    :contain="true"
-    ref="container"
-    class="app-sessions"
->
-    <ui-row justify="center">
-        <ui-block-head
-            class="app-container__list"
-            :size="12"
-            :title="getCmd('open_existing_session')"
-            :color="colorClass"
-            :radius="true"
-            radius-size="md"
-            :class="uaSessionColorClass"
-        >
-            <transition-group
-                tag="div"
-                name="app-session-list"
+    <ui-container :contain="true" ref="container" class="app-sessions">
+        <ui-row justify="center">
+            <ui-block-head
+                class="app-container__list"
+                :size="12"
+                :title="getCmd('open_existing_session')"
+                :color="colorClass"
+                :radius="true"
+                radius-size="md"
+                :class="uaSessionColorClass"
             >
-                <ui-app-session
-                    v-for="(session, i) in sessions"
-                    :key="session.id"
-                    :counter="i"
-                    :idx="session.id"
-                    :title="session.title"
-                    :token="session.token"
-                    :is-shared="session.teacher_shared"
-                    @open-session="openSession"
-                    @delete-session="deleteSession"
-                    @share-session="shareSession"
-                />
-            </transition-group>
-        </ui-block-head>
-    </ui-row>
-</ui-container>
+                <transition-group tag="div" name="app-session-list">
+                    <ui-app-session
+                        v-for="(session, i) in sessions"
+                        :key="session.id"
+                        :counter="i"
+                        :idx="session.id"
+                        :title="session.title"
+                        :token="session.token"
+                        :is-shared="session.teacher_shared"
+                        @open-session="openSession"
+                        @delete-session="deleteSession"
+                        @share-session="shareSession"
+                    />
+                </transition-group>
+            </ui-block-head>
+        </ui-row>
+    </ui-container>
 </template>
 
 <script>
-import UiAppSession from './UiAppSession.vue'
-import TranslateCmd from '_js/TranslateCmd'
+import UiAppSession from "./UiAppSession.vue";
+import TranslateCmd from "_js/TranslateCmd";
 import {
     UiBlock,
     UiBlockHead,
@@ -53,15 +46,11 @@ import {
     UiRow,
     UiSpecialText,
     UiTitle
-}
-from '../ui'
+} from "../ui";
 
-import {
-    TimelineMax,
-}
-from 'gsap/all'
+import { TimelineMax } from "gsap/all";
 export default {
-    name: 'UiAppSessionManager',
+    name: "UiAppSessionManager",
     mixins: [TranslateCmd],
     components: {
         UiAppSession,
@@ -82,135 +71,150 @@ export default {
     props: {
         app: {
             type: Object,
-            default: function () {
-                return {}
-            },
+            default: function() {
+                return {};
+            }
         },
         appSessions: {
             type: Array,
-            default: function () {
-                return []
-            },
+            default: function() {
+                return [];
+            }
         },
         open: {
             type: Boolean,
-            default: false,
-        },
+            default: false
+        }
     },
-    data: function () {
+    data: function() {
         return {
             sessions: [],
             master: null,
-            colorClass: null,
-        }
+            colorClass: null
+        };
     },
     watch: {
-        app: function (app) {
-            this.setDefault()
+        app: function(app) {
+            this.setDefault();
         },
-        appSessions: function (sessions) {
-            this.sessions = sessions
+        appSessions: function(sessions) {
+            this.sessions = sessions;
         },
-        open: function (status) {
+        open: function(status) {
             if (status) {
-                this.play()
+                this.play();
+            } else {
+                this.reverse();
             }
-            else {
-                this.reverse()
-            }
-        },
+        }
     },
     computed: {
-        uaSessionColorClass: function () {
-            if (this.colorClass == 'dark-gray') {
-                return 'ua-session-text-light'
+        uaSessionColorClass: function() {
+            if (this.colorClass == "dark-gray") {
+                return "ua-session-text-light";
             }
 
-            return null
-        },
+            return null;
+        }
     },
     methods: {
-        setDefault: function () {
-            this.colorClass = 'dark-gray'
-            if (this.app.category && this.app.category.color_class) {
-                this.colorClass = this.app.category.color_class
+        setDefault: function() {
+            this.colorClass = "dark-gray";
+            if (
+                this.app &&
+                this.app.category &&
+                this.app.category.color_class
+            ) {
+                this.colorClass = this.app.category.color_class;
             }
             // console.log(this.colorClass);
         },
-        deleteSession: function (idx) {
-            let url = '/api/v2/session/' + idx + '/false'
-            this.$http.delete(url)
-                .then(response => {
-                    if (response.data.success) {
-                        this.sessions = this.sessions.filter(session => session.token != idx)
-                    }
-                })
+        deleteSession: function(idx) {
+            let url = "/api/v2/session/" + idx + "/false";
+            this.$http.delete(url).then(response => {
+                if (response.data.success) {
+                    this.sessions = this.sessions.filter(
+                        session => session.token != idx
+                    );
+                }
+            });
         },
-        openSession: function (idx) {
-            let session = this.sessions.filter(session => session.token == idx)[0]
-            session.content = JSON.parse(session.content)
-            this.$root.session = session
-            this.$root.isOpen = true
+        openSession: function(idx) {
+            let session = this.sessions.filter(
+                session => session.token == idx
+            )[0];
+            session.content = JSON.parse(session.content);
+            this.$root.session = session;
+            this.$root.isOpen = true;
             this.$nextTick(() => {
-                this.$emit('open-session')
-            })
+                this.$emit("open-session");
+            });
         },
-        shareSession: function (token) {
+        shareSession: function(token) {
             // console.log(token);
 
-            let data = new FormData()
-            data.append('token', token)
-            this.$root.fullMessage = this.$root.getCmd('shared_with_your_teacher')
+            let data = new FormData();
+            data.append("token", token);
+            this.$root.fullMessage = this.$root.getCmd(
+                "shared_with_your_teacher"
+            );
 
-            this.$http.post('/api/v2/session/share-to-teacher', data).then(response => {
-                this.$root.showMessage()
-            })
+            this.$http
+                .post("/api/v2/session/share-to-teacher", data)
+                .then(response => {
+                    this.$root.showMessage();
+                });
         },
-        init: function () {
+        init: function() {
             this.master = new TimelineMax({
                 paused: true,
                 yoyo: true
-            })
-            this.master.fromTo(this.$refs.container.$el, .3, {
-                autoAlpha: 0,
-                overflow: 'hidden',
-                height: 0,
-                // className: '-=app-sessions--visible'
-            }, {
-                autoAlpha: 1,
-                height: '100%',
-                overflow: 'visible',
-                immediateRender: false,
-                // className: '+=app-sessions--visible'
-            })
-            this.master.progress(1).progress(0)
-            this.setDefault()
+            });
+            this.master.fromTo(
+                this.$refs.container.$el,
+                0.3,
+                {
+                    autoAlpha: 0,
+                    overflow: "hidden",
+                    height: 0
+                    // className: '-=app-sessions--visible'
+                },
+                {
+                    autoAlpha: 1,
+                    height: "100%",
+                    overflow: "visible",
+                    immediateRender: false
+                    // className: '+=app-sessions--visible'
+                }
+            );
+            this.master.progress(1).progress(0);
+            this.setDefault();
         },
-        play: function () {
+        play: function() {
             if (this.master) {
-                this.master.play()
+                this.master.play();
             }
         },
-        reverse: function () {
+        reverse: function() {
             if (this.master) {
-                this.master.reverse()
+                this.master.reverse();
             }
         }
     },
-    mounted: function () {
-        this.init()
-        this.sessions = this.appSessions
+    mounted: function() {
+        this.init();
+        this.sessions = this.appSessions;
     },
-    beforeDestroy: function () {
+    beforeDestroy: function() {
         if (this.master) {
-            this.master.kill()
+            this.master.kill();
         }
     }
-}
+};
 </script>
 
 <style lang="scss">
-@import '~styles/shared';
+@import "~styles/shared";
 
 .app-sessions {
     margin-top: $spacer * 1.618;
