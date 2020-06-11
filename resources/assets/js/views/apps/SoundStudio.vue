@@ -59,7 +59,7 @@ import SizeUtility from "../../Sizes";
 import Shared from "./Shared";
 
 export default {
-    name: "ActiveParallelAction",
+    name: "SoundStudio",
     mixins: [Shared],
     components: {
         AppTemplate,
@@ -232,6 +232,7 @@ export default {
                         .post("/api/v2/render-audio", data)
                         .then(response => {
                             // se c'è qualcosa nella cache
+                            console.log(response);
                             this.isFree = true;
                             this.oldTimelines = this.timelines;
                             if (this.cache) {
