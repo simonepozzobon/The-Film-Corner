@@ -307,17 +307,18 @@
             </svg>
           </a>
         </div>
-        <div class="row mt-4">
+        <div class="row mt-4 pr-5">
           <div class="col-md-4">
             <img src="/img/logos/logo-mibact.png" class="img-fluid"/>
           </div>
           <div class="col-md-4">
             <img src="/img/logos/logo-miur.png" class="img-fluid"/>
           </div>
-        </div>
-        <div class="row">
           <div class="col-md-4">
             <img src="/img/logos/logo-cips.png" class="img-fluid"/>
+          </div>
+          <div class="col-12 text-center">
+            <small>Iniziativa realizzata nell’ambito del Piano Nazionale Cinema per la Scuola</small>
           </div>
         </div>
       </div>
