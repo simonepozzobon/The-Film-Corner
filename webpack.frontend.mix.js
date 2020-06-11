@@ -1,5 +1,5 @@
-let mix = require('laravel-mix')
-require('laravel-mix-polyfill')
+let mix = require("laravel-mix");
+require("laravel-mix-polyfill");
 
 /*
  |--------------------------------------------------------------------------
@@ -13,32 +13,33 @@ require('laravel-mix-polyfill')
  */
 //
 
-mix
-    .js('resources/assets/js/app.js', 'public/js')
-    .sass('resources/assets/sass/app.scss', 'public/css')
+mix.js("resources/assets/js/app.js", "public/js")
+    .sass("resources/assets/sass/app.scss", "public/css")
     .autoload({
-        jquery: ['$', 'jQuery', 'jquery'],
-        tether: ['Tether'],
+        jquery: ["$", "jQuery", "jquery"],
+        tether: ["Tether"]
     })
     .webpackConfig({
         resolve: {
             alias: {
-                'styles': path.resolve(__dirname, 'resources/assets/sass'),
-                '_js': path.resolve(__dirname, 'resources/assets/js')
+                styles: path.resolve(__dirname, "resources/assets/sass"),
+                _js: path.resolve(__dirname, "resources/assets/js")
             }
         }
     })
     .polyfill({
         enabled: false,
-        useBuiltIns: 'usage',
-        targets: 'last 2 version, not dead',
+        useBuiltIns: "usage",
+        targets: "last 2 version, not dead",
         debug: true
     })
     .browserSync({
-        proxy: 'http://tfc.test',
+        proxy: "http://tfc.test",
         port: 3020,
-        browser: 'google chrome',
+        browser: "google chrome",
         files: [
-            'public/{*,**/*}.*',
+            "public/js/**/*.js",
+            "public/css/**/*.css",
+            "resources/views/**/*.php"
         ]
-    })
+    });

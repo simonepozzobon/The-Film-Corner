@@ -232,7 +232,7 @@ export default {
                         .post("/api/v2/render-audio", data)
                         .then(response => {
                             // se c'è qualcosa nella cache
-                            console.log(response);
+                            console.log("risposta render", response.data);
                             this.isFree = true;
                             this.oldTimelines = this.timelines;
                             if (this.cache) {
