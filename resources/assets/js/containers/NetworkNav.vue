@@ -1,93 +1,104 @@
 <template>
-<nav
-    class="network-nav navbar navbar-dark navbar-expand-lg fixed-top"
-    ref="menu"
->
-    <ul class="navbar-nav network-nav__nav">
-        <li class="network-nav__item nav-item">
-            <a
-                href="#"
-                @click.stop.prevent="sortByDate"
-                class="nav-link network-nav__link"
-            >{{ this.$root.getCmd('most_recent') }}</a>
-        </li>
-        <li class="network-nav__item nav-item">
-            <a
-                href="#"
-                @click.stop.prevent="sortByLikes"
-                class="nav-link network-nav__link"
-            >{{ this.$root.getCmd('most_liked') }}</a>
-        </li>
-        <li class="network-nav__item nav-item">
-            <a
-                href="#"
-                @click.stop.prevent="filterByApp"
-                class="nav-link network-nav__link disabled"
-                disabled
-            >{{ this.$root.getCmd('filter_by_app') }}</a>
-        </li>
-    </ul>
-</nav>
+    <nav
+        class="network-nav navbar navbar-dark navbar-expand-lg fixed-top"
+        ref="menu"
+    >
+        <ul class="navbar-nav network-nav__nav">
+            <li class="network-nav__item nav-item">
+                <a
+                    href="#"
+                    @click.stop.prevent="sortByDate"
+                    class="nav-link network-nav__link"
+                    >{{ this.$root.getCmd("most_recent") }}</a
+                >
+            </li>
+            <li class="network-nav__item nav-item">
+                <a
+                    href="#"
+                    @click.stop.prevent="sortByLikes"
+                    class="nav-link network-nav__link"
+                    >{{ this.$root.getCmd("most_liked") }}</a
+                >
+            </li>
+            <li class="network-nav__item nav-item">
+                <a
+                    href="#"
+                    @click.stop.prevent="sortByApp"
+                    class="nav-link network-nav__link"
+                    >{{ this.$root.getCmd("filter_by_app") }}</a
+                >
+            </li>
+        </ul>
+    </nav>
 </template>
 
 <script>
-import {
-    TweenMax
-}
-from 'gsap/all'
+import { TweenMax } from "gsap/all";
 
 export default {
-    name: 'NetworkNav',
+    name: "NetworkNav",
     methods: {
-        goTo: function (event, name) {
-            event.preventDefault()
+        goTo: function(event, name) {
+            event.preventDefault();
             this.$router.push({
                 name: name
-            })
+            });
         },
-        show: function () {
-            let master = TweenMax.fromTo(this.$refs.menu, .5, {
-                y: -150,
-                autoAlpha: 0,
-            }, {
-                y: 0,
-                autoAlpha: 1,
-                onComplete: () => {
-                    master.kill()
+        show: function() {
+            let master = TweenMax.fromTo(
+                this.$refs.menu,
+                0.5,
+                {
+                    y: -150,
+                    autoAlpha: 0
+                },
+                {
+                    y: 0,
+                    autoAlpha: 1,
+                    onComplete: () => {
+                        master.kill();
+                    }
                 }
-            })
+            );
         },
-        hide: function () {
-            let master = TweenMax.fromTo(this.$refs.menu, .5, {
-                y: 0,
-                autoAlpha: 1,
-            }, {
-                y: -150,
-                autoAlpha: 0,
-                onComplete: () => {
-                    master.kill()
+        hide: function() {
+            let master = TweenMax.fromTo(
+                this.$refs.menu,
+                0.5,
+                {
+                    y: 0,
+                    autoAlpha: 1
+                },
+                {
+                    y: -150,
+                    autoAlpha: 0,
+                    onComplete: () => {
+                        master.kill();
+                    }
                 }
-            })
+            );
         },
-        sortByDate: function () {
-            this.$root.$emit('sort-by-date')
+        sortByDate: function() {
+            this.$root.$emit("sort-by-date");
         },
-        sortByLikes: function () {
-            this.$root.$emit('sort-by-likes')
+        sortByLikes: function() {
+            this.$root.$emit("sort-by-likes");
         },
-        filterByApp: function () {},
+        sortByApp: function() {
+            this.$root.$emit("sort-by-app");
+        }
     },
-    mounted: function () {
-        this.show()
+    mounted: function() {
+        this.show();
     },
-    beforeDestroy: function () {
-        this.hide()
+    beforeDestroy: function() {
+        this.hide();
     }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import '~styles/shared';
+@import "~styles/shared";
 
 .network-nav {
     top: 107px;
@@ -107,7 +118,7 @@ export default {
         color: $white !important;
 
         &.disabled {
-            color: rgba($white, .6) !important;
+            color: rgba($white, 0.6) !important;
         }
     }
 }
