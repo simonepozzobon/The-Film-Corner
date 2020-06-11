@@ -1,79 +1,69 @@
 <template>
-<ui-container>
-    <ui-hero-banner
-        image="/img/grafica/propaganda/bg-app-80.jpg"
-        :full-width="true"
-    >
-        <ui-row
-            align="center"
-            ver-align="center"
+    <ui-container>
+        <ui-hero-banner
+            image="/img/grafica/propaganda/bg-app-80.jpg"
+            :full-width="true"
+            :relative="true"
         >
-            <div class="col-12">
-                <ui-row
-                    :full-width="true"
-                    align="center"
-                >
-                    <ui-title
-                        :title="title"
-                        font-size="h1"
-                        align="center"
-                        :uppercase="false"
-                        :has-container="true"
-                    />
-                </ui-row>
+            <ui-row align="center" ver-align="center">
+                <div class="col-12">
+                    <ui-row :full-width="true" align="center">
+                        <ui-title
+                            :title="title"
+                            font-size="h1"
+                            align="center"
+                            :uppercase="false"
+                            :has-container="true"
+                        />
+                    </ui-row>
 
-                <ui-row
-                    :full-width="true"
-                    align="center"
-                >
-                    <ui-special-text
-                        :has-padding="false"
-                        display="inline-block"
-                        class="mr-3"
-                        :text="$root.getCmd('search_the_clips_intro_home')"
-                    />
-                </ui-row>
-                <ui-row
-                    :full-width="true"
-                    align="center"
-                >
-                    <ui-button
-                        :title="$root.getCmd('advanced_search')"
-                        color="red"
-                        :has-container="false"
-                        :has-margin="false"
-                        @click="$root.goTo('propaganda-search')"
-                    />
-                </ui-row>
+                    <ui-row :full-width="true" align="center">
+                        <ui-special-text
+                            :has-padding="false"
+                            display="inline-block"
+                            class="mr-3"
+                            :text="$root.getCmd('search_the_clips_intro_home')"
+                        />
+                    </ui-row>
+                    <ui-row :full-width="true" align="center">
+                        <ui-button
+                            :title="$root.getCmd('advanced_search')"
+                            color="red"
+                            :has-container="false"
+                            :has-margin="false"
+                            @click="$root.goTo('propaganda-search')"
+                        />
+                    </ui-row>
 
-                <ui-roadmap
-                    :channels="channels"
-                    @select-channel="selectChannel"
-                />
+                    <ui-roadmap
+                        :channels="channels"
+                        @select-channel="selectChannel"
+                    />
 
-                <ui-row
-                    align="center"
-                    :full-width="true"
-                >
-                    <ui-button
-                        :title="
+                    <ui-row align="center" :full-width="true">
+                        <ui-button
+                            :title="
                                 $root.getCmd('go_to_the_creative_challenges')
                             "
-                        color="yellow"
-                        :has-container="false"
-                        :has-margin="false"
-                        @click="goToChallenges"
-                    />
-                </ui-row>
+                            color="yellow"
+                            :has-container="false"
+                            :has-margin="false"
+                            @click="goToChallenges"
+                        />
+                    </ui-row>
+                </div>
+            </ui-row>
+
+            <div class="propaganda-logo">
+                <img src="/img/logos/aamod.jpg" alt="" />
             </div>
-        </ui-row>
-    </ui-hero-banner>
-    <ui-app-channel-results
-        id="channel-result"
-        :contents="results"
-        :title="currentChannelTitle"
-    />
-</ui-container>
+        </ui-hero-banner>
+        <ui-app-channel-results
+            id="channel-result"
+            :contents="results"
+            :title="currentChannelTitle"
+        />
+    </ui-container>
 </template>
 
 <script>
@@ -92,22 +82,12 @@ import {
     UiSpecialText,
     UiTitle,
     UiRow
-}
-from "../../../ui";
+} from "../../../ui";
 
-import {
-    UiAppChannelResults
-}
-from "../../../uiapp";
+import { UiAppChannelResults } from "../../../uiapp";
 
-import {
-    gsap
-}
-from "gsap";
-import {
-    ScrollToPlugin
-}
-from "gsap/ScrollToPlugin";
+import { gsap } from "gsap";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -127,7 +107,7 @@ export default {
         UiTitle,
         UiRow
     },
-    data: function () {
+    data: function() {
         return {
             title: "Welcome",
             channels: [],
@@ -136,15 +116,15 @@ export default {
         };
     },
     watch: {
-        "$root.user": function (user) {
+        "$root.user": function(user) {
             this.setWelcome();
         },
-        currentChannel: function (channel) {
+        currentChannel: function(channel) {
             this.results = channel.clips;
         }
     },
     computed: {
-        currentChannelTitle: function () {
+        currentChannelTitle: function() {
             if (
                 this.currentChannel &&
                 this.currentChannel.hasOwnProperty("title")
@@ -156,7 +136,7 @@ export default {
         }
     },
     methods: {
-        getData: function () {
+        getData: function() {
             // perform api call
             this.$http.get("/api/v2/propaganda/clips").then(response => {
                 // console.log(response);
@@ -165,16 +145,16 @@ export default {
             // this.channels = Channels
             // this.debug()
         },
-        debug: function () {
+        debug: function() {
             // this.selectChannel(this.channels[2])
         },
-        setWelcome: function () {
+        setWelcome: function() {
             this.title = "Welcome " + Utility.capitalize(this.$root.user.name);
             // console.log(this.title);
         },
-        enter: function () {},
-        leave: function () {},
-        selectChannel: function (selected) {
+        enter: function() {},
+        leave: function() {},
+        selectChannel: function(selected) {
             this.channels = this.channels.map(channel => {
                 delete channel.isActive;
 
@@ -194,14 +174,14 @@ export default {
                 }
             });
         },
-        goToChallenges: function () {
+        goToChallenges: function() {
             this.$root.goTo("propaganda-challenges");
         }
     },
-    created: function () {
+    created: function() {
         this.getData();
     },
-    mounted: function () {
+    mounted: function() {
         this.$nextTick(this.setWelcome);
     }
 };
@@ -209,4 +189,16 @@ export default {
 
 <style lang="scss" scoped>
 @import "~styles/shared";
+
+.propaganda-logo {
+    position: absolute;
+    left: $spacer * 2;
+    bottom: $spacer * 2;
+    overflow: hidden;
+    @include border-radius(5px);
+
+    img {
+        width: $spacer * 7;
+    }
+}
 </style>

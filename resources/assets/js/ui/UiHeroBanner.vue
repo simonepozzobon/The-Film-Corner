@@ -1,26 +1,21 @@
 <template>
-<div
-    class="ui-hero-banner"
-    :class="[fullHeightClass, fullWidthClass]"
-    ref="bg"
->
-    <img
-        :src="image"
-        alt=""
-        class="ui-hero-banner__bg"
-        ref="image"
+    <div
+        class="ui-hero-banner"
+        :class="[fullHeightClass, fullWidthClass]"
+        ref="bg"
     >
-    <div class="ui-hero-banner__container">
-        <div class="ui-hero-banner__content">
-            <slot></slot>
+        <img :src="image" alt="" class="ui-hero-banner__bg" ref="image" />
+        <div class="ui-hero-banner__container">
+            <div class="ui-hero-banner__content">
+                <slot></slot>
+            </div>
         </div>
     </div>
-</div>
 </template>
 
 <script>
 export default {
-    name: 'UiHeroBanner',
+    name: "UiHeroBanner",
     props: {
         image: {
             type: String,
@@ -28,41 +23,49 @@ export default {
         },
         fullHeight: {
             type: Boolean,
-            default: false,
+            default: false
         },
         fullWidth: {
             type: Boolean,
-            default: false,
+            default: false
         },
+        relative: {
+            type: Boolean,
+            default: false
+        }
     },
     watch: {
-        '$root.isMobile': function (value) {
+        "$root.isMobile": function(value) {
             if (value) {
-                this.$refs.bg.style.backgroundImage = 'url(' + this.image + ')'
-            }
-            else {
-                this.$refs.bg.style.backgroundImage = null
+                this.$refs.bg.style.backgroundImage = "url(" + this.image + ")";
+            } else {
+                this.$refs.bg.style.backgroundImage = null;
             }
         }
     },
     computed: {
-        fullHeightClass: function () {
+        fullHeightClass: function() {
             if (this.fullHeight) {
-                return 'ui-hero-banner--full-height'
+                return "ui-hero-banner--full-height";
             }
         },
-        fullWidthClass: function () {
+        fullWidthClass: function() {
             if (this.fullWidth) {
-                return 'ui-hero-banner--full-width'
+                return "ui-hero-banner--full-width";
             }
         },
+        relativeClass: function() {
+            if (this.relative) {
+                return "ui-hero-banner__content--relative";
+            }
+        }
     },
-    mounted: function () {}
-}
+    mounted: function() {}
+};
 </script>
 
 <style lang="scss" scoped>
-@import '~styles/shared';
+@import "~styles/shared";
 
 .ui-hero-banner {
     $self: &;
@@ -88,6 +91,10 @@ export default {
 
     &__content {
         padding: $spacer * 2;
+
+        &--relative {
+            position: relative;
+        }
     }
 
     &--full-height {
@@ -96,7 +103,7 @@ export default {
         // overflow: hidden;
     }
 
-    @include media-breakpoint-up('sm') {
+    @include media-breakpoint-up("sm") {
         position: relative;
 
         &--full-height {
