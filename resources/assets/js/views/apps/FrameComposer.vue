@@ -515,7 +515,7 @@ export default {
         this.$root.isApp = true;
 
         // this.debugSession()
-        this.getData("5df76bfcdb014");
+        this.getData();
     },
     mounted: function() {
         this.$root.$on("app-save-session", () => {
