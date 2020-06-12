@@ -206,6 +206,15 @@ Route::prefix('v2')->group(
                         Route::delete('{id}', 'Api\Admin\NewsController@destroy');
                     }
                 );
+
+                Route::prefix('home')->group(
+                    function () {
+                        Route::get('/', 'Api\Admin\HomeController@get_all');
+                        Route::post('/save', 'Api\Admin\HomeController@save');
+                        Route::post('/add-list', 'Api\Admin\HomeController@add_list');
+                        Route::post('/update-list', 'Api\Admin\HomeController@update_list_translations');
+                    }
+                );
             }
         );
     }

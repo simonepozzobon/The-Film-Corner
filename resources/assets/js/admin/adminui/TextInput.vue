@@ -1,74 +1,92 @@
 <template>
-<div class="form-group row">
-    <label
-        :for="name"
-        class="col-md-2"
-    >
-        {{ label }}
-    </label>
-    <div class="col-md-10">
-        <input
-            :type="type"
-            class="form-control"
-            :name="name"
-            :placeholder="placeholder"
-            v-model="value"
-        />
-        <small v-if="info">{{ info }}</small>
+    <div class="form-group" :class="isVertical">
+        <label :for="name" :class="isVerticalCol">
+            {{ label }}
+        </label>
+        <div :class="isVerticalCont">
+            <input
+                :type="type"
+                class="form-control"
+                :name="name"
+                :placeholder="placeholder"
+                v-model="value"
+            />
+            <small v-if="info">{{ info }}</small>
+        </div>
     </div>
-</div>
 </template>
 
 <script>
 export default {
-    name: 'TextInput',
+    name: "TextInput",
     props: {
         label: {
             type: String,
-            default: 'label',
+            default: "label"
         },
         name: {
             type: String,
-            default: 'name',
+            default: "name"
         },
         placeholder: {
             type: String,
-            default: null,
+            default: null
         },
         type: {
             type: String,
-            default: 'text',
+            default: "text"
         },
         info: {
             type: String,
-            default: null,
+            default: null
         },
         initial: [String, Number],
-    },
-    data: function () {
-        return {
-            value: null,
+        vertical: {
+            type: Boolean,
+            default: false
         }
     },
+    data: function() {
+        return {
+            value: null
+        };
+    },
     watch: {
-        value: function (value) {
-            this.$emit('update', value)
+        value: function(value) {
+            this.$emit("update", value);
         },
-        initial: function (value) {
-            this.setInitial()
+        initial: function(value) {
+            this.setInitial();
+        }
+    },
+    computed: {
+        isVertical: function() {
+            if (!this.vertical) {
+                return "row";
+            }
         },
+        isVerticalCol: function() {
+            if (!this.vertical) {
+                return "col-md-2";
+            }
+        },
+        isVerticalCont: function() {
+            if (!this.vertical) {
+                return "col-md-10";
+            }
+        }
     },
     methods: {
-        setInitial: function () {
-            this.value = this.initial
-        },
+        setInitial: function() {
+            this.value = this.initial;
+        }
     },
-    created: function () {
-        this.setInitial()
-    },
-}
+    created: function() {
+        this.setInitial();
+    }
+};
 </script>
 
 <style lang="scss" scoped>
-@import '~styles/shared';
+@import "~styles/shared";
 </style>
