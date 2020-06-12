@@ -199,25 +199,24 @@ export default {
         },
         addListener: function(obj, fromOpen = false, isLandscape = false) {
             return new Promise((resolve, reject) => {
-                // let events = [
-                //     "object:added",
-                //     "object:removed",
-                //     "object:modified",
-                //     "object:rotating",
-                //     "object:scaling",
-                //     "object:moving"
-                // ];
-                // for (let j = 0; j < events.length; j++) {
-                //     obj.on(events[j], () => {
-                //         // console.log("evento", events[j]);
-                //         // if (isLandscape == true) {
-                //         //     // console.log('qui');
-                //         // }
-                //         // this.$nextTick(() => {
-                //         //     this.saveCanvas(events[j], fromOpen);
-                //         // });
-                //     });
-                // }
+                let events = [
+                    "object:added"
+                    // "object:removed",
+                    // "object:modified",
+                    // "object:rotating",
+                    // "object:scaling",
+                    // "object:moving"
+                    // "selection:created",
+                    // "selection:cleared"
+                ];
+                for (let j = 0; j < events.length; j++) {
+                    const e = events[j];
+                    obj.on(e, () => {
+                        // this.$nextTick(() => {
+                        this.saveCanvas(e, fromOpen);
+                        // });
+                    });
+                }
 
                 this.$nextTick(() => {
                     resolve(isLandscape);
@@ -228,8 +227,10 @@ export default {
             await new Promise((resolve, reject) => {
                 let events = ["selection:created", "selection:updated"];
                 for (let j = 0; j < events.length; j++) {
+                    // console.log("evento", events[j]);
                     this.canvas.on(events[j], el => {
                         this.toggleActiveLayer(el, true);
+                        // console.log(el);
                     });
                 }
 
@@ -245,18 +246,30 @@ export default {
         toggleActiveLayer: function(el, hasToActive = true) {
             let layers = this.$refs.layers.$refs.layer;
             let objs = hasToActive ? el.selected : el.deselected;
+            // console.log("qui", hasToActive, el);
+            const { uuid } = el.selected[0];
+            let idx = this.objs.findIndex(obj => obj.uuid == uuid);
+            // console.log(idx);
+            if (idx > -1) {
+                this.selectLayer(idx);
+            }
+
             for (let i = 0; i < objs.length; i++) {
                 let obj = objs[i].toJSON();
                 let layer = layers.find(layer => layer.uuid == obj.uuid);
+                // console.log(layer.uuid, obj);
                 let layerInverse = layers.filter(
                     layer => layer.uuid != obj.uuid
                 );
                 if (layer) {
                     if (hasToActive) {
+                        // if (obj.uuid == layer.uuid) {
+                        // }
                         layer.setActive();
                         layerInverse.forEach(asset => {
                             asset.unsetActive();
                         });
+                        // this.selectLayer(i);
                     } else {
                         layer.unsetActive();
                     }
@@ -318,6 +331,7 @@ export default {
             let image = new fabric.Image.fromURL(url, (obj, opts) => {
                 // new Object
                 let uuid = this.uniqid();
+                // console.log(obj);
 
                 if (fromOpen && savedObj) {
                     // console.log('from open', fromOpen);
@@ -450,6 +464,7 @@ export default {
             this.addToCanvas(index, libraryID);
         },
         selectLayer: function(idx) {
+            // console.log(idx);
             this.objs[idx].set({
                 borderColor: "white",
                 cornerColor: "white",
@@ -500,11 +515,11 @@ export default {
         this.$root.isApp = true;
 
         // this.debugSession()
-        this.getData();
+        this.getData("5df76bfcdb014");
     },
     mounted: function() {
         this.$root.$on("app-save-session", () => {
-            console.log("caiis");
+            // console.log("caiis");
             this.saveCanvas();
         });
     },

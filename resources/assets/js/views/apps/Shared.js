@@ -67,6 +67,7 @@ const Shared = {
                 url = "/api/v2/load-assets/" + slug + "/" + token;
                 // console.log(url);
             }
+            // console.log(slug);
 
             // console.log('url per il caricamento', url);
 
@@ -90,13 +91,13 @@ const Shared = {
         },
         deleteEmptySession: function() {
             // verificare se è vuota
-            const { is_empty, token } = this.session;
-            this.$root.session = null;
-            if (Boolean(is_empty)) {
-                this.$http.delete("/api/v2/session/" + token + "/true");
+            if (this.session) {
+                const { is_empty, token } = this.session;
+                this.$root.session = null;
+                if (Boolean(is_empty)) {
+                    this.$http.delete("/api/v2/session/" + token + "/true");
+                }
             }
-            // this.$nextTick(() => {
-            // })
         },
         debug: function(slug, token) {
             console.log("debug");

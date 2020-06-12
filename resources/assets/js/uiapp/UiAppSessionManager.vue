@@ -95,7 +95,7 @@ export default {
     },
     watch: {
         app: function(app) {
-            this.setDefault();
+            this.setDefault(true);
         },
         appSessions: function(sessions) {
             this.sessions = sessions;
@@ -118,7 +118,8 @@ export default {
         }
     },
     methods: {
-        setDefault: function() {
+        setDefault: function(fromWatch = false) {
+            console.log("setting default", fromWatch);
             this.colorClass = "dark-gray";
             if (
                 this.app &&
@@ -166,6 +167,7 @@ export default {
                 });
         },
         init: function() {
+            // console.log("initi");
             this.master = new TimelineMax({
                 paused: true,
                 yoyo: true
@@ -188,7 +190,9 @@ export default {
                 }
             );
             this.master.progress(1).progress(0);
-            this.setDefault();
+            this.$nextTick(() => {
+                this.setDefault();
+            });
         },
         play: function() {
             if (this.master) {
@@ -202,8 +206,10 @@ export default {
         }
     },
     mounted: function() {
-        this.init();
         this.sessions = this.appSessions;
+        this.$nextTick(() => {
+            this.init();
+        });
     },
     beforeDestroy: function() {
         if (this.master) {
