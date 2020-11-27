@@ -236,7 +236,11 @@ class SectionController extends Controller
                 // Film Specific - Sound - App 9 - Soundscapes
             case '9':
                 $item['media_type'] = 'video';
-                $item['featured_media'] = Storage::disk('local')->url($obj->exp);
+                if (isset($obj->exp) && $obj->exp) {
+                    $item['featured_media'] = Storage::disk('local')->url($obj->exp);
+                } else {
+                    $item['featured_media'] = 'no-video';
+                }
                 $item['notes'] = $obj->notes;
                 break;
 
