@@ -188,21 +188,34 @@ export default {
             // );
         },
         onDrag: function(obj) {
-            this.timelines[obj.idx]["start"] = obj.start;
-            this.timelines = this.timelines.slice();
+            console.log("ciao", obj);
+            const newObj = this.timelines[obj.idx];
+            const timelines = Object.assign([], this.timelines);
+
+            newObj["start"] = obj.start;
+            timelines[obj.idx] = newObj;
+
+            this.timelines = timelines.slice();
         },
         onDragMaster: function(time) {
-            // console.log("time from drag", time);
+            console.log("time from drag", time);
             const position = Math.round(time / this.tick);
             // console.log("new time", position);
             this.$refs.preview.player.currentTime(position);
         },
         onResize: function(obj) {
-            this.timelines[obj.idx]["start"] = obj.start;
-            this.timelines[obj.idx]["duration"] = obj.duration;
-            this.timelines[obj.idx]["cutStart"] = obj.cutStart;
-            this.timelines[obj.idx]["cutEnd"] = obj.cutEnd;
-            this.timelines = this.timelines.slice();
+            console.log("resize", obj);
+            const newObj = this.timelines[obj.idx];
+            const timelines = Object.assign([], this.timelines);
+
+            newObj["start"] = obj.start;
+            newObj["duration"] = obj.duration;
+            newObj["cutStart"] = obj.cutStart;
+            newObj["cutEnd"] = obj.cutEnd;
+
+            timelines[obj.idx] = newObj;
+
+            this.timelines = timelines.slice();
         },
         onUpdatePlayer: function(time) {
             const position = Math.round(time * this.tick + this.playheadStart);
@@ -214,7 +227,7 @@ export default {
             const oldTimelines = JSON.stringify(this.timelinesCache);
 
             // Verifico se è necessario un nuovo render
-            // console.log(newTimelines == oldTimelines);
+            console.log(newTimelines == oldTimelines);
             if (newTimelines != oldTimelines) {
                 // richiede un nuovo render
                 if (this.isFree) {
@@ -233,17 +246,18 @@ export default {
                             this.isFree = true;
                             if (this.cache) {
                                 this.cache = null;
-                                this.saveContent();
-                                this.$nextTick(() => this.updateEditor());
+                                this.saveContent(newTimelines).then(() =>
+                                    this.updateEditor()
+                                );
                             } else {
                                 this.$refs.preview.hideLoader().then(() => {
                                     // carico l'export solo quando è finita la coda
                                     this.currentExport = response.data.export;
-                                    this.saveContent();
-
-                                    if (this.$refs.preview) {
-                                        this.$refs.preview.readyToPlay();
-                                    }
+                                    this.saveContent(newTimelines).then(() => {
+                                        if (this.$refs.preview) {
+                                            this.$refs.preview.readyToPlay();
+                                        }
+                                    });
                                 });
                                 // this.$nextTick(() => {
 
@@ -266,33 +280,42 @@ export default {
             this.notes = notes;
             this.saveContent();
         },
-        saveContent: function() {
-            let content = this.$root.session.content;
+        saveContent: function(newTimelines = null) {
+            return new Promise((resolve, reject) => {
+                let content = this.$root.session.content;
 
-            // salva le timelines in una cache per confrontarle
-            this.timelinesCache = Object.assign([], this.timelines);
+                // salva le timelines in una cache per confrontarle
 
-            let newContent = {
-                video: this.currentExport,
-                timelines: this.timelines,
-                notes: this.notes
-            };
+                let newContent = {
+                    video: this.currentExport,
+                    timelines: newTimelines
+                        ? JSON.parse(newTimelines)
+                        : this.timelines,
+                    notes: this.notes
+                };
 
-            // console.log(newContent, content);
+                // console.log(newContent, content);
 
-            for (let key in content) {
-                if (
-                    content.hasOwnProperty(key) &&
-                    newContent.hasOwnProperty(key)
-                ) {
-                    content[key] = newContent[key];
+                for (let key in content) {
+                    if (
+                        content.hasOwnProperty(key) &&
+                        newContent.hasOwnProperty(key)
+                    ) {
+                        content[key] = newContent[key];
+                    }
                 }
-            }
 
-            this.$root.session = {
-                ...this.$root.session,
-                content: content
-            };
+                this.$root.session = {
+                    ...this.$root.session,
+                    content: content
+                };
+
+                this.timelinesCache = newTimelines
+                    ? JSON.parse(newTimelines)
+                    : Object.assign([], this.timelines);
+
+                resolve();
+            });
         },
         uploaded: function(asset) {
             // console.log(this.assets, asset);

@@ -273,10 +273,10 @@ export default {
             if (this.loaderVisible) {
                 // console.log('triggered');
                 this.hideLoader().then(() => {
-                    this.$emit("ready");
+                    this.$emit("ready", true);
                 });
             } else {
-                this.$emit("ready");
+                this.$emit("ready", false);
             }
         },
         setControlsHeight: function(height) {
