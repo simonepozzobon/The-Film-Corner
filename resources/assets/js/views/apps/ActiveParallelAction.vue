@@ -59,7 +59,7 @@ import {
 import SizeUtility from "../../Sizes";
 
 import Shared from "./Shared";
-const debounce = require("lodash.debounce");
+// const debounce = require("lodash.debounce");
 
 export default {
     name: "ActiveParallelAction",
@@ -164,9 +164,10 @@ export default {
             this.timelines.push(timeline);
         },
         onDeleteTrack: function(uniqueid) {
-            this.timelines = this.timelines.filter(
+            const timelines = this.timelines.filter(
                 timeline => timeline.uniqueid != uniqueid
             );
+            this.timelines = Object.assign([], timelines);
         },
         onDuplicate: function(uniqueid) {
             let obj = this.timelines.find(
@@ -188,7 +189,7 @@ export default {
             // );
         },
         onDrag: function(obj) {
-            console.log("ciao", obj);
+            // console.log("ciao", obj);
             const newObj = this.timelines[obj.idx];
             const timelines = Object.assign([], this.timelines);
 
@@ -198,13 +199,13 @@ export default {
             this.timelines = timelines.slice();
         },
         onDragMaster: function(time) {
-            console.log("time from drag", time);
+            // console.log("time from drag", time);
             const position = Math.round(time / this.tick);
             // console.log("new time", position);
             this.$refs.preview.player.currentTime(position);
         },
         onResize: function(obj) {
-            console.log("resize", obj);
+            // console.log("resize", obj);
             const newObj = this.timelines[obj.idx];
             const timelines = Object.assign([], this.timelines);
 
@@ -259,9 +260,6 @@ export default {
                                         }
                                     });
                                 });
-                                // this.$nextTick(() => {
-
-                                // });
                                 // console.log('complete');
                             }
                         });
@@ -283,8 +281,6 @@ export default {
         saveContent: function(newTimelines = null) {
             return new Promise((resolve, reject) => {
                 let content = this.$root.session.content;
-
-                // salva le timelines in una cache per confrontarle
 
                 let newContent = {
                     video: this.currentExport,
@@ -310,6 +306,7 @@ export default {
                     content: content
                 };
 
+                // salva le timelines in una cache per confrontarle
                 this.timelinesCache = newTimelines
                     ? JSON.parse(newTimelines)
                     : Object.assign([], this.timelines);
