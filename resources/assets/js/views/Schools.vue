@@ -8,16 +8,29 @@
                     :is-main="true"
                     :uppercase="false"
                     title="Schools"
-                    color="white"/>
+                    color="white"
+                />
             </ui-container>
         </ui-hero-banner>
         <ui-container class="py-5" :contain="true">
+            <ui-paragraph>
+                <ui-title title="Georgia" />
+                <ui-list>
+                    <ui-list-item
+                        v-for="(item, i, key) in this.scGE"
+                        :key="key"
+                    >
+                        {{ item.text }}
+                    </ui-list-item>
+                </ui-list>
+            </ui-paragraph>
             <ui-paragraph>
                 <ui-title title="Italy" />
                 <ui-list>
                     <ui-list-item
                         v-for="(item, i, key) in this.scIT"
-                        :key="key">
+                        :key="key"
+                    >
                         {{ item.text }}
                     </ui-list-item>
                 </ui-list>
@@ -27,7 +40,8 @@
                 <ui-list>
                     <ui-list-item
                         v-for="(item, i, key) in this.scNR"
-                        :key="key">
+                        :key="key"
+                    >
                         {{ item.text }}
                     </ui-list-item>
                 </ui-list>
@@ -37,17 +51,30 @@
                 <ui-list>
                     <ui-list-item
                         v-for="(item, i, key) in this.scSR"
-                        :key="key">
+                        :key="key"
+                    >
                         {{ item.text }}
                     </ui-list-item>
                 </ui-list>
             </ui-paragraph>
             <ui-paragraph>
-                <ui-title title="UK"/>
+                <ui-title title="Slovenia" />
+                <ui-list>
+                    <ui-list-item
+                        v-for="(item, i, key) in this.scSL"
+                        :key="key"
+                    >
+                        {{ item.text }}
+                    </ui-list-item>
+                </ui-list>
+            </ui-paragraph>
+            <ui-paragraph>
+                <ui-title title="UK" />
                 <ui-list>
                     <ui-list-item
                         v-for="(item, i, key) in this.scUK"
-                        :key="key">
+                        :key="key"
+                    >
                         {{ item.text }}
                     </ui-list-item>
                 </ui-list>
@@ -57,30 +84,39 @@
 </template>
 
 <script>
-import { schoolsIT, schoolsNr, schoolsSR, schoolsUK } from '../dummies/schools'
-import { UiContainer, UiHeroBanner, UiList, UiListItem, UiParagraph, UiTitle } from '../ui'
+import { schools } from "../dummies/schools";
+import {
+    UiContainer,
+    UiHeroBanner,
+    UiList,
+    UiListItem,
+    UiParagraph,
+    UiTitle
+} from "../ui";
 
 export default {
-    name: 'Schools',
+    name: "Schools",
     components: {
         UiContainer,
         UiHeroBanner,
         UiList,
         UiListItem,
         UiParagraph,
-        UiTitle,
+        UiTitle
     },
     data: function() {
         return {
-            scIT: schoolsIT,
-            scNR: schoolsNr,
-            scSR: schoolsSR,
-            scUK: schoolsUK,
-        }
+            scIT: schools.IT,
+            scNR: schools.Nr,
+            scSR: schools.SR,
+            scUK: schools.UK,
+            scGE: schools.GE,
+            scSL: schools.SL
+        };
     }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import '~styles/shared';
+@import "~styles/shared";
 </style>

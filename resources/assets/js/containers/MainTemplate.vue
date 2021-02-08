@@ -1,47 +1,49 @@
 <template>
-<main
-    class="main"
-    :class="paddingClass"
->
-    <main-nav></main-nav>
-    <full-screen-message />
-    <div class="main__content">
-        <router-view></router-view>
-    </div>
-</main>
+    <main class="main" :class="paddingClass">
+        <main-nav></main-nav>
+        <full-screen-message />
+        <div class="main__content">
+            <router-view></router-view>
+
+            <!-- <div class="cookies-modal">
+                <div class="cookies-modal__container">
+                    <ui-title title="Cookies and privacy" />
+
+                </div>
+            </div> -->
+        </div>
+    </main>
 </template>
 
 <script>
-import {
-    gsap
-}
-from 'gsap/all'
-import FullScreenMessage from './FullScreenMessage.vue'
-import MainNav from './MainNav.vue'
+import { gsap } from "gsap/all";
+import FullScreenMessage from "./FullScreenMessage.vue";
+import MainNav from "./MainNav.vue";
+import { UiTitle } from "../ui";
 
 export default {
-    name: 'MainTemplate',
+    name: "MainTemplate",
     components: {
         FullScreenMessage,
         MainNav,
+        UiTitle
     },
-    data: function () {
+    data: function() {
         return {
-            paddingClass: null,
-        }
+            paddingClass: null
+        };
     },
     watch: {
-        '$root.space': function (value) {
-            this.setPadding()
+        "$root.space": function(value) {
+            this.setPadding();
         }
     },
     methods: {
-        setPadding: function () {
+        setPadding: function() {
             if (!this.$root.space) {
-                this.paddingClass = 'main--no-padding'
-            }
-            else {
-                this.paddingClass = null
+                this.paddingClass = "main--no-padding";
+            } else {
+                this.paddingClass = null;
             }
         }
         // conferenceMenuEnter: function(el, done) {
@@ -69,14 +71,14 @@ export default {
         //     })
         // }
     },
-    mounted: function () {
-        this.$nextTick(this.setPadding)
+    mounted: function() {
+        this.$nextTick(this.setPadding);
     }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import '~styles/shared';
+@import "~styles/shared";
 .main {
     &__content {
         padding-top: 60px;
@@ -84,6 +86,22 @@ export default {
 
     &--no-padding {
         padding-bottom: 0;
+    }
+
+    .cookies-modal {
+        position: fixed;
+        bottom: $spacer;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        z-index: 10000;
+
+        &__container {
+            background-color: $white;
+            padding: $spacer;
+            @include border-radius(5px);
+        }
     }
 }
 </style>
