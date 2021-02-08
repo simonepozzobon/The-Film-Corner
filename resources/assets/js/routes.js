@@ -11,6 +11,7 @@ import About from "./views/About.vue";
 import Schools from "./views/Schools.vue";
 import Filmography from "./views/Filmography.vue";
 import News from "./views/News.vue";
+import ConferenceOnline from "./views/ConferenceOnline.vue";
 import Cookies from "./views/Cookies.vue";
 import Privacy from "./views/Privacy.vue";
 
@@ -120,40 +121,45 @@ const routes = [
             },
             {
                 path: "conference",
-                component: ConferenceContainer,
-                children: [
-                    {
-                        path: "",
-                        name: "conference",
-                        component: ConferenceHome
-                    },
-                    {
-                        path: "about",
-                        name: "conf-about",
-                        component: ConferenceAbout
-                    },
-                    {
-                        path: "schedule-draft",
-                        name: "conf-schedule-draft",
-                        component: ScheduleDraft
-                    },
-                    {
-                        path: "accomodation",
-                        name: "conf-accomodation",
-                        component: Accomodation
-                    },
-                    {
-                        path: "downloads",
-                        name: "conf-downloads",
-                        component: Downloads
-                    },
-                    {
-                        path: "contact",
-                        name: "conf-contact",
-                        component: Contact
-                    }
-                ]
+                name: "conference",
+                component: ConferenceOnline
             },
+            // {
+            //     path: "conference",
+            //     component: ConferenceContainer,
+            //     children: [
+            //         {
+            //             path: "",
+            //             name: "conference",
+            //             component: ConferenceHome
+            //         },
+            //         {
+            //             path: "about",
+            //             name: "conf-about",
+            //             component: ConferenceAbout
+            //         },
+            //         {
+            //             path: "schedule-draft",
+            //             name: "conf-schedule-draft",
+            //             component: ScheduleDraft
+            //         },
+            //         {
+            //             path: "accomodation",
+            //             name: "conf-accomodation",
+            //             component: Accomodation
+            //         },
+            //         {
+            //             path: "downloads",
+            //             name: "conf-downloads",
+            //             component: Downloads
+            //         },
+            //         {
+            //             path: "contact",
+            //             name: "conf-contact",
+            //             component: Contact
+            //         }
+            //     ]
+            // },
             {
                 path: "apps",
                 component: AppsContainer,

@@ -1,6 +1,6 @@
 <template>
     <ui-container>
-        <ui-hero-banner image="./img/grafica/bg.jpg">
+        <ui-hero-banner image="/img/grafica/bg.jpg">
             <ui-container :full-width="true">
                 <ui-title
                     tag="h1"
