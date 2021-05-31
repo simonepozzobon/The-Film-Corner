@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\News;
+use App\School;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -13,7 +14,7 @@ class PublicController extends Controller
     {
         $news = News::all();
 
-        $news = $news->transform(function($value, $key) {
+        $news = $news->transform(function ($value, $key) {
             $value->link = $value->slug;
             return $value;
         })->all();
@@ -31,5 +32,18 @@ class PublicController extends Controller
             'success' => true,
             'news' => $news
         ];
+    }
+
+    public function get_schools()
+    {
+        $schools = School::get()->groupBy('country');
+
+
+
+        return response()->json(
+            [
+                'schools' => $schools
+            ]
+        );
     }
 }

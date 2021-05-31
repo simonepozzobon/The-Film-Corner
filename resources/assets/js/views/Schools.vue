@@ -13,69 +13,14 @@
             </ui-container>
         </ui-hero-banner>
         <ui-container class="py-5" :contain="true">
-            <ui-paragraph>
-                <ui-title title="Georgia" />
+            <ui-paragraph
+                v-for="(schools, country, key) in countries"
+                :key="key"
+            >
+                <ui-title :title="country" />
                 <ui-list>
-                    <ui-list-item
-                        v-for="(item, i, key) in this.scGE"
-                        :key="key"
-                    >
-                        {{ item.text }}
-                    </ui-list-item>
-                </ui-list>
-            </ui-paragraph>
-            <ui-paragraph>
-                <ui-title title="Italy" />
-                <ui-list>
-                    <ui-list-item
-                        v-for="(item, i, key) in this.scIT"
-                        :key="key"
-                    >
-                        {{ item.text }}
-                    </ui-list-item>
-                </ui-list>
-            </ui-paragraph>
-            <ui-paragraph>
-                <ui-title title="Northern Ireland" />
-                <ui-list>
-                    <ui-list-item
-                        v-for="(item, i, key) in this.scNR"
-                        :key="key"
-                    >
-                        {{ item.text }}
-                    </ui-list-item>
-                </ui-list>
-            </ui-paragraph>
-            <ui-paragraph>
-                <ui-title title="Serbia" />
-                <ui-list>
-                    <ui-list-item
-                        v-for="(item, i, key) in this.scSR"
-                        :key="key"
-                    >
-                        {{ item.text }}
-                    </ui-list-item>
-                </ui-list>
-            </ui-paragraph>
-            <ui-paragraph>
-                <ui-title title="Slovenia" />
-                <ui-list>
-                    <ui-list-item
-                        v-for="(item, i, key) in this.scSL"
-                        :key="key"
-                    >
-                        {{ item.text }}
-                    </ui-list-item>
-                </ui-list>
-            </ui-paragraph>
-            <ui-paragraph>
-                <ui-title title="UK" />
-                <ui-list>
-                    <ui-list-item
-                        v-for="(item, i, key) in this.scUK"
-                        :key="key"
-                    >
-                        {{ item.text }}
+                    <ui-list-item v-for="school in schools" :key="school.id">
+                        {{ school.name }}
                     </ui-list-item>
                 </ui-list>
             </ui-paragraph>
@@ -111,8 +56,20 @@ export default {
             scSR: schools.SR,
             scUK: schools.UK,
             scGE: schools.GE,
-            scSL: schools.SL
+            scSL: schools.SL,
+            countries: []
         };
+    },
+    methods: {
+        getSchools: function() {
+            this.$http.get("/api/v2/schools").then(response => {
+                console.log(response);
+                this.countries = response.data.schools;
+            });
+        }
+    },
+    mounted: function() {
+        this.getSchools();
     }
 };
 </script>

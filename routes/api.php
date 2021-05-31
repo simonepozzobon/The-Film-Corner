@@ -40,6 +40,7 @@ Route::prefix('v2')->group(
         Route::get('logout', 'Api\AuthController@attempt_logout')->middleware('auth:api');
         Route::get('news', 'Api\PublicController@get_news');
         Route::get('news/{slug}', 'Api\PublicController@get_single_news');
+        Route::get('schools', 'Api\PublicController@get_schools');
 
         Route::prefix('translate')->group(
             function () {
