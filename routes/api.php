@@ -213,6 +213,7 @@ Route::prefix('v2')->group(
                         Route::post('/save', 'Api\Admin\HomeController@save');
                         Route::post('/add-list', 'Api\Admin\HomeController@add_list');
                         Route::post('/update-list', 'Api\Admin\HomeController@update_list_translations');
+                        Route::post('/remove-item', 'Api\Admin\HomeController@remove_item');
                     }
                 );
             }

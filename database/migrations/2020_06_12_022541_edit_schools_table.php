@@ -19,8 +19,7 @@ class EditSchoolsTable extends Migration
                 $table->dropColumn('address');
                 $table->dropColumn('city');
                 $table->dropColumn('postal_code');
-                $table->dropColumn('country');
-                $table->text('description')->nullable();
+                // $table->text('description')->nullable();
             }
         );
     }
@@ -38,8 +37,7 @@ class EditSchoolsTable extends Migration
                 $table->string('address')->nullable();
                 $table->string('city')->nullable();
                 $table->string('postal_code')->nullable();
-                $table->string('country')->nullable();
-                $table->dropColumn('description');
+                // $table->dropColumn('description');
             }
         );
     }

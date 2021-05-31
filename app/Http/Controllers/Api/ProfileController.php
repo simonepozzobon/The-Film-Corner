@@ -25,10 +25,6 @@ class ProfileController extends Controller
 
     public function get_profile(Request $request)
     {
-        // $user = Auth::user();
-        // return [
-        //   $request->user(),
-        // ];
         $user = $request->user();
         if ($user->role_id == 1) {
             $students = $user->students;

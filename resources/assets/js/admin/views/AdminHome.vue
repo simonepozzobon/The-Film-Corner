@@ -27,6 +27,7 @@
                     :fields="block.fields"
                     :block="block"
                     @translate="translate"
+                    @destroy="destroy"
                 ></home-list>
             </block-panel>
         </container>
@@ -96,6 +97,7 @@ export default {
                     key: "schools",
                     title: "Scuole",
                     type: "list",
+                    hasTranslations: false,
                     fields: [
                         {
                             key: "name",
@@ -103,9 +105,14 @@ export default {
                             type: "string"
                         },
                         {
-                            key: "description",
-                            label: "Descrizione",
-                            type: "text-editor"
+                            key: "country",
+                            label: "Paese",
+                            type: "string"
+                        },
+                        {
+                            key: "tools",
+                            label: "Tools",
+                            included: false
                         }
                     ]
                 },
@@ -165,14 +172,41 @@ export default {
                     }
                 }
 
-                let block = this.blocks[3];
-                let item = block.data[2];
-                this.translate(item, block);
+                // let block = this.blocks[3];
+                // let item = block.data[2];
+                // this.translate(item, block);
             });
         },
         translate: function(item, block) {
             this.$refs.translate.show(item, block);
             this.current = item;
+        },
+        destroy: function(item, block) {
+            if (block && block.hasOwnProperty("key")) {
+                let data = new FormData();
+                data.append("type", block.key);
+                data.append("item_id", item.id);
+                this.$http
+                    .post("/api/v2/admin/home/remove-item", data)
+                    .then(response => {
+                        let idx = this.blocks.findIndex(
+                            el => el.key == block.key
+                        );
+                        if (idx > -1) {
+                            const current = this.blocks[idx];
+                            let idxData = current.data.findIndex(
+                                el => el.id == item.id
+                            );
+                            if (idxData > -1) {
+                                current.data.splice(idxData, 1);
+                                this.blocks.splice(idx, 1, current);
+                            }
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                    });
+            }
         }
     },
     mounted: function() {

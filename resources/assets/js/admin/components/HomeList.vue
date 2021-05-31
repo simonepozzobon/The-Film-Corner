@@ -10,6 +10,7 @@
             >
                 <template v-slot:cell(tools)="data">
                     <ui-button
+                        v-if="block.hasTranslations"
                         title="Aggiungi traduzioni"
                         color="orange"
                         size="sm"
@@ -55,7 +56,7 @@
 
                 <div class="w-100 d-flex justify-content-center mt-4">
                     <ui-button
-                        title="Aggiungi paratesto"
+                        title="Aggiungi"
                         color="green"
                         theme="outline"
                         :disable="isLoading"
@@ -86,7 +87,7 @@ import {
 import { UiButton, UiTitle } from "../../ui";
 import HomeListModal from "./HomeListModal";
 export default {
-    name: "Traduzioni",
+    name: "HomeList",
     components: {
         BlockPanel,
         Container,
@@ -163,10 +164,12 @@ export default {
     },
     methods: {
         init: function() {
+            // console.log("campi per il form", this.fields);
             for (let i = 0; i < this.fields.length; i++) {
                 const element = this.fields[i];
                 if (element.included != false) {
-                    this.values[element.key] = "sdsjfskdj";
+                    // console.log("valore mancante", element.key);
+                    this.values[element.key] = "campo vuoto";
                 }
             }
 
@@ -178,12 +181,14 @@ export default {
         save: function() {
             let data = new FormData();
             const fields = this.fields.filter(field => field.included != false);
+            console.log("fields", fields);
+            console.log("type", this.block.key);
             data.append("type", this.block.key);
             data.append("fields", JSON.stringify(fields));
             for (let i = 0; i < fields.length; i++) {
                 const element = fields[i];
                 if (element.included != false) {
-                    // console.log(element.key, this.values[element.key]);
+                    console.log(element.key, this.values[element.key]);
                     data.append(element.key, this.values[element.key]);
                 }
             }
@@ -225,6 +230,9 @@ export default {
         },
         translate: function(item) {
             this.$emit("translate", item, this.block);
+        },
+        destroy: function(item) {
+            this.$emit("destroy", item, this.block);
         }
     },
     mounted: function() {

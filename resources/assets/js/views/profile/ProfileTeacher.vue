@@ -161,9 +161,10 @@ export default {
     methods: {
         getData: function() {
             // console.log(this.$root.user);
+            console.log("teacher");
             this.$http.get("/api/v2/profile").then(response => {
                 // console.log(response.data.user.activities[0]);
-                // console.log(response.data);
+                console.log(response.data);
                 if (response.data.success) {
                     this.button = this.$root.getCmd("add_student");
 

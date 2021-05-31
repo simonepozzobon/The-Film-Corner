@@ -93,7 +93,7 @@ export default {
             }
         },
         editorReady: function() {
-            console.log("reads");
+            console.log("ready");
             this.items = this.items - 1;
             if (this.items == 0 && this.initialized == false) {
                 this.initialized = true;

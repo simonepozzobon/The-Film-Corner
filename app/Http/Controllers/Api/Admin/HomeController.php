@@ -55,6 +55,21 @@ class HomeController extends Controller
         return response()->json($item);
     }
 
+    public function remove_item(Request $request)
+    {
+        $type = $request->type;
+
+        if ($type == 'schools') {
+            $model = 'App\\School';
+        } else if ($type == 'filmography') {
+            $model = 'App\\FilmographyTranslation';
+        }
+
+        $item = $model::find($request->item_id);
+        $item->delete();
+        return response()->json($item);
+    }
+
     public function update_list_translations(Request $request)
     {
         $type = $request->type;
