@@ -245,7 +245,6 @@ class PropagandaController extends Controller
                 break;
         }
 
-        return [$app->id];
         $sessions = $user->sessions()->where(
             [
                 ['app_id', $app->id],
@@ -295,9 +294,9 @@ class PropagandaController extends Controller
             $session->refresh();
             $session->app = $session->app;
         } else if ($token == 'navigation') {
-            return [
-                'siamo qui'
-            ];
+            // return [
+            //     'siamo qui'
+            // ];
             $session = null;
         } else {
             $session = Session::where('token', $token)->with('app')->first();

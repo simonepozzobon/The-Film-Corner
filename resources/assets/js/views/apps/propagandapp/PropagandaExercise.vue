@@ -160,7 +160,12 @@ export default {
     },
     watch: {
         content: function(content) {
-            this.description = content.description;
+            console.log("qui content", content);
+            if (content && content.hasOwnProperty("description")) {
+                this.description = content.description;
+            } else {
+                this.description = null;
+            }
         },
         "$root.locale": function(locale) {
             this.translateExercise();
@@ -181,6 +186,7 @@ export default {
             this.title = this.translateContent("title");
         },
         translateContent: function(key) {
+            // if (this.content) {
             let item = this.content.translations.find(
                 translation => translation.locale == this.$root.locale
             );
@@ -190,15 +196,18 @@ export default {
             }
 
             return this.content[key];
+            // }
+            // return null;
         },
         getData: function() {
             let id = this.$route.params.id;
             let exerciseId = this.$route.params.exerciseId;
 
             // perform api call
+            console.log(`id -> ${id}`, `exerciseId -> ${exerciseId}`);
             let url = `/api/v2/propaganda/clip/${id}/exercise/${exerciseId}/navigation`;
             this.$http.get(url).then(response => {
-                // console.log(response);
+                console.log("risposta navigazione", response.data);
                 const { clip, exercise, sessions } = response.data;
 
                 this.clip = clip;
@@ -249,6 +258,7 @@ export default {
         }
     },
     created: function() {
+        // console.log("gettin data");
         this.getData();
     },
     mounted: function() {}
