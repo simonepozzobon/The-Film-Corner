@@ -706,7 +706,7 @@
           <img src="/img/logos/logo-miur.png" class="img-fluid" />
         </div>
         <div class="col-md-4">
-          <img src="/img/logos/CiPS.png" class="img-fluid" />
+          <img src="/img/logos/logo-cips.png" class="img-fluid" />
         </div>
         <div class="col-12 text-center">
           <small>Iniziativa realizzata nell’ambito del Piano Nazionale Cinema per la Scuola</small>
