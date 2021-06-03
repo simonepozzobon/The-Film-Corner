@@ -200,10 +200,13 @@ export default {
                 .post("/api/v2/admin/home/add-list", data)
                 .then(response => {
                     const { data } = response;
+                    // console.log(this.contents, response);
+                    // this.contents.push(data);
+                    this.$emit("update", data, this.block);
                 });
         },
         updateContent: function(value, isEditor = false, key = null) {
-            console.log("updateContent", value, isEditor, key);
+            // console.log("updateContent", value, isEditor, key);
             if (key && this.values.hasOwnProperty(key)) {
                 this.values[key] = value;
             }

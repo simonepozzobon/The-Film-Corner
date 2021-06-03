@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import { schools } from "../dummies/schools";
 import {
     UiContainer,
     UiHeroBanner,
@@ -51,12 +50,6 @@ export default {
     },
     data: function() {
         return {
-            scIT: schools.IT,
-            scNR: schools.Nr,
-            scSR: schools.SR,
-            scUK: schools.UK,
-            scGE: schools.GE,
-            scSL: schools.SL,
             countries: []
         };
     },
@@ -68,7 +61,7 @@ export default {
             });
         }
     },
-    mounted: function() {
+    created: function() {
         this.getSchools();
     }
 };

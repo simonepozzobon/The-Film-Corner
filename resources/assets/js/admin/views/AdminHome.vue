@@ -27,6 +27,7 @@
                     :fields="block.fields"
                     :block="block"
                     @translate="translate"
+                    @update="update"
                     @destroy="destroy"
                 ></home-list>
             </block-panel>
@@ -180,6 +181,15 @@ export default {
         translate: function(item, block) {
             this.$refs.translate.show(item, block);
             this.current = item;
+        },
+        update: function(item, block) {
+            // console.log("updatesss", item, block);
+            let idx = this.blocks.findIndex(el => el.key == block.key);
+            if (idx > -1) {
+                const current = this.blocks[idx];
+                current.data.push(item);
+                this.blocks.splice(idx, 1, current);
+            }
         },
         destroy: function(item, block) {
             if (block && block.hasOwnProperty("key")) {

@@ -41,6 +41,7 @@ Route::prefix('v2')->group(
         Route::get('news', 'Api\PublicController@get_news');
         Route::get('news/{slug}', 'Api\PublicController@get_single_news');
         Route::get('schools', 'Api\PublicController@get_schools');
+        Route::get('filmography', 'Api\PublicController@get_filmography');
 
         Route::prefix('translate')->group(
             function () {

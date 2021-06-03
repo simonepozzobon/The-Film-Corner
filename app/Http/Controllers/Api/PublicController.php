@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Filmography;
 use App\News;
 use App\School;
 
@@ -14,10 +15,12 @@ class PublicController extends Controller
     {
         $news = News::all();
 
-        $news = $news->transform(function ($value, $key) {
-            $value->link = $value->slug;
-            return $value;
-        })->all();
+        $news = $news->transform(
+            function ($value, $key) {
+                $value->link = $value->slug;
+                return $value;
+            }
+        )->all();
 
         return [
             'success' => true,
@@ -38,11 +41,19 @@ class PublicController extends Controller
     {
         $schools = School::get()->groupBy('country');
 
-
-
         return response()->json(
             [
                 'schools' => $schools
+            ]
+        );
+    }
+
+    public function get_filmography()
+    {
+        $filmography = Filmography::get();
+        return response()->json(
+            [
+                'filmography' => $filmography
             ]
         );
     }
