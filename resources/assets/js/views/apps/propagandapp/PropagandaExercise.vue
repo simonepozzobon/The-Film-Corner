@@ -160,7 +160,7 @@ export default {
     },
     watch: {
         content: function(content) {
-            console.log("qui content", content);
+            // console.log("qui content", content);
             if (content && content.hasOwnProperty("description")) {
                 this.description = content.description;
             } else {
@@ -202,6 +202,7 @@ export default {
         getData: function() {
             let id = this.$route.params.id;
             let exerciseId = this.$route.params.exerciseId;
+            console.log("parametri", this.$route);
 
             // perform api call
             console.log(`id -> ${id}`, `exerciseId -> ${exerciseId}`);

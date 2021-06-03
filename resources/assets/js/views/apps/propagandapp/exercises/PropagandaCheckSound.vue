@@ -194,6 +194,7 @@ export default {
                     ? JSON.parse(session.content)
                     : {};
                 formattedSession.content = {
+                    clipId: id,
                     ...content
                 };
                 this.session = Object.assign({}, formattedSession);
