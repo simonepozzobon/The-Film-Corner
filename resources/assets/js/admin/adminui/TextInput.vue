@@ -44,6 +44,10 @@ export default {
         vertical: {
             type: Boolean,
             default: false
+        },
+        fieldKey: {
+            type: String,
+            default: null
         }
     },
     data: function() {
@@ -53,7 +57,8 @@ export default {
     },
     watch: {
         value: function(value) {
-            this.$emit("update", value);
+            const key = this.fieldKey;
+            this.$emit("update", value, false, key);
         },
         initial: function(value) {
             this.setInitial();

@@ -39,6 +39,7 @@
                         ref="content"
                         :has-animation="false"
                         :label="field.label"
+                        :field-key="field.key"
                         min-height="50px"
                         @update="updateContent"
                     />
@@ -47,6 +48,7 @@
                         ref="content"
                         :has-animation="false"
                         :label="field.label"
+                        :field-key="field.key"
                         min-height="50px"
                         :has-label="false"
                         input-size="col-md-12"
@@ -187,8 +189,9 @@ export default {
             data.append("fields", JSON.stringify(fields));
             for (let i = 0; i < fields.length; i++) {
                 const element = fields[i];
+                console.log(element, "dentro");
                 if (element.included != false) {
-                    console.log(element.key, this.values[element.key]);
+                    // console.log(element.key, this.values[element.key]);
                     data.append(element.key, this.values[element.key]);
                 }
             }
@@ -199,7 +202,12 @@ export default {
                     const { data } = response;
                 });
         },
-        updateContent: function() {},
+        updateContent: function(value, isEditor = false, key = null) {
+            console.log("updateContent", value, isEditor, key);
+            if (key && this.values.hasOwnProperty(key)) {
+                this.values[key] = value;
+            }
+        },
         setInitials: function() {
             for (let key in this.initials) {
                 if (
@@ -225,6 +233,7 @@ export default {
             });
         },
         update: function(key, values = arguments) {
+            console.log("updatess", key, values);
             let value = values[1];
             this.values[key] = value;
         },

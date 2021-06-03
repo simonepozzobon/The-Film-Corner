@@ -1,187 +1,164 @@
 <template>
-<div class="admin-editor">
-    <div class="form-group row">
-        <label
-            v-if="hasLabel"
-            for=""
-            :class="labelSize"
-        >
-            {{ label }}
-        </label>
-        <div
-            :class="inputSize"
-            @click.stop.prevent="focusEditor"
-        >
-            <div
-                class="admin-editor__container"
-                ref="container"
-            >
-                <editor-menu-bar
-                    ref="menuBar"
-                    :editor="editor"
-                    v-slot="{ commands, isActive }"
-                >
-                    <div class="menubar">
-                        <button
-                            class="menubar__button"
-                            :class="{ 'is-active': isActive.bold() }"
-                            @click="commands.bold"
-                        >
-                            B
-                        </button>
-
-                        <button
-                            class="menubar__button"
-                            :class="{ 'is-active': isActive.italic() }"
-                            @click="commands.italic"
-                        >
-                            I
-                        </button>
-
-                        <button
-                            class="menubar__button"
-                            :class="{ 'is-active': isActive.strike() }"
-                            @click="commands.strike"
-                        >
-                            S
-                        </button>
-
-                        <button
-                            class="menubar__button"
-                            :class="{ 'is-active': isActive.underline() }"
-                            @click="commands.underline"
-                        >
-                            U
-                        </button>
-
-                        <button
-                            class="menubar__button"
-                            :class="{ 'is-active': isActive.bullet_list() }"
-                            @click="commands.bullet_list"
-                        >
-                            List
-                        </button>
-
-                        <button
-                            class="menubar__button"
-                            :class="{ 'is-active': isActive.heading({ level: 1 }) }"
-                            @click="commands.heading({ level: 1 })"
-                        >
-                            H1
-                        </button>
-
-                        <button
-                            class="menubar__button"
-                            :class="{ 'is-active': isActive.heading({ level: 2 }) }"
-                            @click="commands.heading({ level: 2 })"
-                        >
-                            H2
-                        </button>
-
-                        <button
-                            class="menubar__button"
-                            :class="{ 'is-active': isActive.heading({ level: 3 }) }"
-                            @click="commands.heading({ level: 3 })"
-                        >
-                            H3
-                        </button>
-
-                    </div>
-                </editor-menu-bar>
-                <editor-menu-bubble
-                    class="menububble"
-                    :editor="editor"
-                    @hide="hideLinkMenu"
-                    v-slot="{ commands, isActive, getMarkAttrs, menu }"
-                >
-                    <div
-                        class="menububble"
-                        :class="{ 'is-active': menu.isActive }"
-                        :style="`left: ${menu.left}px; bottom: ${menu.bottom}px;`"
+    <div class="admin-editor">
+        <div class="form-group row">
+            <label v-if="hasLabel" for="" :class="labelSize">
+                {{ label }}
+            </label>
+            <div :class="inputSize" @click.stop.prevent="focusEditor">
+                <div class="admin-editor__container" ref="container">
+                    <editor-menu-bar
+                        ref="menuBar"
+                        :editor="editor"
+                        v-slot="{ commands, isActive }"
                     >
+                        <div class="menubar">
+                            <button
+                                class="menubar__button"
+                                :class="{ 'is-active': isActive.bold() }"
+                                @click="commands.bold"
+                            >
+                                B
+                            </button>
 
-                        <form
-                            class="menububble__form"
-                            v-if="linkMenuIsActive"
-                            @submit.prevent="setLinkUrl(commands.link, linkUrl)"
+                            <button
+                                class="menubar__button"
+                                :class="{ 'is-active': isActive.italic() }"
+                                @click="commands.italic"
+                            >
+                                I
+                            </button>
+
+                            <button
+                                class="menubar__button"
+                                :class="{ 'is-active': isActive.strike() }"
+                                @click="commands.strike"
+                            >
+                                S
+                            </button>
+
+                            <button
+                                class="menubar__button"
+                                :class="{ 'is-active': isActive.underline() }"
+                                @click="commands.underline"
+                            >
+                                U
+                            </button>
+
+                            <button
+                                class="menubar__button"
+                                :class="{ 'is-active': isActive.bullet_list() }"
+                                @click="commands.bullet_list"
+                            >
+                                List
+                            </button>
+
+                            <button
+                                class="menubar__button"
+                                :class="{
+                                    'is-active': isActive.heading({ level: 1 })
+                                }"
+                                @click="commands.heading({ level: 1 })"
+                            >
+                                H1
+                            </button>
+
+                            <button
+                                class="menubar__button"
+                                :class="{
+                                    'is-active': isActive.heading({ level: 2 })
+                                }"
+                                @click="commands.heading({ level: 2 })"
+                            >
+                                H2
+                            </button>
+
+                            <button
+                                class="menubar__button"
+                                :class="{
+                                    'is-active': isActive.heading({ level: 3 })
+                                }"
+                                @click="commands.heading({ level: 3 })"
+                            >
+                                H3
+                            </button>
+                        </div>
+                    </editor-menu-bar>
+                    <editor-menu-bubble
+                        class="menububble"
+                        :editor="editor"
+                        @hide="hideLinkMenu"
+                        v-slot="{ commands, isActive, getMarkAttrs, menu }"
+                    >
+                        <div
+                            class="menububble"
+                            :class="{ 'is-active': menu.isActive }"
+                            :style="
+                                `left: ${menu.left}px; bottom: ${menu.bottom}px;`
+                            "
                         >
-                            <input
-                                class="menububble__input"
-                                type="text"
-                                v-model="linkUrl"
-                                placeholder="https://"
-                                ref="linkInput"
-                                @keydown.esc="hideLinkMenu"
-                            />
-                            <button
-                                class="menububble__button"
-                                @click="setLinkUrl(commands.link, null)"
-                                type="button"
+                            <form
+                                class="menububble__form"
+                                v-if="linkMenuIsActive"
+                                @submit.prevent="
+                                    setLinkUrl(commands.link, linkUrl)
+                                "
                             >
-                                Elimina
-                            </button>
-                        </form>
+                                <input
+                                    class="menububble__input"
+                                    type="text"
+                                    v-model="linkUrl"
+                                    placeholder="https://"
+                                    ref="linkInput"
+                                    @keydown.esc="hideLinkMenu"
+                                />
+                                <button
+                                    class="menububble__button"
+                                    @click="setLinkUrl(commands.link, null)"
+                                    type="button"
+                                >
+                                    Elimina
+                                </button>
+                            </form>
 
-                        <template v-else>
-                            <button
-                                class="menububble__button"
-                                @click="showLinkMenu(getMarkAttrs('link'))"
-                                :class="{ 'is-active': isActive.link() }"
-                            >
-                                <span>{{ isActive.link() ? 'Modifica Link' : 'Aggiungi Link'}}</span>
-                            </button>
-                        </template>
-
-                    </div>
-                </editor-menu-bubble>
-                <editor-content
-                    ref="content"
-                    class="admin-editor__content"
-                    :editor="editor"
-                >
-                </editor-content>
+                            <template v-else>
+                                <button
+                                    class="menububble__button"
+                                    @click="showLinkMenu(getMarkAttrs('link'))"
+                                    :class="{ 'is-active': isActive.link() }"
+                                >
+                                    <span>{{
+                                        isActive.link()
+                                            ? "Modifica Link"
+                                            : "Aggiungi Link"
+                                    }}</span>
+                                </button>
+                            </template>
+                        </div>
+                    </editor-menu-bubble>
+                    <editor-content
+                        ref="content"
+                        class="admin-editor__content"
+                        :editor="editor"
+                    >
+                    </editor-content>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </template>
 
 <script>
-import {
-    Editor,
-    EditorContent,
-    EditorMenuBar,
-    EditorMenuBubble,
-}
-from 'tiptap'
+import { Editor, EditorContent, EditorMenuBar, EditorMenuBubble } from "tiptap";
 
-import {
-    TweenMax,
-    Power4,
-    Back,
-    TimelineMax,
-}
-from 'gsap/all'
-import {
-    gsap
-}
-from 'gsap'
-import {
-    CSSPlugin
-}
-from 'gsap/CSSPlugin'
+import { TweenMax, Power4, Back, TimelineMax } from "gsap/all";
+import { gsap } from "gsap";
+import { CSSPlugin } from "gsap/CSSPlugin";
 
-import {
-    GSDevTools
-}
-from 'gsap/GSDevTools'
+import { GSDevTools } from "gsap/GSDevTools";
 
-gsap.registerPlugin(CSSPlugin, GSDevTools)
+gsap.registerPlugin(CSSPlugin, GSDevTools);
 
-const plugins = [
-    Power4,
-    Back,
-]
+const plugins = [Power4, Back];
 
 import {
     Blockquote,
@@ -202,52 +179,55 @@ import {
     Strike,
     Underline,
     History,
-    Focus,
-}
-from 'tiptap-extensions'
+    Focus
+} from "tiptap-extensions";
 
 export default {
-    name: 'TextEditor',
+    name: "TextEditor",
     props: {
         label: {
             type: String,
-            default: 'Titolo',
+            default: "Titolo"
         },
         hasAnimations: {
             type: Boolean,
-            default: false,
+            default: false
         },
         hasAnimation: {
             type: Boolean,
-            default: false,
+            default: false
         },
         labelSize: {
             type: String,
-            default: 'col-md-2',
+            default: "col-md-2"
         },
         inputSize: {
             type: String,
-            default: 'col-md-10',
+            default: "col-md-10"
         },
         debug: {
             type: Boolean,
-            default: false,
+            default: false
         },
         minHeight: {
             type: String,
-            default: '250px',
+            default: "250px"
         },
         hasLabel: {
             type: Boolean,
-            default: true,
+            default: true
         },
+        fieldKey: {
+            type: String,
+            default: null
+        }
     },
     components: {
         EditorContent,
         EditorMenuBar,
-        EditorMenuBubble,
+        EditorMenuBubble
     },
-    data: function () {
+    data: function() {
         return {
             editor: null,
             html: null,
@@ -255,11 +235,11 @@ export default {
             linkUrl: null,
             linkMenuIsActive: false,
             master: null,
-            isOpen: false,
-        }
+            isOpen: false
+        };
     },
     methods: {
-        init: function () {
+        init: function() {
             this.editor = new Editor({
                 extensions: [
                     // new PasteHandler(),
@@ -285,87 +265,112 @@ export default {
                     new Underline(),
                     new History(),
                     new Focus({
-                        className: 'has-focus',
-                        nested: true,
-                    }),
+                        className: "has-focus",
+                        nested: true
+                    })
                 ],
-                content: this.initial ? this.initial : '',
+                content: this.initial ? this.initial : "",
                 onFocus: () => {
-                    if (this.hasAnimations == true || this.hasAnimation == true) {
-                        this.openPanel()
+                    if (
+                        this.hasAnimations == true ||
+                        this.hasAnimation == true
+                    ) {
+                        this.openPanel();
                     }
                 },
                 onBlur: () => {
-                    if (this.hasAnimations == true || this.hasAnimation == true) {
-                        this.closePanel()
+                    if (
+                        this.hasAnimations == true ||
+                        this.hasAnimation == true
+                    ) {
+                        this.closePanel();
                     }
                 }
-            })
+            });
 
             // console.log(this.initial);
 
-            this.editor.on('update', (e) => {
-                this.html = e.getHTML()
-                this.json = e.getJSON()
-                this.$emit('update', this.json, this.html)
+            this.editor.on("update", e => {
+                this.html = e.getHTML();
+                this.json = e.getJSON();
+                if (this.fieldKey) {
+                    const key = this.fieldKey;
+                    this.$emit("update", this.html, true, key);
+                } else {
+                    this.$emit("update", this.json, this.html);
+                }
                 // console.log('updated');
-            })
+            });
 
             if (this.hasAnimations == true || this.hasAnimation == true) {
                 this.$nextTick(() => {
-                    this.initAnim()
-                })
+                    this.initAnim();
+                });
             }
         },
-        initAnim: function () {
+        initAnim: function() {
             // console.log('animations');
-            let container = this.$refs.container
-            let menu = container.getElementsByClassName('menubar')
+            let container = this.$refs.container;
+            let menu = container.getElementsByClassName("menubar");
             if (menu) {
-                menu = menu[0]
+                menu = menu[0];
             }
-            menu.style.overflow = 'hidden'
+            menu.style.overflow = "hidden";
 
             this.master = gsap.timeline({
-                paused: true,
-            })
+                paused: true
+            });
 
-            this.master.addLabel('start', 0)
+            this.master.addLabel("start", 0);
 
+            this.master.fromTo(
+                container,
+                {
+                    minHeight: this.minHeight
+                },
+                {
+                    minHeight: "1px",
+                    duration: 0.3,
+                    ease: "back.out(1.4)"
+                },
+                "start"
+            );
 
-            this.master.fromTo(container, {
-                minHeight: this.minHeight,
-            }, {
-                minHeight: '1px',
-                duration: .3,
-                ease: 'back.out(1.4)',
-            }, 'start')
+            this.master.fromTo(
+                menu,
+                {
+                    padding: "0.61805rem",
+                    marginBottom: "1rem",
+                    maxHeight: "100%",
+                    height: "auto"
+                },
+                {
+                    padding: 0,
+                    marginBottom: 0,
+                    maxHeight: 0,
+                    height: 0,
+                    // lazy: true,
+                    duration: 0.1,
+                    ease: "power4.inOut"
+                },
+                "start+=0.1"
+            );
 
-            this.master.fromTo(menu, {
-                padding: '0.61805rem',
-                marginBottom: '1rem',
-                maxHeight: '100%',
-                height: 'auto',
-            }, {
-                padding: 0,
-                marginBottom: 0,
-                maxHeight: 0,
-                height: 0,
-                // lazy: true,
-                duration: .1,
-                ease: 'power4.inOut',
-            }, 'start+=0.1')
+            this.master.fromTo(
+                menu,
+                {
+                    autoAlpha: 1
+                },
+                {
+                    autoAlpha: 0,
+                    // lazy: true,
+                    duration: 0.2,
+                    immediateRender: false
+                },
+                "start"
+            );
 
-            this.master.fromTo(menu, {
-                autoAlpha: 1,
-            }, {
-                autoAlpha: 0,
-                // lazy: true,
-                duration: .2,
-                immediateRender: false,
-            }, 'start')
-
-            this.master.progress(1).progress(0)
+            this.master.progress(1).progress(0);
 
             if (this.debug) {
                 GSDevTools.create({
@@ -373,74 +378,75 @@ export default {
                     css: {
                         zIndex: 100
                     }
-                })
+                });
             }
 
             this.$nextTick(() => {
-                this.closePanel()
-                this.$emit('ready')
-            })
-
+                this.closePanel();
+                this.$emit("ready");
+            });
         },
-        closePanel: function () {
+        closePanel: function() {
             if (this.master) {
-                this.master.play()
+                this.master.play();
             }
         },
-        openPanel: function () {
+        openPanel: function() {
             if (this.master) {
-                this.master.reverse()
+                this.master.reverse();
             }
         },
-        showLinkMenu: function (attrs) {
-            this.linkUrl = attrs.href
-            this.linkMenuIsActive = true
+        showLinkMenu: function(attrs) {
+            this.linkUrl = attrs.href;
+            this.linkMenuIsActive = true;
             this.$nextTick(() => {
-                this.$refs.linkInput.focus()
-            })
+                this.$refs.linkInput.focus();
+            });
         },
-        hideLinkMenu: function () {
-            this.linkUrl = null
-            this.linkMenuIsActive = false
+        hideLinkMenu: function() {
+            this.linkUrl = null;
+            this.linkMenuIsActive = false;
         },
-        setLinkUrl: function (command, url) {
+        setLinkUrl: function(command, url) {
             command({
                 href: url
-            })
-            this.hideLinkMenu()
-            this.editor.focus()
+            });
+            this.hideLinkMenu();
+            this.editor.focus();
         },
-        focusEditor: function () {
+        focusEditor: function() {
             if (this.editor) {
-                this.editor.focus()
+                this.editor.focus();
             }
         },
-        setHeight: function () {
-            let container = this.$refs.container
-            let content = container.getElementsByClassName('admin-editor__content')[0]
-            container.style.minHeight = this.minHeight
-            content.style.minHeight = this.minHeight
-        },
-    },
-    mounted: function () {
-        this.setHeight()
-        this.$nextTick(this.init)
-        if (this.debug) {
-            console.log('mounted inside');
+        setHeight: function() {
+            let container = this.$refs.container;
+            let content = container.getElementsByClassName(
+                "admin-editor__content"
+            )[0];
+            container.style.minHeight = this.minHeight;
+            content.style.minHeight = this.minHeight;
         }
     },
-    beforeDestroy: function () {
-        this.editor.destroy()
+    mounted: function() {
+        this.setHeight();
+        this.$nextTick(this.init);
+        if (this.debug) {
+            console.log("mounted inside");
+        }
+    },
+    beforeDestroy: function() {
+        this.editor.destroy();
         if (this.master) {
-            this.master.kill()
+            this.master.kill();
         }
     }
-}
+};
 </script>
 
 <style lang="scss">
-@import '~styles/shared';
-@import '~styles/vendor/tiptap/main';
+@import "~styles/shared";
+@import "~styles/vendor/tiptap/main";
 
 .admin-editor {
     &__container {
