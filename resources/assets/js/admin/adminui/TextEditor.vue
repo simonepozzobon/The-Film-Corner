@@ -306,6 +306,10 @@ export default {
                 this.$nextTick(() => {
                     this.initAnim();
                 });
+            } else {
+                this.$nextTick(() => {
+                    this.$emit("ready");
+                });
             }
         },
         initAnim: function() {

@@ -1,5 +1,9 @@
 <template>
     <div class="admin-home">
+        <home-project />
+        <container :contains="true" :has-animations="true">
+            <block-panel title="Conferenza" :has-footer="true"></block-panel>
+        </container>
         <container
             :contains="true"
             :has-animations="true"
@@ -38,6 +42,7 @@
 
 <script>
 import { Container, BlockPanel, TextEditor } from "../adminui";
+import HomeProject from "../components/HomeProject";
 import HomeBlock from "../components/HomeBlock";
 import HomeList from "../components/HomeList";
 import HomeListModal from "../components/HomeListModal";
@@ -49,7 +54,8 @@ export default {
         TextEditor,
         HomeBlock,
         HomeList,
-        HomeListModal
+        HomeListModal,
+        HomeProject
     },
     data: () => {
         return {
@@ -89,11 +95,11 @@ export default {
                 ka: {}
             },
             blocks: [
-                {
-                    key: "project",
-                    title: "Il Progetto",
-                    type: "text-editor"
-                },
+                // {
+                //     key: "project",
+                //     title: "Il Progetto",
+                //     type: "text-editor"
+                // },
                 {
                     key: "schools",
                     title: "Scuole",
@@ -117,11 +123,11 @@ export default {
                         }
                     ]
                 },
-                {
-                    key: "conference",
-                    title: "Conferenza",
-                    type: "text-editor"
-                },
+                // {
+                //     key: "conference",
+                //     title: "Conferenza",
+                //     type: "text-editor"
+                // },
                 {
                     key: "filmography",
                     title: "Filmografia",
