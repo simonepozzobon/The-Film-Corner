@@ -5,12 +5,12 @@ return [
     /*
      * Enable it?
      */
-    'enabled' => true,
+    'enabled' => false,
 
     /*
      * Enable cache?
      */
-    'cache_enabled' => true,
+    'cache_enabled' => false,
 
     /*
      * Deffer booting for middleware use
@@ -124,7 +124,7 @@ return [
      *
      */
 
-    'geoip_database_path' => __DIR__.'/geoip', //storage_path('geoip'),
+    'geoip_database_path' => __DIR__ . '/geoip', //storage_path('geoip'),
 
     /*
      * Also log SQL query bindings?
