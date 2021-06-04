@@ -27,9 +27,11 @@ class TranslationController extends Controller
             $current->save();
         }
 
-        return response()->json([
-          'clip' => $clip,
-          'translations' => $translations
-        ]);
+        return response()->json(
+            [
+                'clip' => $clip,
+                'translations' => $translations
+            ]
+        );
     }
 }

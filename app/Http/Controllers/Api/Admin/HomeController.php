@@ -6,6 +6,8 @@ use App\Filmography;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\School;
+use App\HomeText;
+use App\HomeTextTranslation;
 
 class HomeController extends Controller
 {
@@ -26,6 +28,7 @@ class HomeController extends Controller
     public function save(Request $request)
     {
     }
+
     public function add_list(Request $request)
     {
         $type = $request->type;
@@ -112,5 +115,74 @@ class HomeController extends Controller
         }
         $item = $model::find($request->id);
         return response()->json($item);
+    }
+
+    public function get_project()
+    {
+        $text = HomeText::find(1);
+        return response()
+            ->json(
+                [
+                    'text' => $text
+                ]
+            );
+    }
+
+    public function save_project(Request $request)
+    {
+        $text = $this->save_home_text($request, 1);
+
+        return response()
+            ->json(
+                [
+                    'text' => $text
+                ]
+            );
+    }
+
+    public function get_conference()
+    {
+        $text = HomeText::find(2);
+        return response()
+            ->json(
+                [
+                    'text' => $text
+                ]
+            );
+    }
+
+    public function save_conference(Request $request)
+    {
+        $text = $this->save_home_text($request, 2);
+
+        return response()
+            ->json(
+                [
+                    'text' => $text
+                ]
+            );
+    }
+
+    public function save_home_text($request, $id)
+    {
+        $languages = ['it', 'en', 'fr', 'sr', 'sl', 'ka'];
+        foreach ($languages as $lang) {
+            $content = $request->{$lang};
+
+            if ($content && $content != 'null') {
+                $t = HomeTextTranslation::firstOrNew(
+                    [
+                        ['home_text_id', '=', $id],
+                        ['locale', '=', $lang]
+                    ]
+                );
+                $t->home_text_id = $id;
+                $t->locale = $lang;
+                $t->content = $content;
+                $t->save();
+            }
+        }
+
+        return HomeText::find($id);
     }
 }

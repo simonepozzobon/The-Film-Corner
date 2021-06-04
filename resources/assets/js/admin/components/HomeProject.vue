@@ -58,7 +58,7 @@
 
             <div class="w-100 d-flex justify-content-center mt-4">
                 <ui-button
-                    title="Aggiungi"
+                    title="Salva"
                     color="green"
                     theme="outline"
                     :disable="isLoading"
@@ -84,16 +84,13 @@ export default {
     },
     data: function() {
         return {
-            initials: {
-                it: "gianni",
-                en: "porco",
-                ka: "dfkjdkdjjfdk"
-            },
+            initials: {},
             ready: {
                 it: false,
                 en: false,
                 fr: false,
                 sr: false,
+                sl: false,
                 ka: false
             },
             content: {
@@ -101,12 +98,30 @@ export default {
                 en: null,
                 fr: null,
                 sr: null,
+                sl: null,
                 ka: null
             },
             isLoading: true
         };
     },
+    watch: {
+        initials: function(initials) {
+            // this.setInitials();
+        }
+    },
     methods: {
+        getData: function() {
+            this.$http.get("/api/v2/admin/home/get-project").then(response => {
+                let contents = response.data.text.translations;
+                for (let i = 0; i < contents.length; i++) {
+                    const element = contents[i];
+                    const locale = element.locale;
+                    this.initials[locale] = element.content;
+                }
+                // console.log(this.initials);
+                this.$nextTick(this.setInitials);
+            });
+        },
         setReady: function(key) {
             this.ready[key] = true;
 
@@ -120,10 +135,14 @@ export default {
             }
 
             if (completed) {
-                this.setInitials();
+                this.$nextTick(() => {
+                    this.setInitials();
+                    this.isLoading = false;
+                });
             }
         },
         setInitials: function() {
+            // console.log("set initials");
             let keys = Object.keys(this.content);
             for (let i = 0; i < keys.length; i++) {
                 const key = keys[i];
@@ -133,6 +152,7 @@ export default {
                     this.$refs[key].editor
                 ) {
                     let value = this.initials[key];
+                    // console.log("setting editor");
                     this.$refs[key].editor.setContent(value);
                 }
             }
@@ -142,7 +162,30 @@ export default {
                 this.content[key] = value;
             }
         },
-        save: function() {}
+        save: function() {
+            this.isLoading = true;
+
+            let data = new FormData();
+            data.append("it", this.content.it);
+            data.append("en", this.content.en);
+            data.append("fr", this.content.fr);
+            data.append("sr", this.content.sr);
+            data.append("sl", this.content.sl);
+            data.append("ka", this.content.ka);
+
+            this.$http
+                .post("/api/v2/admin/home/save-project", data)
+                .then(response => {
+                    // console.log(response.data);
+                    this.isLoading = false;
+                })
+                .catch(err => {
+                    this.isLoading = false;
+                });
+        }
+    },
+    created: function() {
+        this.getData();
     },
     mounted: function() {
         // this.setInitials();

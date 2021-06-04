@@ -216,6 +216,10 @@ Route::prefix('v2')->group(
                         Route::post('/add-list', 'Api\Admin\HomeController@add_list');
                         Route::post('/update-list', 'Api\Admin\HomeController@update_list_translations');
                         Route::post('/remove-item', 'Api\Admin\HomeController@remove_item');
+                        Route::get('/get-project', 'Api\Admin\HomeController@get_project');
+                        Route::post('/save-project', 'Api\Admin\HomeController@save_project');
+                        Route::get('/get-conference', 'Api\Admin\HomeController@get_conference');
+                        Route::post('/save-conference', 'Api\Admin\HomeController@save_conference');
                     }
                 );
             }

@@ -1,9 +1,7 @@
 <template>
     <div class="admin-home">
         <home-project />
-        <container :contains="true" :has-animations="true">
-            <block-panel title="Conferenza" :has-footer="true"></block-panel>
-        </container>
+        <home-conference />
         <container
             :contains="true"
             :has-animations="true"
@@ -42,10 +40,12 @@
 
 <script>
 import { Container, BlockPanel, TextEditor } from "../adminui";
-import HomeProject from "../components/HomeProject";
 import HomeBlock from "../components/HomeBlock";
+import HomeConference from "../components/HomeConference";
 import HomeList from "../components/HomeList";
 import HomeListModal from "../components/HomeListModal";
+import HomeProject from "../components/HomeProject";
+
 export default {
     name: "AdminHome",
     components: {
@@ -53,6 +53,7 @@ export default {
         BlockPanel,
         TextEditor,
         HomeBlock,
+        HomeConference,
         HomeList,
         HomeListModal,
         HomeProject
