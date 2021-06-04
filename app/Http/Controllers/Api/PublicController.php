@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Filmography;
 use App\News;
 use App\School;
+use App\HomeText;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -56,5 +57,26 @@ class PublicController extends Controller
                 'filmography' => $filmography
             ]
         );
+    }
+
+    public function get_project()
+    {
+        $text = HomeText::find(1);
+        return response()
+            ->json(
+                [
+                    'text' => $text
+                ]
+            );
+    }
+    public function get_conference()
+    {
+        $text = HomeText::find(2);
+        return response()
+            ->json(
+                [
+                    'text' => $text
+                ]
+            );
     }
 }

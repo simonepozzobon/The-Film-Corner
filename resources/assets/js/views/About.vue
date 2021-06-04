@@ -13,96 +13,18 @@
             </ui-container>
         </ui-hero-banner>
         <ui-container class="py-5" :contain="true">
-            <ui-paragraph :has-padding="false">
-                “The Film Corner Reloaded – A cultural approach” is a follow-up
-                project stemming from “The Film Corner. Online and offline
-                activities for film literacy” already financed in the frame of
-                this call in 2016. The aim of this second edition of the
-                project, “The Film Corner Reloaded – A cultural Approach”, is to
-                design, develop amd test an innovative set of didactical
-                resource: an online interactive user-centered platform for film
-                education addressed to school students aged 11-18 and their
-                teachers with the general purposes of increasing sensitivity and
-                appreciation of film, increasing the film education average
-                skills among EU students and fostering engagement towards film.
-            </ui-paragraph>
-            <ui-paragraph :has-padding="false">
-                In “The Film Corner. Online and offline activities for film
-                literacy” 2 sections of the platform have already been
-                developed; in “The Film Corner Reloaded – A cultural approach” a
-                third section of the platform will be developed. The first two
-                sections were dedicated to a critical approach to film language
-                and to film as an art form and to a creative approach to film
-                and to filmmaking; the new section of the platform will be
-                dedicated to an interdisciplinary and cross-curricular approach
-                to film education centered on the main topic of film and its
-                relationships with other subjects, arts and topics. Through this
-                new section of the platform the project aims to provide teachers
-                with a prompt tool that support teachers in fulfilling the
-                objectives of the curricular didactical activity through a set
-                of didactical resources using film as a cross-cutting subject
-                that can foster connections throughout the school curriculum.
-            </ui-paragraph>
-            <ui-paragraph :has-padding="false">
-                The platform will be created around a selection of EU and non-EU
-                films and audiovisual, both industry and heritage films, for
-                which rights will be cleared in cooperation with rightholders.
-                Moreover, in the occasion of the European Year of Cultural
-                Heritage, The Film Corner platform will also present a catalogue
-                of EU both classic and contemporary feature films that will be
-                available for free on a vod section of the platform. LUX Prizes
-                selection of the recent years will be also taken into account
-                for the selection of the catalogue.
-            </ui-paragraph>
-            <ui-paragraph :has-padding="false">
-                The new tool will be strongly integrated and connected with the
-                sections of the platform that have already been developed,
-                creating a connection among the three areas explored by the
-                platform: the critical, creative and cultural/interdisciplinary
-                ones, making an all-in-one interactive didactical tool that can
-                help teachers building a coherent and exhaustive program of film
-                education. The platform will also include a public networking
-                space in which schools in the countries involved can connect
-                each other, fostering interaction and viral online dissemination
-                of the project.
-            </ui-paragraph>
-            <ui-paragraph :has-padding="false">
-                The platform is totally available for free for school teachers
-                and students and is open to students and teachers from school
-                form any other country who would request to access.
-            </ui-paragraph>
-            <ui-paragraph :has-padding="false">
-                The project will have the duration of 24 months from december
-                2018 until november 2020. It consists of 16 tasks divided into 3
-                work packages: platform development; testing; communication and
-                dissemination. The first year of the project (2019) will be
-                mainly dedicated to the design and development of the platform
-                and the teacher training, while the second year (2020) will be
-                mainly dedicated to testing, dissemination and evaluation &
-                quality assurance. The project will also include a kick-off
-                meeting, an interim meeting and a final conference. During the
-                international conference The Film corner platform will be
-                launched.
-            </ui-paragraph>
-            <ui-paragraph :has-padding="false">
-                <ui-list>
-                    <ui-list-item>
-                        PROJECT TITLE: The Film Corner Reloaded-A Cultural
-                        approach
-                    </ui-list-item>
-                    <ui-list-item>
-                        AGREEMENT NUMBER:
-                        2018-2105/001-001-601430-CREA-1-2018-I-MED-FILMEDU
-                    </ui-list-item>
-                    <ui-list-item>
-                        GRANT ASSIGNED: € 183.800
-                    </ui-list-item>
-                    <ui-list-item>
-                        LEADING INSTITUTION: Fondazione Cineteca Italiana,
-                        Milan, Italy
-                    </ui-list-item>
-                </ui-list>
-            </ui-paragraph>
+            <div v-if="content" v-html="translateContent"></div>
+            <div
+                v-else
+                class="d-flex justify-content-center align-items-center w-100"
+            >
+                <span
+                    class="spinner-border spinner-border-xl text-green w-16 h-16"
+                    ref="spinner"
+                    role="status"
+                    aria-hidden="true"
+                ></span>
+            </div>
         </ui-container>
         <ui-container class="pb-5" :contain="true">
             <ui-row align="center">
@@ -244,8 +166,12 @@ import {
     UiTeam,
     UiTitle
 } from "../ui";
+
+import TranslationFilter from "../TranslationFilter";
+
 export default {
     name: "About",
+    mixins: [TranslationFilter],
     components: {
         UiBlock,
         UiContainer,
@@ -257,6 +183,30 @@ export default {
         UiRow,
         UiTeam,
         UiTitle
+    },
+    data: function() {
+        return {
+            content: null
+        };
+    },
+    computed: {
+        translateContent: function() {
+            return this.$options.filters.translate(
+                this.content,
+                "content",
+                this.$root.locale
+            );
+        }
+    },
+    methods: {
+        getData: function() {
+            this.$http.get("/api/v2/project").then(response => {
+                this.content = response.data.text;
+            });
+        }
+    },
+    created: function() {
+        this.getData();
     }
 };
 </script>
