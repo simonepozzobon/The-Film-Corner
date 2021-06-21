@@ -21,6 +21,7 @@ use App\Propaganda\Challenge;
 use App\Propaganda\ParatextType;
 use App\Propaganda\ChallengeLibrary;
 use App\Propaganda\ChallengeLibraryMedia;
+use File;
 
 use Illuminate\Http\Request;
 use App\Notifications\SharedSession;
@@ -320,10 +321,14 @@ class PropagandaController extends Controller
         $file = $request->file('media');
         $extension = $file->getClientOriginalExtension();
         $original_name = $file->getClientOriginalName();
-
         $filename = uniqid() . '.' . $extension;
         $path = 'public/propaganda/users';
-        $src = $file->storeAs($path, $filename);
+
+        $storage_path = storage_path('app/' . $path);
+        if (!file_exists($storage_path)) {
+            $mkdir = Storage::makeDirectory($path);
+        }
+        $src = $request->file('media')->storeAs($path, $filename);
 
         $media->url = Storage::disk('local')->url($src);
         $media->library_type_id = isset($request->library_type_id) ? $request->library_type_id : 0;
